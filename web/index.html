@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones del Arte — Filosofía</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep: #050510;
+            --bg-surface: #0a0a1a;
+            --bg-card: #0f0f25;
+            --bg-card-hover: #151535;
+            --gold: #c9a84c;
+            --gold-light: #e8d282;
+            --gold-dim: rgba(201, 168, 76, 0.15);
+            --purple: #7b5ea7;
+            --purple-dim: rgba(123, 94, 167, 0.15);
+            --blue: #4a7fb5;
+            --blue-dim: rgba(74, 127, 181, 0.15);
+            --red: #b54a4a;
+            --red-dim: rgba(181, 74, 74, 0.15);
+            --green: #4ab57d;
+            --green-dim: rgba(74, 181, 125, 0.15);
+            --text-primary: #e8e6f0;
+            --text-secondary: #9896a8;
+            --text-muted: #5c5a6e;
+            --border: rgba(201, 168, 76, 0.08);
+            --glow-gold: 0 0 40px rgba(201, 168, 76, 0.15);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== CANVAS BACKGROUND ===== */
+        #star-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .gradient-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(123, 94, 167, 0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 80%, rgba(74, 127, 181, 0.04) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            background: rgba(5, 5, 16, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.7rem 2rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 24px; height: 2px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        main {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content { max-width: 900px; }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--gold-dim);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), #a07d2e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--gold) 0%, #a07d2e 100%);
+            color: var(--bg-deep);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            border-radius: 4px;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-cta:hover {
+            box-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* ===== SECTION STYLES ===== */
+        .section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ===== FUNCTIONS GRID ===== */
+        .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .function-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .function-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--card-accent), transparent);
+        }
+
+        .function-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--card-accent);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--card-glow);
+        }
+
+        .function-card[data-color="gold"] { --card-accent: var(--gold); --card-glow: rgba(201,168,76,0.08); }
+        .function-card[data-color="purple"] { --card-accent: var(--purple); --card-glow: rgba(123,94,167,0.08); }
+        .function-card[data-color="blue"] { --card-accent: var(--blue); --card-glow: rgba(74,127,181,0.08); }
+        .function-card[data-color="red"] { --card-accent: var(--red); --card-glow: rgba(181,74,74,0.08); }
+        .function-card[data-color="green"] { --card-accent: var(--green); --card-glow: rgba(74,181,125,0.08); }
+
+        .function-icon {
+            width: 50px; height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--card-glow);
+        }
+
+        .function-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--card-accent);
+        }
+
+        .function-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .function-example {
+            display: block;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ===== CONCEPTS SECTION ===== */
+        .concept-row {
+            display: flex;
+            gap: 4rem;
+            align-items: flex-start;
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .concept-row:nth-child(even) {
+            flex-direction: row-reverse;
+            transform: translateX(30px);
+        }
+
+        .concept-image {
+            flex: 0 0 45%;
+            position: relative;
+        }
+
+        .concept-image img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.4s, filter 0.4s;
+        }
+
+        .concept-image:hover img {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        .concept-text h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .concept-text p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        /* ===== WORKS ANALYSIS SECTION ===== */
+        .work-analysis {
+            margin-bottom: 8rem;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .work-header {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .work-hero-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .work-hero-overlay {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            padding: 3rem;
+            background: linear-gradient(to top, rgba(5,5,16,0.95) 0%, rgba(5,5,16,0.6) 60%, transparent 100%);
+        }
+
+        .work-hero-overlay h3 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-hero-overlay .work-meta {
+            color: var(--gold);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+        }
+
+        .work-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .work-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+        }
+
+        .work-block h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .work-block h4::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .work-block p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.9;
+        }
+
+        .work-functions {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+        }
+
+        .work-functions h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .function-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .function-tag {
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid;
+            cursor: default;
+            transition: all 0.3s;
+        }
+
+        .function-tag:hover { transform: translateY(-2px); }
+
+        .function-tag[data-color="gold"] { color: var(--gold); border-color: var(--gold-dim); background: rgba(201,168,76,0.05); }
+        .function-tag[data-color="purple"] { color: var(--purple); border-color: rgba(123,94,167,0.3); background: rgba(123,94,167,0.05); }
+        .function-tag[data-color="blue"] { color: var(--blue); border-color: rgba(74,127,181,0.3); background: rgba(74,127,181,0.05); }
+        .function-tag[data-color="red"] { color: var(--red); border-color: rgba(181,74,74,0.3); background: rgba(181,74,74,0.05); }
+        .function-tag[data-color="green"] { color: var(--green); border-color: rgba(74,181,125,0.3); background: rgba(74,181,125,0.05); }
+
+        .work-functions p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.9;
+        }
+
+        /* ===== CONCEPT BLOCK (FOR CONCEPTS WITHOUT IMAGES) ===== */
+        .concept-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .concept-block h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .concept-block p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        .concept-block ul {
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .concept-block li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        /* ===== AI ANALYZER SECTION ===== */
+        .analyzer-section {
+            position: relative;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            overflow: hidden;
+            margin: 4rem 0;
+        }
+
+        .analyzer-section::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(201,168,76,0.03), transparent, rgba(123,94,167,0.03), transparent);
+            animation: analyzerRotate 20s linear infinite;
+        }
+
+        @keyframes analyzerRotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .analyzer-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .analyzer-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .analyzer-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+        }
+
+        .analyzer-form {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: rgba(15, 15, 37, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px var(--gold-dim);
+        }
+
+        .input-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .input-group label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--gold), #a07d2e);
+            color: var(--bg-deep);
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .analyze-btn:hover {
+            box-shadow: 0 0 40px rgba(201,168,76,0.3);
+            transform: translateY(-2px);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .analyzer-result {
+            margin-top: 3rem;
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .analyzer-result.visible {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .result-section {
+            margin-bottom: 2rem;
+        }
+
+        .result-section:last-child { margin-bottom: 0; }
+
+        .result-section h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .result-section p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.9;
+        }
+
+        .result-bar {
+            margin-bottom: 1rem;
+        }
+
+        .result-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .result-bar-track {
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .result-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== TIMELINE SECTION ===== */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            width: 2px;
+            height: 100%;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -3rem;
+            top: 0.5rem;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 3px solid var(--bg-deep);
+            transform: translateX(-5px);
+        }
+
+        .timeline-year {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item h4 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== CONCLUSION SECTION ===== */
+        .conclusion {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .conclusion p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            z-index: 2;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: var(--bg-deep);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer .footer-gold {
+            color: var(--gold);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal { opacity: 0; transform: translateY(40px); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0;
+                width: 100%;
+                background: rgba(5, 5, 16, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active { display: flex; }
+
+            .menu-toggle { display: block; }
+
+            .work-content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .concept-row,
+            .concept-row:nth-child(even) {
+                flex-direction: column !important;
+                gap: 2rem;
+            }
+
+            .concept-image { flex: auto; }
+            .concept-image img { height: 250px; }
+
+            .analyzer-section { padding: 2.5rem 1.5rem; }
+        }
+
+        @media (max-width: 600px) {
+            .functions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section { padding: 5rem 1.5rem; }
+            .hero { padding: 1.5rem; }
+        }
+
+        /* ===== LOADING SPINNER ===== */
+        .spinner {
+            width: 20px; height: 20px;
+            border: 2px solid rgba(5,5,16,0.3);
+            border-top-color: var(--bg-deep);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--gold);
+            color: var(--bg-deep);
+        }
+
+        /* Canvas scatter particles */
+        #nebula-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Star Background -->
+    <canvas id="star-canvas"></canvas>
+    <div class="gradient-overlay"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="nav-logo">Φ FILOSOFÍA</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#funciones">Funciones</a></li>
+            <li><a href="#conceptos">Conceptos</a></li>
+            <li><a href="#obras">Obras</a></li>
+            <li><a href="#inteligencia">Análisis IA</a></li>
+            <li><a href="#conclusion">Conclusión</a></li>
+        </ul>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero" id="inicio">
+            <canvas id="nebula-canvas"></canvas>
+            <div class="hero-content">
+                <div class="hero-badge" id="heroBadge">Trabajo de Filosofía</div>
+                <h1 id="heroTitle">
+                    <span>Las Funciones</span>
+                    <span>del Arte</span>
+                </h1>
+                <p class="hero-subtitle" id="heroSubtitle">
+                    Un viaje a través de la historia del arte y la filosofía, explorando cómo las manifestaciones artísticas han moldeado nuestra comprensión del mundo.
+                </p>
+                <a href="#funciones" class="hero-cta" id="heroCta">
+                    Comenzar exploración
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                </a>
+            </div>
+            <div class="scroll-indicator" id="scrollIndicator">
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
+            </div>
+        </section>
+
+        <!-- ===== FUNCIONES DEL ARTE ===== -->
+        <section class="section" id="funciones">
+            <div class="section-header reveal">
+                <span class="section-tag">01 — Marco Teórico</span>
+                <h2 class="section-title">Funciones del Arte</h2>
+                <p class="section-desc">
+                    A lo largo de la historia, las manifestaciones artísticas han cumplido diversas funciones esenciales. Estas son las principales que analizaremos en este trabajo.
+                </p>
+            </div>
+
+            <div class="functions-grid">
+
+                <div class="function-card reveal" data-color="gold">
+                    <div class="function-icon">🧠</div>
+                    <h3>Función Cognitiva</h3>
+                    <p>Las artes pueden proporcionarnos ideas y conocimiento que desconocemos. A través de la intuición, la emoción y la experiencia vivida, el arte nos enseña sobre la realidad y la condición humana de una manera que otros saberes no pueden ofrecer.</p>
+                    <span class="function-example">Ej: El Quijote revela aspectos profundos de la realidad y la condición humana</span>
+                </div>
+
+                <div class="function-card reveal" data-color="green">
+                    <div class="function-icon">📚</div>
+                    <h3>Función Educativa / Ética</h3>
+                    <p>Las artes han contribuido a formarnos como personas. Valores como la justicia, la libertad, la igualdad y la solidaridad han sido encarnados por multitud de personajes e imágenes a lo largo de la historia, enseñándonos a ser mejores.</p>
+                    <span class="function-example">Ej: Las vidrieras de las catedrales góticas educaban en la fe cristiana</span>
+                </div>
+
+                <div class="function-card reveal" data-color="purple">
+                    <div class="function-icon">💚</div>
+                    <h3>Función Terapéutica / Curativa</h3>
+                    <p>El arte puede curar: expresando traumas y enfermedades, cumplendo de manera imaginaria deseos irrealizables, proporcionando consuelo emocional y ayudándonos a procesar el dolor.</p>
+                    <span class="function-example">Ej: El Grito de Munch canaliza la angustia existencial en arte</span>
+                </div>
+
+                <div class="function-card reveal" data-color="red">
+                    <div class="function-icon">⚡</div>
+                    <h3>Función Política</h3>
+                    <p>El arte ha desempeñado funciones políticas fundamentales: representar la voz de los que carecían de voz, expresar la voluntad general, legitimar el poder o, por el contrario, resistirlo.</p>
+                    <span class="function-example">Ej: El Guernica denuncia el fascismo y la barbarie de la guerra</span>
+                </div>
+
+                <div class="function-card reveal" data-color="blue">
+                    <div class="function-icon">🔍</div>
+                    <h3>Función Crítica</h3>
+                    <p>A través del arte se cuestionan los abusos y excesos políticos, ideológicos y sociales. El arte crítico nos incomoda, nos perturba y nos obliga a reflexionar sobre aquello que preferimos ignorar.</p>
+                    <span class="function-example">Ej: Las Pinturas Negras de Goya denuncian la violencia y la crueldad</span>
+                </div>
+
+                <div class="function-card reveal" data-color="gold">
+                    <div class="function-icon">📡</div>
+                    <h3>Función Ideológica</h3>
+                    <p>Vinculada con la función educativa y política, el arte se ha utilizado para difundir diversas corrientes de pensamiento y creencias, tanto de manera explícita como sutil e inconsciente.</p>
+                    <span class="function-example">Ej: El arte al servicio de los Médici en el Renacimiento florentino</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== CONCEPTOS FUNDAMENTALES ===== -->
+        <section class="section" id="conceptos">
+            <div class="section-header reveal">
+                <span class="section-tag">02 — Conceptos Clave</span>
+                <h2 class="section-title">Conceptos Fundamentales</h2>
+                <p class="section-desc">
+                    Para comprender las funciones del arte, necesitamos dominar algunos conceptos filosóficos esenciales que han estructurado nuestra manera de pensar sobre la estética.
+                </p>
+            </div>
+
+            <!-- Kant's Genius -->
+            <div class="concept-block reveal" data-color="gold">
+                <h3>🎭 El Genio Artístico — Kant</h3>
+                <p>Según Inmanuel Kant en su <em>Crítica del Juicio</em> (1790), el <strong>genio</strong> es aquella persona que <strong>da la regla del arte que está por venir</strong>. No se trata simplemente de alguien talentoso, sino de un creador que establece reglas completamente nuevas, que abre caminos inéditos.</p>
+                <ul>
+                    <li><strong>Originalidad:</strong> El genio crea algo genuinamente nuevo.</li>
+                    <li><strong>Ejemplaridad:</strong> Su obra sirve como modelo para otros.</li>
+                    <li><strong>Naturalidad:</strong> Como si la naturaleza hablara a través de él.</li>
+                </ul>
+                <p style="margin-top: 1.5rem;"><strong>Ejemplo:</strong> Picasso, al crear el cubismo con <em>Las señoritas de Avignon</em>, dio la regla del arte que estaba por venir. Transformó para siempre la forma de representar la realidad.</p>
+            </div>
+
+            <!-- Aesthetics -->
+            <div class="concept-block reveal" data-color="purple">
+                <h3>🎨 La Estética como Disciplina Filosófica</h3>
+                <p>La <strong>estética</strong> es la rama de la filosofía que reflexiona sobre las sensaciones, emociones y juicios que nos producen las obras de arte. Acuñada por Baumgarten en el siglo XVIII, aunque la reflexión sobre el arte y la belleza se remonta a Platón y Aristóteles.</p>
+                <p>Se ocupa de cuestiones fundamentales:</p>
+                <ul>
+                    <li>¿Qué es la belleza? ¿Es objetiva o subjetiva?</li>
+                    <li>¿Qué convierte a algo en obra de arte?</li>
+                    <li>¿Hay criterios universales para juzgar la belleza?</li>
+                    <li>¿Cuál es la relación entre arte y verdad?</li>
+                </ul>
+            </div>
+
+            <!-- Beauty -->
+            <div class="concept-block reveal" data-color="blue">
+                <h3>✨ La Belleza y sus Categorías</h3>
+                <p>Tradicionalmente, el arte buscó la <strong>belleza</strong> entendida como armonía, simetría, orden y proporción — desde los griegos hasta el Romanticismo. A partir de las vanguardias, las categorías estéticas se multiplicaron:</p>
+                <ul>
+                    <li><strong>Lo Sublime:</strong> Lo que mezcla terror y admiración (un paisaje grandioso, una tormenta en el mar).</li>
+                    <li><strong>Lo Grotesco:</strong> La deformación de lo bello que genera inquietud.</li>
+                    <li><strong>Lo Pintoresco:</strong> La belleza caprichosa y sugerente de lo irregular.</li>
+                    <li><strong>Lo Feo:</strong> Lo opuesto a la belleza clásica, ahora con propio valor estético.</li>
+                    <li><strong>Lo Kitsch:</strong> La belleza excesiva, artificial y sentimental.</li>
+                </ul>
+            </div>
+
+            <!-- Aesthetic Experience -->
+            <div class="concept-block reveal" data-color="green">
+                <h3>🌊 La Experiencia Estética</h3>
+                <p>La experiencia estética es aquella vivencia y emoción que se despierta ante una obra de arte. Tiene características muy específicas:</p>
+                <ul>
+                    <li><strong>Distanciamiento:</strong> El espectador sabe que es ficción, no confunde la obra con la realidad.</li>
+                    <li><strong>Desinterés:</strong> No hay ningún interés práctico; simplemente se contempla.</li>
+                    <li><strong>Admiración:</strong> El espectador quiere seguir observando la obra en estado de asombro.</li>
+                    <li><strong>Ruptura con la cotidianidad:</strong> Nos saca del tedio diario y nos hace ver con ojos nuevos.</li>
+                </ul>
+            </div>
+
+            <!-- Timeline of Aesthetic Categories -->
+            <div class="concept-block reveal">
+                <h3>📅 Evolución del Concepto de Belleza</h3>
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">Antigüedad Clásica</div>
+                        <h4>Belleza = Armonía y proporción</h4>
+                        <p>Para Platón, reflejo de la Belleza ideal. Para Aristóteles, orden y proporción de las partes.</p>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">Renacimiento (s. XV-XVI)</div>
+                        <h4>Belleza = Perfección formal y perspectiva</h4>
+                        <p>Proporciones perfectas del cuerpo humano, perspectiva matemática, simetría compositiva.</p>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">Romanticismo (s. XVIII-XIX)</div>
+                        <h4>Belleza = Expresión + Lo Sublime</h4>
+                        <p>No solo armónicos: también emociones intensas y lo sublime (Burke, Kant).</p>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">Vanguardias (s. XX)</div>
+                        <h4>Multiplicación de categorías estéticas</h4>
+                        <p>Lo feo, lo grotesco, lo absurdo, lo kitsch... El arte ya no necesita ser "bonito".</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ANÁLISIS DE OBRAS ===== -->
+        <section class="section" id="obras">
+            <div class="section-header reveal">
+                <span class="section-tag">03 — Análisis</span>
+                <h2 class="section-title">Obras y sus Funciones</h2>
+                <p class="section-desc">
+                    Ahora vamos a analizar en profundidad obras de arte concretas, relacionándolas con las funciones del arte que hemos estudiado.
+                </p>
+            </div>
+
+            <!-- WORK 1: El Quijote -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/El_Quijote_de_la_Mancha.jpg/1280px-El_Quijote_de_la_Mancha.jpg" alt="El Quijote de la Mancha" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=El+Quijote+de+la+Mancha'">
+                    <div class="work-hero-overlay">
+                        <h3>El Quijote</h3>
+                        <span class="work-meta">Miguel de Cervantes · 1605/1615 · Novela</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Publicado en dos partes (1605 y 1615) durante el Siglo de Oro español, un periodo de esplendor cultural pero de decadencia política y económica. España mantenía su imperio pero estaba en crisis. Las novelas de caballerías —historias fantásticas sobre caballeros andantes— eran el best-seller de la época, y Cervantes quiso escribir una sátira de esas novelas. Lo que creó fue mucho más: la novela moderna.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>Un hidalgo de la Mancha, Alonso Quijano, pierde el juicio de tanto leer novelas de caballerías y decide convertirse en caballero andante. Junto a su escudero Sancho Panza, vive aventuras donde confunde molinos con gigantes y rebaños con ejércitos.</p>
+                        <p>Lo que hace de esta obra una maestra universal es su profundidad: la locura como forma de lucidez, la dicotomía idealismo-realismo, la crítica social, y la metaficción revolucionaria de hacer que sus personajes sepan que son personajes de una novela.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="green">Educativa/Ética</span>
+                        <span class="function-tag" data-color="purple">Terapéutica</span>
+                        <span class="function-tag" data-color="blue">Crítica</span>
+                        <span class="function-tag" data-color="gold">Ideológica</span>
+                    </div>
+                    <p>El Quijote cumple prácticamente todas las funciones del arte: nos <strong>enseña</strong> sobre la condición humana (cognitiva), nos <strong>educa</strong> en valores como la generosidad y la lealtad (ética), nos <strong>consuela</strong> y nos hace ver que está bien ser diferente (terapéutica), <strong>critica</strong> duramente la sociedad española de la época (crítica), y también <strong>transmite</strong> valores de su tiempo, algunos hoy cuestionables (ideológica).</p>
+                </div>
+            </div>
+
+            <!-- WORK 2: Guernica -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/en/7/74/Guernica.jpg" alt="Guernica de Picasso" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=Guernica+-+Picasso'">
+                    <div class="work-hero-overlay">
+                        <h3>Guernica</h3>
+                        <span class="work-meta">Pablo Picasso · 1937 · Óleo sobre lienzo · 3,49m × 7,76m</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Pintado como respuesta al bombardeo de la ciudad vasca de Guernica el 26 de abril de 1937, durante la Guerra Civil Española. Un escuadrón alemán aliado de Franco bombardeó durante más de tres horas esta pequeña ciudad, causando una masacre entre civiles. Picasso, que vivía en París, se enteró por los periódicos y creó esta obra para el Pabellón Español de la Exposición de París de 1937.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>Pintado en blanco, negro y grises —evocando las fotografías de guerra—, el cuadro es un grito de horror contra la violencia. Las figuras se retuercen y fragmentan en un espacio caótico: una madre grita con su hijo muerto en brazos, un soldado yace desmembrado, una mujer cae de un edificio en llamas. El toro observa con serenidad inquietante. Todo es un anti-monumento: no celebra ninguna victoria, solo muestra el sufrimiento de los inocentes.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="red">Política</span>
+                        <span class="function-tag" data-color="blue">Crítica</span>
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="green">Ética</span>
+                    </div>
+                    <p>El Guernica es quizás el ejemplo más claro de la <strong>función política</strong> del arte: fue propaganda republicana contra el fascismo que dio visibilidad internacional a la causa. Su <strong>función crítica</strong> es brutal: denuncia la guerra y la barbarie de una manera que resulta imposible ignorar. También es <strong>cognitiva</strong> (nos enseña sobre el sufrimiento de la guerra) y <strong>ética</strong> (nos recuerda que la guerra es siempre un crimen contra la humanidad).</p>
+                </div>
+            </div>
+
+            <!-- WORK 3: Las señoritas de Avignon -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/en/4/4c/Les_Demoiselles_d%27Avignon.jpg" alt="Las señoritas de Avignon" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=Les+Demoiselles+d%27Avignon'">
+                    <div class="work-hero-overlay">
+                        <h3>Las señoritas de Avignon</h3>
+                        <span class="work-meta">Pablo Picasso · 1907 · Óleo sobre lienzo · 2,43m × 2,33m</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Pintado en 1907, cuando el arte pictórico occidental llevaba siglos regido por reglas estables: perspectiva lineal, claroscuro, canon clásico. Cézanne había preparado el terreno, los fauves habían liberado el color, pero Picasso dio el golpe definitivo. La obra representa a cinco prostitutas en un burdel de Barcelona.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>Cinco mujeres desnudas en un espacio plano y fragmentado, sin perspectiva tradicional. Los cuerpos están geometrizados, los rostros de las figuras de la derecha inspirados en máscaras africanas. Picasso destruye la ilusión de profundidad renacentista: el cuadro es un muro, no una ventana. Los cuerpos están deliberadamente deformados — no por incompetencia, sino por decisión consciente de buscar un nuevo lenguaje pictórico.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="gold">Genio (Kant)</span>
+                        <span class="function-tag" data-color="blue">Crítica</span>
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="gold">Ideológica</span>
+                    </div>
+                    <p>Esta obra es EL ejemplo del <strong>genio kantiano</strong>: Picasso no se limitó a hacer algo diferente, creó reglas completamente nuevas. El cubismo transformó el arte occidental para siempre. También cumple una <strong>función crítica</strong> al desafiar las convenciones artísticas, una <strong>función cognitiva</strong> al enseñarnos que la realidad puede representarse de muchas maneras, y una <strong>función ideológica</strong> al promover la vanguardia como filosofía artística.</p>
+                </div>
+            </div>
+
+            <!-- WORK 4: El Grito -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg" alt="El Grito de Munch" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=El+Grito+-+Munch'">
+                    <div class="work-hero-overlay">
+                        <h3>El Grito</h3>
+                        <span class="work-meta">Edvard Munch · 1893 · Óleo y pastel sobre cartón · 91cm × 73cm</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Munch (1863-1944) vivió una vida marcada por la enfermedad, la muerte y la angustia existencial. Su madre y su hermana murieron de tuberculosis cuando él era joven, y él mismo sufrió depresión severa. La obra nace de una experiencia personal: "Paseaba por un sendero con dos amigos —el sol se puso— de repente, el cielo se tiñó de rojo como la sangre. Me detuve, mortalmente cansado. Y sentí un grito infinito que atravesaba la naturaleza."</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>Una figura andrógina, con el rostro deformado por el horror absoluto, se agarra la cabeza mientras abre la boca en un grito silencioso. El cielo es un remolino de rojos incandescentes. Todo el paisaje vibra y se retuerce, como si la naturaleza compartiera la angustia del personaje. Las dos figuras del fondo caminan indiferentes, simbolizando la sociedad que ignora el sufrimiento individual.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="purple">Terapéutica</span>
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="blue">Crítica</span>
+                        <span class="function-tag" data-color="green">Experiencia Estética</span>
+                    </div>
+                    <p>La <strong>función terapéutica</strong> es la más evidente: Munch canalizó su angustia existencial a través de la pintura. Millones de personas se han sentido identificados con esa imagen. También es <strong>cognitiva</strong> (nos enseña sobre la angustia existencial como experiencia universal), <strong>crítica</strong> (denuncia la superficialidad social) y una <strong>experiencia estética</strong> completa que no deja indiferente a nadie.</p>
+                </div>
+            </div>
+
+            <!-- WORK 5: La Piedad -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/%27Piet%C3%A0%27_by_Michelangelo_BUONARROTI_0019.jpg/800px-%27Piet%C3%A0%27_by_Michelangelo_BUONARROTI_0019.jpg" alt="La Piedad del Vaticano" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=La+Piedad+-+Miguel+Angel'">
+                    <div class="work-hero-overlay">
+                        <h3>La Piedad del Vaticano</h3>
+                        <span class="work-meta">Miguel Ángel Buonarroti · 1498-1499 · Mármol · 174cm altura</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Realizada cuando Miguel Ángel tenía solo 23 años, durante el Renacimiento italiano. Este movimiento recuperó los ideales de la Antigüedad clásica y exaltó al ser humano como centro del universo. El arte buscaba la belleza basada en la armonía, la proporción y el equilibrio. La obra se encuentra en la Basílica de San Pedro del Vaticano.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>La Virgen María sostiene en su regazo el cuerpo muerto de Jesucristo. Su rostro es extraordinariamente joven —Miguel Ángel quería representar su pureza eterna—. El cuerpo de Cristo es anatómicamente perfecto, cayendo con naturalidad. La composición es piramidal, lo que le da estabilidad y armonía. La expresión de María es serena, con una emoción contenida más profunda que cualquier llanto desconsolado.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="green">Educativa/Ética</span>
+                        <span class="function-tag" data-color="gold">Ideológica</span>
+                        <span class="function-tag" data-color="blue">Belleza Clásica</span>
+                        <span class="function-tag" data-color="green">Experiencia Estética</span>
+                    </div>
+                    <p>La Piedad cumple una clara <strong>función educativa</strong> (enseña la doctrina cristiana de la redención), <strong>ideológica</strong> (demuestra el poder de la Iglesia Católica a través de la magnificencia artística), y es el ejemplo perfecto de <strong>belleza clásica</strong> basada en armonía y proporción. Contemplarla produce una profunda <strong>experiencia estética</strong> de admiración serena.</p>
+                </div>
+            </div>
+
+            <!-- WORK 6: Las Meninas -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg/1280px-Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg" alt="Las Meninas de Velázquez" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=Las+Meninas+-+Velazquez'">
+                    <div class="work-hero-overlay">
+                        <h3>Las Meninas</h3>
+                        <span class="work-meta">Diego Velázquez · 1656 · Óleo sobre lienzo · 3,18m × 2,76m</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Velázquez era pintor de cámara del rey Felipe IV. La obra fue pintada en el Alcázar Real de Madrid y representa un momento cotidiano: la infanta Margarita visita al pintor mientras trabaja, acompañada de sus damas de compañía, enanos y perros. Es una de las obras más comentadas por los historiadores del arte de todos los tiempos.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>El misterio central: ¿qué está pintando Velázquez? El espejo del fondo refleja a los reyes Felipe IV y Mariana de Austria, lo que significa que Velázquez está pintando el retrato de los reyes desde nuestro punto de vista. Nosotros ocupamos el lugar del poder. Velázquez se autorrepresenta como protagonista, reivindicando el estatus del artista. La técnica es extraordinariamente libre: de cerca son manchas casi abstractas, de lejos son perfectas.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="red">Política</span>
+                        <span class="function-tag" data-color="blue">Crítica</span>
+                        <span class="function-tag" data-color="gold">Ideológica</span>
+                    </div>
+                    <p>Las Meninas es <strong>cognitiva</strong> (nos enseña sobre la naturaleza de la representación artística), <strong>política</strong> (legitima la monarquía), <strong>crítica</strong> (Velázquez reivindica el estatus del artista) e <strong>ideológica</strong> (transmite una visión jerárquica de la sociedad). Es una reflexión filosófica en forma de pintura.</p>
+                </div>
+            </div>
+
+            <!-- WORK 7: Los Girasoles -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Vincent_Willem_van_Gogh_127.jpg/800px-Vincent_Willem_van_Gogh_127.jpg" alt="Los Girasoles de Van Gogh" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=Los+Girasoles+-+Van+Gogh'">
+                    <div class="work-hero-overlay">
+                        <h3>Los Girasoles</h3>
+                        <span class="work-meta">Vincent van Gogh · 1888 · Óleo sobre lienzo · Serie de pinturas</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Pintados durante la estancia de Van Gogh en Arlés (sur de Francia) en 1888. Van Gogh vivió una vida dramática: pobreza, enfermedad mental, incomprensión. Nunca vendió más que un cuadro en vida y se suicidó a los 37 años. Sin embargo, produjo más de 2.000 obras en apenas una década. Los girasoles fueron pintados para decorar la habitación de su amigo Gauguin.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>Un tema aparentemente sencillo: un jarrón con girasoles en diferentes estados de floración. Pero la ejecución es extraordinaria: toda la serie se desarrolla en tonos amarillos (Van Gogh asociaba el amarillo con la luz y la alegría). Las pinceladas son gruesas, empastadas, expresivas. Cada girasol es diferente: algunos en plena floración, otros marchitos. Puede leerse como una meditación sobre el ciclo de la vida.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="purple">Terapéutica</span>
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="blue">Belleza Expresiva</span>
+                        <span class="function-tag" data-color="green">Experiencia Estética</span>
+                    </div>
+                    <p>Los girasoles son profundamente <strong>terapéuticos</strong>: Van Gogh canalizó su energía creativa y encontró sentido en medio de la desesperación. Son <strong>cognitivos</strong> (nos enseñan que la belleza está también en lo imperfecto y lo marchito), de una <strong>belleza expresiva</strong> intensa, y producen una <strong>experiencia estética</strong> absorbente y emocionante.</p>
+                </div>
+            </div>
+
+            <!-- WORK 8: El Nacimiento de Venus -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1280px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg" alt="El Nacimiento de Venus" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=Nacimiento+de+Venus+-+Botticelli'">
+                    <div class="work-hero-overlay">
+                        <h3>El Nacimiento de Venus</h3>
+                        <span class="work-meta">Sandro Botticelli · 1484-1486 · Temple sobre lienzo · 1,72m × 2,78m</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Encargada por Lorenzo di Pierfrancesco de Médici durante el Renacimiento florentino. El tema viene de la mitología: Venus (Afrodita) nació del mar. La obra se entiende en el contexto del Neoplatonismo florentino, que reconciliaba la filosofía platónica con el cristianismo: la belleza terrenal era un reflejo de la Belleza divina, un camino hacia Dios.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>Venus emerge desnuda sobre una concha, con una pose inspirada en la <em>Venus púdica</em> de la escultura clásica. Su cuerpo es alargado, grácil, etéreo, con pelirrojos cayendo largos sobre sus hombros. Su expresión es melancólica. La composición es clara y equilibrada: Céfiro sopla brisas a la izquierda, la Hora de la Primavera se apresura a cubrir Venus con un manto florido a la derecha.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="blue">Belleza Clásica</span>
+                        <span class="function-tag" data-color="green">Educativa/Ética</span>
+                        <span class="function-tag" data-color="gold">Ideológica</span>
+                        <span class="function-tag" data-color="purple">Terapéutica</span>
+                    </div>
+                    <p>El Nacimiento de Venus es una manifestación perfecta de la <strong>belleza clásica</strong> (armonía, proporción y equilibrio). Tiene una <strong>función educativa</strong> filosófica (la belleza terrenal como camino hacia lo divino), <strong>ideológica</strong> (propaganda de los Médici) y <strong>terapéutica</strong> (su belleza serena produce calma y admiración).</p>
+                </div>
+            </div>
+
+            <!-- WORK 9: 1984 -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/1984first.jpg/800px-1984first.jpg" alt="1984 de George Orwell" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=1984+-+George+Orwell'">
+                    <div class="work-hero-overlay">
+                        <h3>1984</h3>
+                        <span class="work-meta">George Orwell · 1949 · Novela distópica</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Escrita por Orwell (Eric Arthur Blair) en 1949, en los últimos años de su vida, ya gravemente enfermo de tuberculosis. El contexto es el periodo de entreguerras y la Guerra Fría. Orwell, socialista democrático, estaba profundamente preocupado por los totalitarismos (estalinismo soviético y nazismo) y por la degradación del lenguaje como instrumento de control político.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>La novela retrata un mundo distópico gobernado por el Partido y su líder omnipresente, el Gran Hermano. El control es absoluto: videovigilancia total, manipulación del lenguaje (la "neolengua"), reescritura de la historia, "doble pensamiento"... Winston Smith se rebela secretamente, pero es capturado, torturado y "reeducado". El final desgarrador: "Amaba al Gran Hermano." Conceptos como "Gran Hermano" o "neolengua" se han incorporado al lenguaje cotidiano.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="red">Política</span>
+                        <span class="function-tag" data-color="blue">Crítica</span>
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="green">Educativa/Ética</span>
+                        <span class="function-tag" data-color="gold">Ideológica</span>
+                    </div>
+                    <p>1984 es una de las obras políticas más poderosas de la historia: cumple <strong>función política</strong> (advertencia contra el totalitarismo), <strong>crítica</strong> (denuncia cualquier forma de totalitarismo), <strong>cognitiva</strong> (nos enseña cómo funcionan los mecanismos de control), <strong>educativa/ética</strong> (nos educa en valores de libertad), e <strong>ideológica</strong> (defiende la democracia liberal y el socialismo democrático).</p>
+                </div>
+            </div>
+
+            <!-- WORK 10: La noche estrellada -->
+            <div class="work-analysis reveal">
+                <div class="work-header">
+                    <img class="work-hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="La noche estrellada de Van Gogh" loading="lazy"
+                         onerror="this.src='https://placehold.co/1200x500/0a0a1a/c9a84c?text=La+Noche+Estrellada+-+Van+Gogh'">
+                    <div class="work-hero-overlay">
+                        <h3>La noche estrellada</h3>
+                        <span class="work-meta">Vincent van Gogh · 1889 · Óleo sobre lienzo · 73,7cm × 92,1cm</span>
+                    </div>
+                </div>
+
+                <div class="work-content-grid">
+                    <div class="work-block">
+                        <h4>Contexto</h4>
+                        <p>Pintada en junio de 1889 durante la estancia de Van Gogh en el hospital psiquiátrico de Saint-Rémy-de-Provence, en el sur de Francia. Alternaba momentos de lucidez creativa con episodios graves de enfermedad mental. La vista desde su ventana está idealizada: el pueblo no se veía realmente desde ahí, sino que lo añadió de memoria.</p>
+                    </div>
+                    <div class="work-block">
+                        <h4>Análisis</h4>
+                        <p>Un cielo nocturno extraordinariamente vibrante: remolinos de estrellas, lunas y espirales luminosas en constante movimiento. El ciprés oscuro y flameante conecta la tierra con el cielo. El pueblo diminuto y dormido contrasta con el universo convulso de arriba. Las pinceladas curvas y gruesas casi hipnóticas hacen que el cuadro parezca moverse ante nuestros ojos. Es una de las pinturas más reconocibles de la historia.</p>
+                    </div>
+                </div>
+
+                <div class="work-functions">
+                    <h4>Funciones del arte relacionadas</h4>
+                    <div class="function-tags">
+                        <span class="function-tag" data-color="purple">Terapéutica</span>
+                        <span class="function-tag" data-color="gold">Cognitiva</span>
+                        <span class="function-tag" data-color="green">Experiencia Estética</span>
+                        <span class="function-tag" data-color="blue">Lo Sublime</span>
+                    </div>
+                    <p>Pintada desde la ventana de un hospital psiquiátrico, La noche estrellada es un testimonio de la capacidad del arte para transformar el sufrimiento en belleza (<strong>función terapéutica</strong>). Es <strong>cognitiva</strong> (nos enseña sobre la relación entre el ser humano y el cosmos), de una profunda <strong>experiencia estética</strong>, y manifiesta la belleza de <strong>lo sublime</strong>: lo que nos sobrepasa y nos llena de asombro.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== PICASSO GENIUS SECTION ===== -->
+        <section class="section">
+            <div class="section-header reveal">
+                <span class="section-tag">04 — El Genio</span>
+                <h2 class="section-title">Picasso: La Regla del Arte por Venir</h2>
+            </div>
+
+            <div class="concept-block reveal">
+                <h3>🎭 El Genio según Kant, ejemplificado</h3>
+                <p>Inmanuel Kant definió el genio como aquel que <strong>da la regla del arte que está por venir</strong>. Picasso lo hizo no una, sino varias veces a lo largo de su carrera extraordinariamente larga y prolífica.</p>
+                <p>Con <em>Las señoritas de Avignon</em> (1907), creó el <strong>cubismo</strong>, destruyendo la perspectiva renacentista que había dominado el arte occidental durante quinientos años. Con el <em>Guernica</em> (1937), demostró que el arte podía ser un arma política devastadora. A lo largo de toda su carrera, cambió constantemente de estilo —del azul al rosa, del clasicismo al cubismo, del surrealismo a la abstracción— y en cada período no fue simplemente "diferente": fue <strong>inaugurador</strong>, estableció nuevas reglas que otros artistas siguieron.</p>
+                <p style="margin-top: 1.5rem;">Como decía el propio Picasso: <em>"Yo no busco, encuentro"</em>. Esa frase resume perfectamente la noción kantiana de genio: el genio no sabe exactamente lo que busca, pero cuando lo encuentra, sabe que es nuevo, que no existía antes, que abre un camino.</p>
+            </div>
+        </section>
+
+        <!-- ===== AI ANALYZER ===== -->
+        <section class="section" id="inteligencia">
+            <div class="section-header reveal">
+                <span class="section-tag">05 — Inteligencia Artificial</span>
+                <h2 class="section-title">Analizador de Obras de Arte</h2>
+                <p class="section-desc">
+                    Utiliza nuestro analizador para obtener un análisis filosófico de cualquier obra de arte. Selecciona la obra o descríbela, y el sistema identificará las funciones del arte que cumple.
+                </p>
+            </div>
+
+            <div class="analyzer-section reveal">
+                <div class="analyzer-inner">
+                    <h3 class="analyzer-title">🔮 Analizador Filosófico de Arte</h3>
+                    <p class="analyzer-subtitle">Selecciona o describe una obra de arte para analizar sus funciones</p>
+
+                    <div class="analyzer-form">
+                        <div class="input-group">
+                            <label for="artworkSelect">Selecciona una obra conocida</label>
+                            <select id="artworkSelect">
+                                <option value="">— O escribe tu propia obra abajo —</option>
+                                <option value="guernica">Guernica — Picasso (1937)</option>
+                                <option value="quijote">El Quijote — Cervantes (1605/1615)</option>
+                                <option value="piedad">La Piedad — Miguel Ángel (1499)</option>
+                                <option value="elgrito">El Grito — Munch (1893)</option>
+                                <option value="meninas">Las Meninas — Velázquez (1656)</option>
+                                <option value="girasoles">Los Girasoles — Van Gogh (1888)</option>
+                                <option value="nacimiento">El Nacimiento de Venus — Botticelli (1485)</option>
+                                <option value="nochestrellada">La noche estrellada — Van Gogh (1889)</option>
+                                <option value="1984book">1984 — George Orwell (1949)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="artworkName">O escribe el nombre/tema de la obra</label>
+                            <input type="text" id="artworkName" placeholder="Ej: Una pintura que representa la guerra...">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="artworkDescription">Describe brevemente la obra (tema, técnica, contexto...)</label>
+                            <textarea id="artworkDescription" placeholder="Describe la obra que quieres analizar: de qué trata, cómo es, cuándo se creó, qué sensación produce..."></textarea>
+                        </div>
+
+                        <button class="analyze-btn" id="analyzeBtn">
+                            <span class="spinner" id="analyzeSpinner"></span>
+                            <span id="analyzeBtnText">✦ Analizar obra</span>
+                        </button>
+                    </div>
+
+                    <div class="analyzer-result" id="analyzerResult">
+                        <div class="result-section">
+                            <h4>📋 Obra analizada</h4>
+                            <p id="resultArtwork"></p>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>📊 Funciones del arte detectadas</h4>
+                            <div id="resultBars"></div>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>📝 Análisis detallado</h4>
+                            <p id="resultAnalysis"></p>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>💡 Reflexión filosófica</h4>
+                            <p id="resultReflection"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONCLUSION ===== -->
+        <section class="section" id="conclusion">
+            <div class="section-header reveal">
+                <span class="section-tag">06 — Conclusión</span>
+                <h2 class="section-title">Reflexión Final</h2>
+            </div>
+
+            <div class="concept-block conclusion reveal">
+                <p>A lo largo de este trabajo hemos visto que el arte es mucho más que un pasatiempo o un adorno. Es una de las herramientas más poderosas que el ser humano ha creado para comprenderse a sí mismo y transformar el mundo que le rodea.</p>
+
+                <p>Las funciones del arte —cognitiva, educativa, terapéutica, política, crítica, ideológica— no son compartimentos estancos, sino dimensiones que se entrelazan y se complementan. Una misma obra puede enseñarnos, curarnos, denunciar una injusticia y hacernos reflexionar sobre la condición humana, todo al mismo tiempo.</p>
+
+                <p>Las obras que hemos analizado —desde el Quijote hasta el Guernica, desde la Piedad hasta la Noche estrellada— nos demuestran que el arte es una forma de conocimiento tan valiosa y tan legítima como la ciencia o la filosofía, aunque su método sea diferente: nos enseña a través de la emoción, de la intuición, de la experiencia vivida.</p>
+
+                <p>Y conceptos como el genio (Kant), la belleza (como armonía y como expresión), la estética y la experiencia estética nos proporcionan las herramientas teóricas necesarias para comprender por qué el arte nos afecta tanto y por qué es tan importante.</p>
+
+                <p>En definitiva, el arte es un reflejo de lo mejor y lo peor de la humanidad: de su creatividad, su sensibilidad, su capacidad de sufrir y de soñar. Y mientras el ser humano siga siendo humano, el arte seguirá siendo una necesidad vital.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p><span class="footer-gold">Φ</span> Trabajo de Filosofía — Las Funciones del Arte</p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem;">Elaborado con dedicación para comprender el arte desde la filosofía</p>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" title="Volver arriba">↑</button>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        // ===== REGISTER SCROLLTRIGGER =====
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== STAR CANVAS =====
+        (function() {
+            const canvas = document.getElementById('star-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height, stars = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight * 3;
+            }
+
+            function initStars() {
+                stars = [];
+                const count = Math.floor((width * height) / 4000);
+                for (let i = 0; i < count; i++) {
+                    stars.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        r: Math.random() * 1.5 + 0.3,
+                        a: Math.random() * 0.8 + 0.2,
+                        twinkle: Math.random() * Math.PI * 2,
+                        speed: Math.random() * 0.02 + 0.005
+                    });
+                }
+            }
+
+            function drawStars() {
+                ctx.clearRect(0, 0, width, height);
+                const time = Date.now() * 0.001;
+                for (const star of stars) {
+                    const alpha = star.a * (0.5 + 0.5 * Math.sin(time * star.speed * 10 + star.twinkle));
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                    ctx.fill();
+                }
+                requestAnimationFrame(drawStars);
+            }
+
+            resize();
+            initStars();
+            drawStars();
+            window.addEventListener('resize', () => { resize(); initStars(); });
+        })();
+
+        // ===== NEBULA CANVAS (Hero) =====
+        (function() {
+            const canvas = document.getElementById('nebula-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height, particles = [];
+
+            function resize() {
+                const parent = canvas.parentElement;
+                width = canvas.width = parent.offsetWidth;
+                height = canvas.height = parent.offsetHeight;
+            }
+
+            function initParticles() {
+                particles = [];
+                const count = 60;
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        r: Math.random() * 80 + 40,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        color: ['rgba(201,168,76,', 'rgba(123,94,167,', 'rgba(74,127,181,'][Math.floor(Math.random() * 3)],
+                        alpha: Math.random() * 0.08 + 0.02
+                    });
+                }
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, width, height);
+                for (const p of particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < -p.r) p.x = width + p.r;
+                    if (p.x > width + p.r) p.x = -p.r;
+                    if (p.y < -p.r) p.y = height + p.r;
+                    if (p.y > height + p.r) p.y = -p.r;
+
+                    const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+                    grad.addColorStop(0, p.color + p.alpha + ')');
+                    grad.addColorStop(1, p.color + '0)');
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+                }
+                requestAnimationFrame(drawParticles);
+            }
+
+            resize();
+            initParticles();
+            drawParticles();
+            window.addEventListener('resize', () => { resize(); initParticles(); });
+        })();
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ===== MOBILE MENU =====
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+
+        // ===== HERO ANIMATIONS =====
+        const heroTl = gsap.timeline({ delay: 0.3 });
+        heroTl
+            .to('#heroBadge', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+            .to('#heroTitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+            .to('#heroSubtitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+            .to('#heroCta', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+            .to('#scrollIndicator', { opacity: 1, duration: 0.8 }, '-=0.4');
+
+        // ===== SCROLL REVEAL =====
+        gsap.utils.toArray('.reveal').forEach((el, i) => {
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                onEnter: () => {
+                    gsap.to(el, {
+                        opacity: 1,
+                        y: 0,
+                        x: 0,
+                        duration: 0.9,
+                        ease: 'power3.out',
+                        delay: i % 3 === 0 ? 0 : 0.1
+                    });
+                },
+                once: true
+            });
+        });
+
+        // ===== BACK TO TOP =====
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 600);
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== AI ANALYZER =====
+        const artworkData = {
+            guernica: {
+                name: "Guernica — Picasso",
+                context: "Óleo de 1937, respuesta al bombardeo de la ciudad vasca de guernica durante la Guerra Civil Española.",
+                funcCognitiva: 70, funcEducativa: 60, funcTerapeutica: 40,
+                funcPolitica: 98, funcCritica: 95, funcIdeologica: 75,
+                functions: [
+                    { name: "Cognitiva", value: 70, color: "gold" },
+                    { name: "Educativa/Ética", value: 60, color: "green" },
+                    { name: "Terapéutica", value: 40, color: "purple" },
+                    { name: "Política", value: 98, color: "red" },
+                    { name: "Crítica", value: 95, color: "blue" },
+                    { name: "Ideológica", value: 75, color: "gold" }
+                ],
+                analysis: "El Guernica es un grito de horror contra la guerra y la violencia. Su composición caótica en blanco, negro y grises evoca las fotografías de guerra. Las figuras retorcidas y fragmentadas transmiten el sufrimiento de las civiles. Es el anti-monumento perfecto: no celebra ninguna victoria, solo muestra el horror.",
+                reflection: "El Guernica demuestra que el arte puede ser el testigo más poderoso de la Historia. Como dijo Picasso, 'el arte no es para decorar habitaciones, es un arma ofensiva y defensiva contra el enemigo.' Esta obra nos enseña que la belleza del arte no está reñida con la denuncia: a veces, una imagen perturbadora es más eficaz que cualquier discurso político."
+            },
+            quijote: {
+                name: "El Quijote — Cervantes",
+                context: "Novela publicada en 1605/1615, considerada la novela moderna y una de las obras más importantes de la literatura universal.",
+                functions: [
+                    { name: "Cognitiva", value: 95, color: "gold" },
+                    { name: "Educativa/Ética", value: 95, color: "green" },
+                    { name: "Terapéutica", value: 85, color: "purple" },
+                    { name: "Política", value: 50, color: "red" },
+                    { name: "Crítica", value: 90, color: "blue" },
+                    { name: "Ideológica", value: 70, color: "gold" }
+                ],
+                analysis: "El Quijote cumple casi todas las funciones del arte simultáneamente. Es cognitiva porque nos enseña sobre la condición humana; educativa porque nos forma en valores éticos; terapéutica porque nos consuela y nos hace sentir bien por ser diferentes; crítica porque denuncia la sociedad de su época; e ideológica porque transmite valores de su tiempo.",
+                reflection: "Don Quijote nos enseña que a veces la locura es más lúcida que la supuesta cordura. Kant distinguía entre el entendimiento y la razón; podríamos decir que Don Quijote ve con la razón aquello que el entendimiento cotidiano no puede ver. ¿No es acaso el filósofo también un 'loco' que ve más lejos que los demás?"
+            },
+            piedad: {
+                name: "La Piedad del Vaticano — Miguel Ángel",
+                context: "Escultura en mármol de 1499, una de las obras maestras del Renacimiento. Representa a la Virgen sosteniendo el cuerpo muerto de Cristo.",
+                functions: [
+                    { name: "Cognitiva", value: 60, color: "gold" },
+                    { name: "Educativa/Ética", value: 95, color: "green" },
+                    { name: "Terapéutica", value: 70, color: "purple" },
+                    { name: "Política", value: 60, color: "red" },
+                    { name: "Crítica", value: 10, color: "blue" },
+                    { name: "Ideológica", value: 90, color: "gold" }
+                ],
+                analysis: "La Piedad es un ejemplo sublime de belleza clásica basada en la armonía, la proporción y el equilibrio. Cumple una clara función educativa (enseña la doctrina cristiana), ideológica (manifiesta el poder de la Iglesia Católica) y terapéutica (su belleza serena produce admiración y paz). La contención emocional de María es más profunda que cualquier llanto.",
+                reflection: "Miguel Ángel esculpió la belleza neoplatónica: la belleza terrenal como reflejo de lo divino. Contemplar la Piedad eleva el alma. Como dijo Plotino, 'la belleza es el esplendor de la verdad.' Esta escultura es la prueba de que el arte puede ser un camino hacia lo trascendente."
+            },
+            elgrito: {
+                name: "El Grito — Munch",
+                context: "Pintura de 1893, obra emblemática del expresionismo. Representa una figura andrógica en un estado de angustia existencial absoluta ante un cielo de un rojo incandescente.",
+                functions: [
+                    { name: "Cognitiva", value: 80, color: "gold" },
+                    { name: "Educativa/Ética", value: 50, color: "green" },
+                    { name: "Terapéutica", value: 98, color: "purple" },
+                    { name: "Política", value: 20, color: "red" },
+                    { name: "Crítica", value: 75, color: "blue" },
+                    { name: "Ideológica", value: 40, color: "gold" }
+                ],
+                analysis: "El Grito es la máxima expresión de la función terapéutica del arte: Munch canalizó su angustia existencial a través de la pintura. La figura retorcida, el cielo de rojos incandescentes, las dos figuras indiferentes del fondo... todo crea una imagen de angustia universal. Millones de personas se han sentido identificados con esa obra.",
+                reflection: "Como dijo Kierkegaard, 'la angustia es el vértigo de la libertad.' El Grito de Munch captura esa experiencia universal del ser humano confrontado con la existencia. El arte expresionista nos enseña que la belleza clásica no es la única vía estética: hay una belleza profunda en la expresión sincera del sufrimiento."
+            },
+            meninas: {
+                name: "Las Meninas — Velázquez",
+                context: "Cuadro de 1656, una de las obras más comentadas de la historia del arte. Representa un momento cotidiano en la corte de Felipe IV con un juego fascinante de miradas y niveles de realidad.",
+                functions: [
+                    { name: "Cognitiva", value: 98, color: "gold" },
+                    { name: "Educativa/Ética", value: 50, color: "green" },
+                    { name: "Terapéutica", value: 30, color: "purple" },
+                    { name: "Política", value: 85, color: "red" },
+                    { name: "Crítica", value: 80, color: "blue" },
+                    { name: "Ideológica", value: 75, color: "gold" }
+                ],
+                analysis: "Las Meninas es una reflexión filosófica en forma de pintura. El juego de miradas (los reyes reflejados en el espejo, Velázquez pintando, nosotros ocupando el lugar del poder), la ruptura de la realidad y la ficción, y la reivindicación del estatus del artista la convierten en una obra de una complejidad conceptual asombrosa.",
+                reflection: "Foucault dedicó un capítulo entero de 'Las palabras y las cosas' a analizar esta obra. Las Meninas nos enseña que la representación no es inocente: toda imagen construye una determinada visión del mundo. Es una obra que anticipa la filosofía moderna sobre la percepción, la representación y el poder."
+            },
+            girasoles: {
+                name: "Los Girasoles — Van Gogh",
+                context: "Serie de pinturas al óleo realizadas en 1888 durante la estancia de Van Gogh en Arlés. Decoran jarrones con girasoles en diferentes estados de floración.",
+                functions: [
+                    { name: "Cognitiva", value: 75, color: "gold" },
+                    { name: "Educativa/Ética", value: 55, color: "green" },
+                    { name: "Terapéutica", value: 95, color: "purple" },
+                    { name: "Política", value: 5, color: "red" },
+                    { name: "Crítica", value: 20, color: "blue" },
+                    { name: "Ideológica", value: 15, color: "gold" }
+                ],
+                analysis: "Los Girasoles son profundamente terapéuticos: Van Gogh pintó estos cuadros desde la desesperación, para decorar la habitación de su amigo Gauguin. La técnica es extraordinaria: pinceladas gruesas y empastadas, una gama monocroma de amarillos que evocan la luz y la alegría. La serie puede leerse como una meditación sobre el ciclo de la vida.",
+                reflection: "Van Gogh encontró belleza en lo más cotidiano: un simple jarrón con flores. Como dijo Nietzsche, 'tenemos el arte para no morir de la verdad.' Los Girasoles son la prueba de que, incluso en la oscuridad más profunda, el ser humano es capaz de crear luz."
+            },
+            nacimiento: {
+                name: "El Nacimiento de Venus — Botticelli",
+                context: "Pintura de 1484-1486, una de las obras emblemáticas del Renacimiento florentino. Representa la diosa Venus naciendo del mar, en el contexto del Neoplatonismo.",
+                functions: [
+                    { name: "Cognitiva", value: 65, color: "gold" },
+                    { name: "Educativa/Ética", value: 80, color: "green" },
+                    { name: "Terapéutica", value: 65, color: "purple" },
+                    { name: "Política", value: 55, color: "red" },
+                    { name: "Crítica", value: 5, color: "blue" },
+                    { name: "Ideológica", value: 85, color: "gold" }
+                ],
+                analysis: "Venus emerge desnuda sobre una concha, con una pose grácil y etérea. La composición es clara y equilibrada, con una belleza que busca la gracia más que el realismo. Encargada por los Médici, es una obra neoplatónica: la belleza terrenal como camino hacia lo divino. Su atmósfera de ensueño ha fascinado a los espectadores durante cinco siglos.",
+                reflection: "Botticelli encarna el ideal renacentista donde la belleza clásica pagana y la espiritualidad cristiana se funden. Como escribió Marsilio Ficino, 'la belleza es el esplendor de la verdad divina.' El Nacimiento de Venus nos invita a contemplar la belleza como un camino de elevación espiritual."
+            },
+            nochestrellada: {
+                name: "La noche estrellada — Van Gogh",
+                context: "Pintura de 1889, realizada durante la estancia de Van Gogh en el hospital psiquiátrico de Saint-Rémy-de-Provence. Uno de los cuadros más reconocibles y reproducidos de la historia del arte.",
+                functions: [
+                    { name: "Cognitiva", value: 80, color: "gold" },
+                    { name: "Educativa/Ética", value: 45, color: "green" },
+                    { name: "Terapéutica", value: 97, color: "purple" },
+                    { name: "Política", value: 5, color: "red" },
+                    { name: "Crítica", value: 15, color: "blue" },
+                    { name: "Ideológica", value: 20, color: "gold" }
+                ],
+                analysis: "Pintada desde la ventana de un hospital psiquiátrico, La noche estrellada muestra un cielo nocturno extraordinariamente vibrante: remolinos de estrellas y lunas en constante movimiento. El ciprés flameante conecta tierra y cielo. El pueblo dormido contrasta con el universo convulso. Las pinceladas curvas y gruesas hacen que el cuadro parezca moverse.",
+                reflection: "Van Gogh transformó su sufrimiento en la imagen más luminosa de la historia del arte. Como dijo Heidegger, 'el arte es el ponerse a trabajar de la verdad.' La noche estrellada nos revela que la verdad no siempre es serena: a veces es un torbellino de luz y angustia que nos sobrepasa y nos llena de asombro. Es lo sublime en estado puro."
+            },
+            "1984book": {
+                name: "1984 — George Orwell",
+                context: "Novela distópica de 1949, una de las obras políticas más influyentes de la historia de la literatura. Retrata un mundo totalitario gobernado por el Partido y el Gran Hermano.",
+                functions: [
+                    { name: "Cognitiva", value: 95, color: "gold" },
+                    { name: "Educativa/Ética", value: 90, color: "green" },
+                    { name: "Terapéutica", value: 30, color: "purple" },
+                    { name: "Política", value: 99, color: "red" },
+                    { name: "Crítica", value: 98, color: "blue" },
+                    { name: "Ideológica", value: 85, color: "gold" }
+                ],
+                analysis: "1984 es una advertencia literaria contra el totalitarismo. Conceptos como 'Gran Hermano', 'neolengua', 'doble pensamiento' y 'crimen de pensamiento' se han incorporado al lenguaje cotidiano porque describen fenómenos reales. Winston Smith se rebela contra el Partido, pero es capturado, torturado y 'reeducado' hasta amar al Gran Hermano. Es un desenlace devastador.",
+                reflection: "Orwell nos enseñó que controlar el lenguaje es controlar el pensamiento. Como dijo, 'si el lenguaje se corrompe, el pensamiento se corrompe.' En la era de las fake news y la vigilancia digital, 1984 es más relevante que nunca. Es una obra que nos advierte: la libertad de pensamiento y expresión es frágil y hay que defenderla en cada generación."
+            }
+        };
+
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const spinner = document.getElementById('analyzeSpinner');
+        const btnText = document.getElementById('analyzeBtnText');
+        const result = document.getElementById('analyzerResult');
+        const artworkSelect = document.getElementById('artworkSelect');
+        const artworkName = document.getElementById('artworkName');
+        const artworkDesc = document.getElementById('artworkDescription');
+
+        artworkSelect.addEventListener('change', () => {
+            if (artworkSelect.value) {
+                artworkName.value = '';
+                artworkDesc.value = '';
+            }
+        });
+
+        analyzeBtn.addEventListener('click', () => {
+            const selected = artworkSelect.value;
+            const name = artworkName.value.trim();
+            const desc = artworkDesc.value.trim();
+
+            if (!selected && !name && !desc) {
+                alert('Selecciona una obra o escribe una descripción para analizar.');
+                return;
+            }
+
+            // Show loading
+            analyzeBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Analizando...';
+            result.classList.remove('visible');
+
+            setTimeout(() => {
+                let data;
+
+                if (selected && artworkData[selected]) {
+                    data = artworkData[selected];
+                } else {
+                    // Generate based on description keywords
+                    const text = (name + ' ' + desc).toLowerCase();
+                    data = generateDynamicAnalysis(text, name || desc);
+                }
+
+                // Display results
+                document.getElementById('resultArtwork').innerHTML = `<strong>${data.name}</strong><br><em>${data.context || ''}</em>`;
+
+                const barsHtml = data.functions.map(f => `
+                    <div class="result-bar">
+                        <div class="result-bar-label">
+                            <span>${f.name}</span>
+                            <span>${f.value}%</span>
+                        </div>
+                        <div class="result-bar-track">
+                            <div class="result-bar-fill" data-width="${f.value}" style="background: var(--${f.color}); width: 0%"></div>
+                        </div>
+                    </div>
+                `).join('');
+                document.getElementById('resultBars').innerHTML = barsHtml;
+
+                document.getElementById('resultAnalysis').textContent = data.analysis;
+                document.getElementById('resultReflection').textContent = data.reflection;
+
+                result.classList.add('visible');
+
+                // Animate bars
+                setTimeout(() => {
+                    document.querySelectorAll('.result-bar-fill').forEach(bar => {
+                        bar.style.width = bar.dataset.width + '%';
+                    });
+                }, 200);
+
+                // Reset button
+                analyzeBtn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.textContent = '✦ Analizar obra';
+
+                // Scroll to result
+                setTimeout(() => {
+                    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 300);
+
+            }, 1500);
+        });
+
+        function generateDynamicAnalysis(text, inputName) {
+            let funcValues = { cognitiva: 50, educativa: 50, terapeutica: 50, politica: 50, critica: 50, ideologica: 50 };
+            let analysis = '';
+
+            // Keywords detection
+            const keywords = {
+                politica: ['guerra', 'poder', 'gobierno', 'política', 'revolución', 'fascismo', 'democracia', 'libertad', 'opresión', 'dictadura', 'imperio', 'nación', 'rey', 'estado', 'pueblo', 'derechos', 'justicia'],
+                critica: ['crítica', 'denuncia', 'abuso', 'injusticia', 'exceso', 'violencia', 'barbarie', 'horror', 'sufrimiento', 'muerte', 'dolor', 'tristeza'],
+                cognitiva: ['aprender', 'conocimiento', 'enseñar', 'verdad', 'realidad', 'mundo', 'naturaleza', 'universo', 'existencia', 'vida', 'sociedad', 'historia'],
+                educativa: ['educar', 'valor', 'moral', 'ético', 'formar', 'crecer', 'fe', 'creencia', 'espiritual', 'virtud', 'dios', 'cristiano', 'religios'],
+                terapeutica: ['curar', 'sanar', 'consuelo', 'angustia', 'ansiedad', 'depresión', 'trauma', 'enfermedad', 'malamor', 'paz', 'emoción', 'sentimiento', 'sentir', 'amor'],
+                ideologica: ['ideología', 'doctrina', 'propaganda', 'pensamiento', 'creencia', 'tradición', 'cultura', 'identidad', 'nación', 'clase']
+            };
+
+            for (const [func, words] of Object.entries(keywords)) {
+                for (const word of words) {
+                    if (text.includes(word)) {
+                        funcValues[func] = Math.min(95, funcValues[func] + 25);
+                    }
+                }
+            }
+
+            // Build contextual analysis
+            if (funcValues.politica >= 70) {
+                analysis += "Esta obra tiene una fuerte dimensión política. El arte como instrumento de transformación social ha sido una constante a lo largo de la historia, desde la propaganda de los poderosos hasta la resistencia de los oprimidos. ";
+            }
+            if (funcValues.critica >= 70) {
+                analysis += "Cumple una función crítica significativa, cuestionando las estructuras de poder y las injusticias sociales. El arte crítico nos obliga a mirar de frente aquello que preferimos ignorar. ";
+            }
+            if (funcValues.terapeutica >= 70) {
+                analysis += "Posee un componente terapéutico notable: el arte como vía de expresión emocional y de curación del sufrimiento. ";
+            }
+            if (funcValues.cognitiva >= 70) {
+                analysis += "Es una obra cognitivamente rica, que nos proporciona conocimiento sobre la realidad y la condición humana a través de la experiencia estética. ";
+            }
+            if (funcValues.educativa >= 70) {
+                analysis += "Cumple una función educativa, transmitiendo valores morales y formando la conciencia del espectador. ";
+            }
+            if (funcValues.ideologica >= 70) {
+                analysis += "También cumple una función ideológica, difundiendo determinadas corrientes de pensamiento y visiones del mundo. ";
+            }
+
+            if (!analysis) {
+                analysis = "Esta obra analizada muestra un equilibrio entre las diferentes funciones del arte. Toda manifestación artística cumple múltiples funciones simultáneamente, aunque alguna de ellas suele predominar según el contexto histórico y la intención del artista.";
+            }
+
+            const functions = [
+                { name: "Cognitiva", value: funcValues.cognitiva, color: "gold" },
+                { name: "Educativa/Ética", value: funcValues.educativa, color: "green" },
+                { name: "Terapéutica", value: funcValues.terapeutica, color: "purple" },
+                { name: "Política", value: funcValues.politica, color: "red" },
+                { name: "Crítica", value: funcValues.critica, color: "blue" },
+                { name: "Ideológica", value: funcValues.ideologica, color: "gold" }
+            ];
+
+            return {
+                name: inputName,
+                context: "Análisis generado a partir de la descripción proporcionada.",
+                functions: functions,
+                analysis: analysis,
+                reflection: "Como hemos visto a lo largo de este trabajo, las funciones del arte no son excluyentes: una misma obra puede cumplir varias simultáneamente. Lo importante es comprender que el arte no es nunca inocente — siempre enseña, siempre comunica, siempre transforma. Como dijo Aristóteles, la finalidad del arte no es representar la apariencia exterior de las cosas, sino su significado interior."
+            };
+        }
+
+        // ===== PARALLAX EFFECT ON CANVAS =====
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const nebula = document.getElementById('nebula-canvas');
+            if (nebula) {
+                nebula.style.transform = `translateY(${scrollY * 0.15}px)`;
+            }
+        });
+
+        // ===== SMOOTH SCROLL FOR ALL ANCHOR LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
