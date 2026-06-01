@@ -8,11 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--wall:#0c0b0a;--wl:#161412;--wd:#070605;--ac:#b8952e;--acl:#d4bc6a;--tx:#d5d0c8;--td:#9a9389;--tm:#6b6358;--fd:'EB Garamond',Georgia,serif;--ft:'Cinzel',serif;--fb:'Cormorant Garamond',Georgia,serif;--fa:'Cormorant Infant',Georgia,serif}
+:root{
+  --wall:#0c0b0a;--wl:#161412;--wd:#070605;
+  --ac:#b8952e;--acl:#d4bc6a;
+  --tx:#d5d0c8;--td:#9a9389;--tm:#6b6358;
+  --fd:'EB Garamond',Georgia,serif;
+  --ft:'Cinzel',serif;
+  --fb:'Cormorant Garamond',Georgia,serif;
+  --fa:'Cormorant Infant',Georgia,serif;
+}
 html{scroll-behavior:smooth;font-size:17px}
 body{font-family:var(--fb);background:var(--wall);color:var(--tx);line-height:1.85;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 800px 500px at 25% 35%,rgba(184,149,46,0.025),transparent),radial-gradient(ellipse 600px 700px at 75% 65%,rgba(101,78,46,0.02),transparent);pointer-events:none;z-index:0}
+
+/* DUST CANVAS */
 #dust{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.12}
+
+/* NAV */
 nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.5s cubic-bezier(0.4,0,0.2,1);border-bottom:1px solid transparent}
 nav.scrolled{background:rgba(12,11,10,0.93);backdrop-filter:blur(30px);border-bottom-color:rgba(184,149,46,0.06);padding:0.8rem 3rem}
 .nl{font-family:var(--ft);font-size:0.85rem;font-weight:600;color:var(--ac);text-decoration:none;letter-spacing:0.2em;text-transform:uppercase}
@@ -21,31 +33,42 @@ nav.scrolled{background:rgba(12,11,10,0.93);backdrop-filter:blur(30px);border-bo
 .na a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--ac);transition:width 0.4s}
 .na a:hover{color:var(--ac)}.na a:hover::after{width:100%}
 .mt{display:none;background:none;border:none;cursor:pointer;padding:0.5rem}
-.mt span{display:block;width:20px;height:1px;background:var(--tx);margin:5px 0}
+.mt span{display:block;width:20px;height:1px;background:var(--tx);margin:5px 0;transition:all 0.3s}
+.mt.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.mt.active span:nth-child(2){opacity:0}
+.mt.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+
+/* MAIN */
 main{position:relative;z-index:2}
+
+/* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;position:relative}
 .hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:100px;background:linear-gradient(to bottom,var(--ac),transparent);opacity:0.2;animation:bp 4s ease-in-out infinite}
 @keyframes bp{0%,100%{opacity:0.1}50%{opacity:0.3}}
 .hc{max-width:800px}
-.he{display:inline-block;padding:0.4rem 1.8rem;border:1px solid rgba(184,149,46,0.15);font-family:var(--ft);font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--ac);margin-bottom:2.5rem}
-.hero h1{font-family:var(--fd);font-size:clamp(2.5rem,7.5vw,5.5rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.01em}
+.he{display:inline-block;padding:0.4rem 1.8rem;border:1px solid rgba(184,149,46,0.15);font-family:var(--ft);font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--ac);margin-bottom:2.5rem;opacity:0;transform:translateY(20px)}
+.hero h1{font-family:var(--fd);font-size:clamp(2.5rem,7.5vw,5.5rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.01em;opacity:0;transform:translateY(20px)}
 .hero h1 em{font-style:italic;font-weight:400;color:var(--acl)}
-.ho{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1.5rem}
+.ho{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1.5rem;opacity:0;transform:scale(0.8)}
 .ho::before,.ho::after{content:'';width:50px;height:1px;background:linear-gradient(to right,transparent,rgba(184,149,46,0.3),transparent)}
 .ho span{color:var(--ac);opacity:0.35}
-.hs{font-family:var(--fa);font-size:1.2rem;font-weight:300;font-style:italic;color:var(--td);max-width:500px;margin:0 auto 3rem;line-height:1.9}
-.ha{display:inline-flex;align-items:center;gap:1rem;padding:1rem 2.5rem;border:1px solid rgba(184,149,46,0.25);color:var(--ac);text-decoration:none;font-family:var(--ft);font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;transition:all 0.4s}
+.hs{font-family:var(--fa);font-size:1.2rem;font-weight:300;font-style:italic;color:var(--td);max-width:500px;margin:0 auto 3rem;line-height:1.9;opacity:0;transform:translateY(20px)}
+.ha{display:inline-flex;align-items:center;gap:1rem;padding:1rem 2.5rem;border:1px solid rgba(184,149,46,0.25);color:var(--ac);text-decoration:none;font-family:var(--ft);font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;transition:all 0.4s;opacity:0;transform:translateY(20px)}
 .ha:hover{background:rgba(184,149,46,0.05);border-color:rgba(184,149,46,0.5)}
-.sh{position:absolute;bottom:2rem;text-align:center}
+.sh{position:absolute;bottom:2rem;text-align:center;opacity:0}
 .shl{width:1px;height:40px;background:linear-gradient(to bottom,var(--tm),transparent);margin:0 auto 0.6rem;animation:sp 3s ease-in-out infinite}
 @keyframes sp{0%,100%{opacity:0.12;transform:scaleY(0.5)}50%{opacity:0.4;transform:scaleY(1)}}
 .sh span{font-family:var(--ft);font-size:0.48rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--tm)}
+
+/* SECTIONS */
 .section{padding:10rem 2rem;max-width:1080px;margin:0 auto}
 .sheader{text-align:center;margin-bottom:6rem}
 .se{font-family:var(--ft);font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--ac);display:block;margin-bottom:1.5rem;opacity:0.7}
 .st{font-family:var(--fd);font-size:clamp(2rem,5vw,3.5rem);font-weight:300;line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.01em}
 .st em{font-style:italic;color:var(--acl)}
 .sd{font-family:var(--fa);font-size:1.1rem;font-style:italic;color:var(--td);max-width:560px;margin:0 auto;line-height:1.9}
+
+/* FUNCTIONS GRID */
 .fng{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.2rem}
 .fn{background:var(--wl);border:1px solid rgba(184,149,46,0.05);border-radius:3px;padding:2.5rem;transition:all 0.5s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
 .fn::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(184,149,46,0.2),transparent)}
@@ -54,15 +77,20 @@ main{position:relative;z-index:2}
 .fn h3{font-family:var(--fd);font-size:1.3rem;font-weight:600;margin-bottom:1rem;letter-spacing:0.01em}
 .fn p{color:var(--td);font-size:1rem;line-height:1.9}
 .fnx{display:block;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(184,149,46,0.05);font-family:var(--fa);font-size:0.9rem;font-style:italic;color:var(--tm)}
+
+/* DIVIDER */
 .ediv{display:flex;align-items:center;justify-content:center;gap:1rem;margin:5rem 0}
 .ediv::before,.ediv::after{content:'';width:60px;height:1px;background:linear-gradient(to right,transparent,rgba(184,149,46,0.15),transparent)}
 .ediv span{color:var(--ac);opacity:0.2}
+
+/* CONCEPTS */
 .con{background:var(--wl);border:1px solid rgba(184,149,46,0.05);border-radius:3px;padding:3rem;margin-bottom:1.5rem;position:relative}
 .con h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;margin-bottom:1.2rem}
 .con p{color:var(--td);font-size:1.05rem;line-height:2}
 .con ul{color:var(--td);padding-left:1.5rem;margin:1rem 0}
 .con li{margin-bottom:0.6rem;font-size:1.05rem;line-height:1.9}
 .con strong{color:var(--tx)}
+
 /* MUSEUM FRAME */
 .mw{margin-bottom:8rem}
 .fo{background:linear-gradient(145deg,#1c1814,#13100d);border-radius:5px;padding:2rem;box-shadow:0 20px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.015);position:relative}
@@ -78,12 +106,16 @@ main{position:relative;z-index:2}
 .finfo .fmeta{font-family:var(--ft);font-size:0.52rem;letter-spacing:0.18em;color:var(--ac);text-transform:uppercase}
 .fp{margin-top:1.5rem;padding:1.2rem 1.8rem;background:rgba(184,149,46,0.025);border-left:1.5px solid rgba(184,149,46,0.15)}
 .fp p{font-family:var(--fa);font-size:0.9rem;font-style:italic;color:var(--td);line-height:1.8}
+
+/* ANALYSIS PANELS */
 .ag{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
 .ap{background:var(--wl);border:1px solid rgba(184,149,46,0.05);border-radius:3px;padding:2.5rem;position:relative}
 .ap::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,rgba(184,149,46,0.12),transparent)}
 .al{font-family:var(--ft);font-size:0.48rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ac);opacity:0.65;margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem}
 .al::after{content:'';flex:1;height:1px;background:rgba(184,149,46,0.06)}
 .ap p{color:var(--td);font-size:1rem;line-height:2.1;text-align:justify}
+
+/* FUNCTION TAGS */
 .fnt{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.2rem}
 .fntg{padding:0.25rem 0.8rem;border-radius:2px;font-family:var(--ft);font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid}
 .fntg[data-m="g"]{color:var(--ac);border-color:rgba(184,149,46,0.15)}
@@ -92,6 +124,9 @@ main{position:relative;z-index:2}
 .fntg[data-m="r"]{color:#b08888;border-color:rgba(176,136,136,0.15)}
 .fntg[data-m="b"]{color:#889eb0;border-color:rgba(136,158,176,0.15)}
 .fnp{background:var(--wl);border:1px solid rgba(184,149,46,0.05);border-radius:3px;padding:2.5rem}
+.fnp p{color:var(--td);font-size:1rem;line-height:2}
+.fnp strong{color:var(--tx)}
+
 /* TIMELINE */
 .tl{position:relative;padding:0 0 0 2.5rem;margin:3rem 0}
 .tl::before{content:'';position:absolute;left:0;top:0;width:1px;height:100%;background:linear-gradient(to bottom,transparent,rgba(184,149,46,0.15) 5%,rgba(184,149,46,0.15) 95%,transparent)}
@@ -100,6 +135,7 @@ main{position:relative;z-index:2}
 .ty{font-family:var(--ft);font-size:0.6rem;color:var(--ac);opacity:0.7;margin-bottom:0.3rem;letter-spacing:0.12em}
 .ti h4{font-family:var(--fd);font-size:1.1rem;font-weight:600;margin-bottom:0.3rem}
 .ti p{color:var(--td);font-size:0.95rem}
+
 /* ANALYZER */
 .ar{background:linear-gradient(170deg,var(--wl),var(--wd));border:1px solid rgba(184,149,46,0.05);border-radius:5px;padding:5rem 3rem;position:relative;margin:4rem 0;overflow:hidden}
 .ar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -5%,rgba(184,149,46,0.04) 0%,transparent 55%);pointer-events:none}
@@ -110,8 +146,9 @@ main{position:relative;z-index:2}
 .ig{margin-bottom:1.2rem}
 .ig label{display:block;font-family:var(--ft);font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ac);opacity:0.6;margin-bottom:0.4rem}
 .ig input,.ig textarea,.ig select{width:100%;padding:0.8rem 1rem;background:rgba(7,6,5,0.5);border:1px solid rgba(184,149,46,0.08);border-radius:2px;color:var(--tx);font-family:var(--fb);font-size:0.95rem;outline:none;transition:all 0.4s}
-.ig input:focus,.ig textarea:focus{border-color:rgba(184,149,46,0.25)}
+.ig input:focus,.ig textarea:focus,.ig select:focus{border-color:rgba(184,149,46,0.25)}
 .ig textarea{min-height:110px;resize:vertical}
+.ig select option{background:#161412;color:#d5d0c8}
 .btn{width:100%;padding:1rem;background:transparent;border:1px solid rgba(184,149,46,0.3);color:var(--ac);font-family:var(--ft);font-size:0.6rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:all 0.4s;border-radius:2px}
 .btn:hover{background:rgba(184,149,46,0.05)}
 .btn:disabled{opacity:0.25;cursor:not-allowed}
@@ -124,465 +161,767 @@ main{position:relative;z-index:2}
 .bb{margin-bottom:0.8rem}.bl{display:flex;justify-content:space-between;margin-bottom:0.3rem;font-size:0.85rem;color:var(--td)}
 .bt{height:3px;background:rgba(255,255,255,0.02);border-radius:2px;overflow:hidden}
 .bf{height:100%;border-radius:2px;width:0;transition:width 2s cubic-bezier(0.4,0,0.2,1);background:var(--ac);opacity:0.6}
+
 /* CONCLUSION */
 .conc{text-align:center;max-width:750px;margin:0 auto}
 .conc p{color:var(--td);font-family:var(--fa);font-size:1.1rem;font-style:italic;line-height:2.1;margin-bottom:2.5rem}
+
+/* FOOTER */
 footer{position:relative;z-index:2;padding:5rem 2rem;text-align:center;border-top:1px solid rgba(184,149,46,0.04)}
 footer p{color:var(--tm);font-family:var(--ft);font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase}
 footer .g{color:var(--ac)}
+
+/* BACK TO TOP */
 .btp{position:fixed;bottom:2rem;right:2rem;width:38px;height:38px;border-radius:50%;background:var(--wl);border:1px solid rgba(184,149,46,0.12);color:var(--ac);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.9rem;opacity:0;transform:translateY(10px);transition:all 0.4s;z-index:100}
-.btp.v{opacity:1;transform:translateY(0)}
-.reveal{opacity:0}
+.btp.vis{opacity:1;transform:translateY(0)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px)}
+
+/* RESPONSIVE */
 @media(max-width:900px){
-.na{display:none;position:absolute;top:100%;left:0;width:100%;background:rgba(12,11,10,0.94);backdrop-filter:blur(20px);flex-direction:column;padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(184,149,46,0.05)}
-.na.active{display:flex}
-.mt{display:block}
-.ag{grid-template-columns:1fr}
-.fo{padding:1.2rem}.fiw{height:250px}
-.ar{padding:3rem 1.5rem}
+  .na{display:none;position:absolute;top:100%;left:0;width:100%;background:rgba(12,11,10,0.96);backdrop-filter:blur(20px);flex-direction:column;padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(184,149,46,0.05)}
+  .na.active{display:flex}
+  .mt{display:block}
+  .ag{grid-template-columns:1fr}
+  .fo{padding:1.2rem}.fiw{height:250px}
+  .ar{padding:3rem 1.5rem}
+  nav{padding:1rem 1.5rem}
 }
 @media(max-width:600px){
-.fng{grid-template-columns:1fr}.section{padding:6rem 1.5rem}html{font-size:16px}
+  .fng{grid-template-columns:1fr}.section{padding:6rem 1.5rem}html{font-size:16px}
 }
 </style>
 </head>
 <body>
 <canvas id="dust"></canvas>
-<nav id="navbar"><a href="#inicio" class="nl">Φ Filosofía</a>
-<ul class="na" id="navLinks"><li><a href="#funciones">Funciones</a></li><li><a href="#conceptos">Conceptos</a></li><li><a href="#obras">Obras</a></li><li><a href="#inteligencia">Análisis</a></li><li><a href="#conclusion">Conclusión</a></li></ul>
-<button class="mt" id="menuToggle"><span></span><span></span><span></span></button></nav>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#inicio" class="nl">Φ Filosofía</a>
+  <ul class="na" id="navLinks">
+    <li><a href="#funciones">Funciones</a></li>
+    <li><a href="#conceptos">Conceptos</a></li>
+    <li><a href="#obras">Obras</a></li>
+    <li><a href="#analisis">Análisis</a></li>
+    <li><a href="#conclusion">Conclusión</a></li>
+  </ul>
+  <button class="mt" id="menuToggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
 <main>
+
+<!-- ===== HERO ===== -->
 <section class="hero" id="inicio">
-<div class="hc">
-<div class="he" id="hb">Trabajo de Filosofía</div>
-<h1 id="ht">Las Funciones<br><em>del Arte</em></h1>
-<div class="ho" id="ho"><span>✦</span></div>
-<p class="hs" id="hs">Un recorrido por la historia del arte y el pensamiento estético, desde la caverna de Platón hasta las vanguardias del siglo veinte.</p>
-<a href="#funciones" class="ha" id="hc">Explorar la galería →</a>
-</div>
-<div class="sh" id="hh"><div class="shl"></div><span>Descender</span></div>
+  <div class="hc">
+    <div class="he" id="hb">Trabajo de Filosofía</div>
+    <h1 id="ht">Las Funciones<br><em>del Arte</em></h1>
+    <div class="ho" id="ho"><span>✦</span></div>
+    <p class="hs" id="hs">Un recorrido por la historia del arte y el pensamiento estético, desde la caverna de Platón hasta las vanguardias del siglo veinte.</p>
+    <a href="#funciones" class="ha" id="hc">Explorar la galería →</a>
+  </div>
+  <div class="sh" id="hh">
+    <div class="shl"></div>
+    <span>Descender</span>
+  </div>
 </section>
+
+<!-- ===== FUNCIONES ===== -->
 <section class="section" id="funciones">
-<div class="sheader reveal"><span class="se">I — Marco Teórico</span>
-<h2 class="st">Funciones del Arte</h2>
-<p class="sd">Las manifestaciones artísticas han cumplido funciones esenciales en la configuración de las sociedades humanas a lo largo de toda la historia.</p></div>
-<div class="fng">
-<div class="fn reveal"><div class="fnn">I</div><h3>Cognitiva</h3><p>El arte proporciona formas de conocimiento inaccesibles por otros medios. No sustituye a la ciencia ni a la filosofía, sino que ofrece una vía distinta: la del sentimiento, la intuición, la experiencia vivida. Cuando Cervantes escribió el Quijote no redactaba un tratado de antropología sino que revelaba verdades sobre la condición humana que sólo la ficción puede alcanzar. El arte no nos dice qué es el mundo, sino qué se siente al habitarlo.</p><span class="fnx">El Quijote revela aspectos profundos de la realidad que desconocemos</span></div>
-<div class="fn reveal"><div class="fnn">II</div><h3>Educativa · Ética</h3><p>Las artes han sido un instrumento fundamental de formación moral. Antes de que existieran los manuales de ética, los personajes literarios e imágenes artísticas encarnaban valores universales — justicia, libertad, solidaridad, valentía — que moldeaban la conciencia de generaciones enteras. Aprendemos a ser quienes somos, en parte, a través de las historias que nos contamos.</p><span class="fnx">Las vidrieras de las catedrales góticas educaban en la fe</span></div>
-<div class="fn reveal"><div class="fnn">III</div><h3>Terapéutica · Curativa</h3><p>El arte cumple una función curativa profunda: permite expresar traumas y angustias que, si permanecen encerrados, destruyen al individuo desde dentro. Cumple también deseos irrealizables de manera imaginaria, proporciona consuelo, ofrece catarsis tanto al creador como al espectador.</p><span class="fnx">El Grito de Munch canaliza la angustia existencial</span></div>
-<div class="fn reveal"><div class="fnn">IV</div><h3>Política</h3><p>El arte ha dado voz a quienes carecían de ella, ha representado la voluntad general cuando los canales estaban bloqueados, y ha servido tanto para legitimar el poder como para resistirlo. Desde los arcos de triunfo romanos hasta el grafitti contemporáneo, la relación entre arte y política ha sido constante.</p><span class="fnx">El Guernica se convirtió en símbolo universal contra el fascismo</span></div>
-<div class="fn reveal"><div class="fnn">V</div><h3>Crítica</h3><p>A través del arte se cuestionan los abusos del poder. El arte crítico nos incomoda, nos confronta con aquello que preferiríamos ignorar. Goya, Orwell, Chaplin: todos utilizaron el arte como instrumento de denuncia. El arte incómodo es necesario: obliga a la sociedad a mirar de frente sus propias miserias.</p><span class="fnx">Las Pinturas Negras de Goya denuncian la barbarie humana</span></div>
-<div class="fn reveal"><div class="fnn">VI</div><h3>Ideológica</h3><p>Vinculada con las funciones educativa y política, el arte difunde corrientes de pensamiento y creencias. Toda obra transmite, consciente o no, una determinada visión del mundo. Aprender a leer esas capas ideológicas es fundamental para el espíritu crítico.</p><span class="fnx">El arte de los Médici difundía el neoplatonismo como cosmovisión</span></div>
-</div>
+  <div class="sheader reveal">
+    <span class="se">I — Marco Teórico</span>
+    <h2 class="st">Funciones del Arte</h2>
+    <p class="sd">Las manifestaciones artísticas han cumplido funciones esenciales en la configuración de las sociedades humanas a lo largo de toda la historia.</p>
+  </div>
+  <div class="fng">
+    <div class="fn reveal">
+      <div class="fnn">I</div>
+      <h3>Cognitiva</h3>
+      <p>El arte proporciona formas de conocimiento inaccesibles por otros medios. No sustituye a la ciencia ni a la filosofía, sino que ofrece una vía distinta: la del sentimiento, la intuición, la experiencia vivida. Cuando Cervantes escribió el Quijote no redactaba un tratado de antropología sino que revelaba verdades sobre la condición humana que sólo la ficción puede alcanzar. El arte no nos dice qué es el mundo, sino qué se siente al habitarlo.</p>
+      <span class="fnx">El Quijote revela aspectos profundos de la realidad que desconocemos</span>
+    </div>
+    <div class="fn reveal">
+      <div class="fnn">II</div>
+      <h3>Educativa · Ética</h3>
+      <p>Las artes han sido un instrumento fundamental de formación moral. Antes de que existieran los manuales de ética, los personajes literarios e imágenes artísticas encarnaban valores universales — justicia, libertad, solidaridad, valentía — que moldeaban la conciencia de generaciones enteras. Aprendemos a ser quienes somos, en parte, a través de las historias que nos contamos.</p>
+      <span class="fnx">Las vidrieras de las catedrales góticas educaban en la fe</span>
+    </div>
+    <div class="fn reveal">
+      <div class="fnn">III</div>
+      <h3>Terapéutica · Curativa</h3>
+      <p>El arte cumple una función curativa profunda: permite expresar traumas y angustias que, si permanecen encerrados, destruyen al individuo desde dentro. Cumple también deseos irrealizables de manera imaginaria, proporciona consuelo, ofrece catarsis tanto al creador como al espectador.</p>
+      <span class="fnx">El Grito de Munch canaliza la angustia existencial</span>
+    </div>
+    <div class="fn reveal">
+      <div class="fnn">IV</div>
+      <h3>Política</h3>
+      <p>El arte ha dado voz a quienes carecían de ella, ha representado la voluntad general cuando los canales estaban bloqueados, y ha servido tanto para legitimar el poder como para resistirlo. Desde los arcos de triunfo romanos hasta el grafitti contemporáneo, la relación entre arte y política ha sido constante.</p>
+      <span class="fnx">El Guernica se convirtió en símbolo universal contra el fascismo</span>
+    </div>
+    <div class="fn reveal">
+      <div class="fnn">V</div>
+      <h3>Crítica</h3>
+      <p>A través del arte se cuestionan los abusos del poder. El arte crítico nos incomoda, nos confronta con aquello que preferiríamos ignorar. Goya, Orwell, Chaplin: todos utilizaron el arte como instrumento de denuncia. El arte incómodo es necesario: obliga a la sociedad a mirar de frente sus propias miserias.</p>
+      <span class="fnx">Las Pinturas Negras de Goya denuncian la barbarie humana</span>
+    </div>
+    <div class="fn reveal">
+      <div class="fnn">VI</div>
+      <h3>Ideológica</h3>
+      <p>Vinculada con las funciones educativa y política, el arte difunde corrientes de pensamiento y creencias. Toda obra transmite, consciente o no, una determinada visión del mundo. Aprender a leer esas capas ideológicas es fundamental para el espíritu crítico.</p>
+      <span class="fnx">El arte de los Médici difundía el neoplatonismo como cosmovisión</span>
+    </div>
+  </div>
 </section>
+
 <div class="ediv"><span>✦</span></div>
+
+<!-- ===== CONCEPTOS ===== -->
 <section class="section" id="conceptos">
-<div class="sheader reveal"><span class="se">II — Conceptos Fundamentales</span>
-<h2 class="st">Fundamentos <em>Estéticos</em></h2>
-<p class="sd">Para comprender las funciones del arte, es necesario asentar determinados conceptos filosóficos esenciales.</p></div>
-<div class="con reveal">
-<h3>El Genio según Kant</h3>
-<p>Inmanuel Kant, en la <em>Crítica del Juicio</em> de 1790, definió el genio como aquella persona que da la regla del arte que está por venir. No se trata de alguien habilidoso, sino de un creador que establece reglas completamente nuevas donde antes no había ninguna. Kant identificó cuatro rasgos esenciales: la <strong>originalidad absoluta</strong>, la <strong>ejemplaridad</strong> (su obra sirve de modelo), la <strong>naturalidad</strong> (como si la naturaleza hablara a través de él) y la <strong>exclusividad</strong> (solo en las bellas artes cabe hablar de genio).</p>
-<p>El ejemplo más claro es Pablo Picasso. Cuando en 1907 pintó <em>Las señoritas de Avignon</em>, no estaba haciendo un cuadro diferente: estaba destruyendo las reglas de la representación pictórica que habían regido el arte occidental desde el Renacimiento. De esas cenizas nació el cubismo y, con él, todo el arte moderno. <em>"Yo no busco, encuentro."</em> Esa frase encierra la noción kantiana de genio.</p>
-</div>
-<div class="con reveal">
-<h3>La Estética como Disciplina</h3>
-<p>La estética es la rama de la filosofía que reflexiona sobre las sensaciones, emociones y juicios que producen las obras de arte. Aunque Baumgarten acuñó el término en 1750, la reflexión sobre la belleza y el arte es tan antigua como la propia filosofía. Ya Platón, en el <em>Banquete</em>, se preguntaba qué era la belleza y por qué nos conmovía: para él, la belleza terrenal era un reflejo degradado de la Belleza ideal. Aristóteles, en la <em>Poética</em>, propuso la catarsis: la tragedia purifica las pasiones al provocar temor y compasión.</p>
-<p>Las preguntas han persistido durante milenios: ¿es la belleza objetiva o subjetiva? ¿Hay criterios universales? ¿Qué relación existe entre arte y verdad? ¿Puede una obra deliberadamente "fea" ser arte? El arte contemporáneo ha vuelto estas preguntas más urgentes que nunca.</p>
-</div>
-<div class="con reveal">
-<h3>La Belleza y sus Categorías</h3>
-<p>Durante siglos, el arte occidental persiguió la belleza como armonía, proporción y orden. Los griegos asociaban lo bello con la simetría matemática. El Renacimiento buscaba proporciones perfectas: Leonardo dibujó el hombre de Vitruvio.</p>
-<p>Pero desde el Romanticismo y las vanguardias, las categorías se multiplicaron: lo <strong>sublime</strong> (terror y admiración mezclados), lo <strong>grotesco</strong> (la deformación perturbadora de lo bello), lo <strong>pintoresco</strong> (la belleza caprichosa e irregular), lo <strong>feo</strong> como categoría autónoma y lo <strong>kitsch</strong> (una belleza excesiva y artificial desprovista de autenticidad, según Adorno).</p>
-</div>
-<div class="con reveal">
-<h3>La Experiencia Estética</h3>
-<p>No es lo mismo mirar un cuadro que mirar un folleto. La experiencia estética posee características definitorias: el <strong>distanciamiento</strong> (el espectador sabe que es ficción); el <strong>desinterés</strong> (no hay propósito práctico, solo contemplación); la <strong>admiración</strong> (produce asombro, desea seguir mirando); y la <strong>ruptura con la cotidianidad</strong> (saca al espectador del tedio y le permite ver con ojos nuevos).</p>
-<p>Cuando leemos una novela sobre un naufragio, nos angustiamos, pero sabemos que no es real. Ese distanciamiento no destructivo de la irrealidad es fundamental: permite experimentar emociones intensas sin confundirlas con la realidad. Kant fue el primero en analizar esta experiencia con rigor filosófico, y su análisis sigue siendo válido hoy.</p>
-</div>
-<div class="con reveal">
-<div class="tl">
-<div class="ti reveal"><div class="td"></div><div class="ty">Antigüedad Clásica</div><h4>Belleza = Armonía y proporción</h4><p>Platón: reflejo de la Belleza ideal en el mundo de las Ideas. Aristóteles: orden y justa proporción de las partes de un objeto. El número áureo.</p></div>
-<div class="ti reveal"><div class="td"></div><div class="ty">Renacimiento, s. XV-XVI</div><h4>Belleza = Perfección formal</h4><p>Proporciones ideales del cuerpo humano, perspectiva matemática rigurosa, simetría compositiva. El hombre de Vitruvio de Leonardo.</p></div>
-<div class="ti reveal"><div class="td"></div><div class="ty">Romanticismo, s. XVIII-XIX</div><h4>Belleza, expresión y lo sublime</h4><p>No basta la armónica: hacen falta emoción, sentimiento, expresión del genio creador. Edmund Burke y Kant desarrollan la categoría de lo sublime.</p></div>
-<div class="ti reveal"><div class="td"></div><div class="ty">Siglo XX — Vanguardias</div><h4>Multiplicación de categorías estéticas</h4><p>Lo feo, lo grotesco, lo absurdo, lo kitsch. El arte ya no necesita ser objetivamente bello para ser arte.</p></div>
-</div>
-</div>
+  <div class="sheader reveal">
+    <span class="se">II — Conceptos Fundamentales</span>
+    <h2 class="st">Fundamentos <em>Estéticos</em></h2>
+    <p class="sd">Para comprender las funciones del arte, es necesario asentar determinados conceptos filosóficos esenciales.</p>
+  </div>
+
+  <div class="con reveal">
+    <h3>El Genio según Kant</h3>
+    <p>Inmanuel Kant, en la <em>Crítica del Juicio</em> de 1790, definió el genio como aquella persona que da la regla del arte que está por venir. No se trata de alguien habilidoso, sino de un creador que establece reglas completamente nuevas donde antes no había ninguna. Kant identificó cuatro rasgos esenciales: la <strong>originalidad absoluta</strong>, la <strong>ejemplaridad</strong> (su obra sirve de modelo), la <strong>naturalidad</strong> (como si la naturaleza hablara a través de él) y la <strong>exclusividad</strong> (solo en las bellas artes cabe hablar de genio).</p>
+    <p>El ejemplo más claro es Pablo Picasso. Cuando en 1907 pintó <em>Las señoritas de Avignon</em>, no estaba haciendo un cuadro diferente: estaba destruyendo las reglas de la representación pictórica que habían regido el arte occidental desde el Renacimiento. De esas cenizas nació el cubismo y, con él, todo el arte moderno. <em>"Yo no busco, encuentro."</em> Esa frase encierra la noción kantiana de genio.</p>
+  </div>
+
+  <div class="con reveal">
+    <h3>La Estética como Disciplina</h3>
+    <p>La estética es la rama de la filosofía que reflexiona sobre las sensaciones, emociones y juicios que producen las obras de arte. Aunque Baumgarten acuñó el término en 1750, la reflexión sobre la belleza y el arte es tan antigua como la propia filosofía. Ya Platón, en el <em>Banquete</em>, se preguntaba qué era la belleza y por qué nos conmovía: para él, la belleza terrenal era un reflejo degradado de la Belleza ideal. Aristóteles, en la <em>Poética</em>, propuso la catarsis: la tragedia purifica las pasiones al provocar temor y compasión.</p>
+    <p>Las preguntas han persistido durante milenios: ¿es la belleza objetiva o subjetiva? ¿Hay criterios universales? ¿Qué relación existe entre arte y verdad? ¿Puede una obra deliberadamente "fea" ser arte? El arte contemporáneo ha vuelto estas preguntas más urgentes que nunca.</p>
+  </div>
+
+  <div class="con reveal">
+    <h3>La Belleza y sus Categorías</h3>
+    <p>Durante siglos, el arte occidental persiguió la belleza como armonía, proporción y orden. Los griegos asociaban lo bello con la simetría matemática. El Renacimiento buscaba proporciones perfectas: Leonardo dibujó el hombre de Vitruvio.</p>
+    <p>Pero desde el Romanticismo y las vanguardias, las categorías se multiplicaron: lo <strong>sublime</strong> (terror y admiración mezclados), lo <strong>grotesco</strong> (la deformación perturbadora de lo bello), lo <strong>pintoresco</strong> (la belleza caprichosa e irregular), lo <strong>feo</strong> como categoría autónoma y lo <strong>kitsch</strong> (una belleza excesiva y artificial desprovista de autenticidad, según Adorno).</p>
+  </div>
+
+  <div class="con reveal">
+    <h3>La Experiencia Estética</h3>
+    <p>No es lo mismo mirar un cuadro que mirar un folleto. La experiencia estética posee características definitorias: el <strong>distanciamiento</strong> (el espectador sabe que es ficción); el <strong>desinterés</strong> (no hay propósito práctico, solo contemplación); la <strong>admiración</strong> (produce asombro, desea seguir mirando); y la <strong>ruptura con la cotidianidad</strong> (saca al espectador del tedio y le permite ver con ojos nuevos).</p>
+    <p>Cuando leemos una novela sobre un naufragio, nos angustiamos, pero sabemos que no es real. Ese distanciamiento no destructivo de la irrealidad es fundamental: permite experimentar emociones intensas sin confundirlas con la realidad. Kant fue el primero en analizar esta experiencia con rigor filosófico, y su análisis sigue siendo válido hoy.</p>
+  </div>
+
+  <div class="con reveal">
+    <div class="tl">
+      <div class="ti reveal">
+        <div class="td"></div>
+        <div class="ty">Antigüedad Clásica</div>
+        <h4>Belleza = Armonía y proporción</h4>
+        <p>Platón: reflejo de la Belleza ideal en el mundo de las Ideas. Aristóteles: orden y justa proporción de las partes. El número áureo.</p>
+      </div>
+      <div class="ti reveal">
+        <div class="td"></div>
+        <div class="ty">Renacimiento, s. XV-XVI</div>
+        <h4>Belleza = Perfección formal</h4>
+        <p>Proporciones ideales del cuerpo humano, perspectiva matemática rigurosa, simetría compositiva. El hombre de Vitruvio de Leonardo.</p>
+      </div>
+      <div class="ti reveal">
+        <div class="td"></div>
+        <div class="ty">Romanticismo, s. XVIII-XIX</div>
+        <h4>Belleza, expresión y lo sublime</h4>
+        <p>No basta la armonía: hacen falta emoción, sentimiento, expresión del genio creador. Burke y Kant desarrollan la categoría de lo sublime.</p>
+      </div>
+      <div class="ti reveal">
+        <div class="td"></div>
+        <div class="ty">Siglo XX — Vanguardias</div>
+        <h4>Multiplicación de categorías estéticas</h4>
+        <p>Lo feo, lo grotesco, lo absurdo, lo kitsch. El arte ya no necesita ser objetivamente bello para ser arte.</p>
+      </div>
+    </div>
+  </div>
 </section>
+
 <div class="ediv"><span>✦</span></div>
+
+<!-- ===== OBRAS ===== -->
 <section class="section" id="obras">
-<div class="sheader reveal"><span class="se">III — Análisis de Obras</span>
-<h2 class="st">La Galería <em>Filosófica</em></h2>
-<p class="sd">Cada obra de arte es un mundo. Diez obras analizadas en profundidad: su contexto, su significado y las funciones del arte que encarnan.</p></div>
+  <div class="sheader reveal">
+    <span class="se">III — Análisis de Obras</span>
+    <h2 class="st">La Galería <em>Filosófica</em></h2>
+    <p class="sd">Cada obra de arte es un mundo. Diez obras analizadas en profundidad: su contexto, su significado y las funciones del arte que encarnan.</p>
+  </div>
 
-<!-- ===== EL QUIJOTE ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1200&q=80", "Biblioteca antigua - El Quijote")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>El Quijote</h3><span class="fmeta">Miguel de Cervantes · 1605 · 1615 · Novela</span></div>
-</div>
-<div class="fp"><p>"En un lugar de la Mancha, de cuyo nombre no quiero acordarme..." — Así comienza la obra que fundó la novela moderna, escrita por un soldado manco, ex cautivo de Argel, agobiado por las deudas y las ironías del destino.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>El Quijote fue publicado en dos partes — 1605 y 1615 — durante el llamado Siglo de Oro español, un periodo de enorme esplendor literario que coincidió, paradójicamente, con la decadencia política y económica de España tras el desastre de la Armada Invencible en 1588. La sociedad española del XVII estaba profundamente estratificada: una nobleza ociosa que se resistía a cualquier trabajo manual, un clero todopoderoso y una clase popular sumida en la pobreza más desesperante.</p><p>Las novelas de caballerías proliferaban como bestsellers populares: historias fantásticas de caballeros andantes que realizaban hazañas increíbles. Cervantes, un hombre culto de vida azarosa — luchó en Lepanto donde perdió el uso de la mano izquierda, estuvo cautivo cinco años en Argel, pasó por la cárcel varias veces — decidió escribir una parodia de esas novelas. Pero lo que creó fue inconmensurablemente más: la novela moderna, una de las cimas absolutas de toda la literatura universal.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Alonso Quijano, hidalgo pobre de la Mancha, pierde el juicio de tanto leer novelas de caballerías y decide convertirse en caballero andante bajo el nombre de Don Quijote. Le acompaña como escudero Sancho Panza, un campesino analfabeto pero de extraordinario sentido común. Juntos recorren España viviendo aventuras donde Don Quijote confunde la realidad con la fantasía: molinos que son gigantes, rebaños que son ejércitos, ventas que son castillos encantados.</p><p>Pero bajo esta trama cómica se esconde una de las reflexiones más profundas jamás escritas sobre la condición humana. La locura de Don Quijote no es simple demencia: es una forma alternativa de ver el mundo, una lucidez revolucionaria que le permite percibir injusticias que los cuerpos no ven, defender a los débiles que nadie defiende. ¿Quién está más cuerdo, el que lucha contra todo por sus ideales aunque el mundo le considere un loco, o el que acepta pasivamente las injusticias del mundo?</p><p>La técnica narrativa de Cervantes fue revolucionaria: introduce la metaficción — en la segunda parte, Don Quijote y Sancho saben que existe una novela sobre sus aventuras. Incluye un narrador ficticio, Cide Hamete Benengeli, del que dice haber "traducido" el texto del árabe. El resultado es una obra que juega constantemente con los límites entre ficción y realidad, anticipando recursos narrativos que el <em>nouveau roman</em> no desarrollaría hasta el siglo XX.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="g">Cognitiva</span>
-<span class="fntg" data-m="v">Educativa</span>
-<span class="fntg" data-m="p">Terapéutica</span>
-<span class="fntg" data-m="b">Crítica</span>
-<span class="fntg" data-m="g">Ideológica</span>
-</div>
-<p>El Quijote cumple casi todas las funciones del arte simultáneamente. Es <strong>cognitivo</strong> porque nos enseña sobre la naturaleza humana de una manera que ningún tratado filosófico podría igualar. Es <strong>educativo y ético</strong> porque nos forma en valores como la generosidad, la lealtad, la amistad incondicional entre Don Quijote y Sancho. Es <strong>terapéutico</strong> porque millones de lectores han encontrado en él consuelo para sus propias desgracias: si Don Quijote puede mantener la dignidad en medio de las palizas, nosotros podemos resistir nuestras propias derrotas. Es <strong>crítico</strong> porque denuncia la injusticia social, la corrupción, la ociosidad de las clases dirigentes. Y es también <strong>ideológico</strong>, pues transmite los valores del catolicismo de la Contrarreforma, una visión del mundo que refleja la España imperial del siglo XVII.</p></div>
-</div>
-</div>
+  <!-- EL QUIJOTE -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1200&q=80" alt="Biblioteca antigua - El Quijote" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>El Quijote</h3><span class="fmeta">Miguel de Cervantes · 1605 · 1615 · Novela</span></div>
+    </div>
+    <div class="fp"><p>"En un lugar de la Mancha, de cuyo nombre no quiero acordarme..." — Así comienza la obra que fundó la novela moderna, escrita por un soldado manco, ex cautivo de Argel, agobiado por las deudas y las ironías del destino.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>El Quijote fue publicado en dos partes — 1605 y 1615 — durante el llamado Siglo de Oro español, un periodo de enorme esplendor literario que coincidió, paradójicamente, con la decadencia política y económica de España tras el desastre de la Armada Invencible en 1588. La sociedad española del XVII estaba profundamente estratificada: una nobleza ociosa que se resistía a cualquier trabajo manual, un clero todopoderoso y una clase popular sumida en la pobreza más desesperante.</p><p>Las novelas de caballerías proliferaban como bestsellers populares: historias fantásticas de caballeros andantes que realizaban hazañas increíbles. Cervantes, un hombre culto de vida azarosa — luchó en Lepanto donde perdió el uso de la mano izquierda, estuvo cautivo cinco años en Argel, pasó por la cárcel varias veces — decidió escribir una parodia de esas novelas. Pero lo que creó fue inconmensurablemente más: la novela moderna, una de las cimas absolutas de toda la literatura universal.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Alonso Quijano, hidalgo pobre de la Mancha, pierde el juicio de tanto leer novelas de caballerías y decide convertirse en caballero andante bajo el nombre de Don Quijote. Le acompaña como escudero Sancho Panza, un campesino analfabeto pero de extraordinario sentido común. Juntos recorren España viviendo aventuras donde Don Quijote confunde la realidad con la fantasía: molinos que son gigantes, rebaños que son ejércitos, ventas que son castillos encantados.</p><p>Pero bajo esta trama cómica se esconde una de las reflexiones más profundas jamás escritas sobre la condición humana. La locura de Don Quijote no es simple demencia: es una forma alternativa de ver el mundo, una lucidez revolucionaria que le permite percibir injusticias que los cuerpos no ven, defender a los débiles que nadie defiende. ¿Quién está más cuerdo, el que lucha contra todo por sus ideales aunque el mundo le considere un loco, o el que acepta pasivamente las injusticias del mundo?</p><p>La técnica narrativa de Cervantes fue revolucionaria: introduce la metaficción — en la segunda parte, Don Quijote y Sancho saben que existe una novela sobre sus aventuras. Incluye un narrador ficticio, Cide Hamete Benengeli, del que dice haber "traducido" el texto del árabe. El resultado es una obra que juega constantemente con los límites entre ficción y realidad.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="g">Cognitiva</span>
+      <span class="fntg" data-m="v">Educativa</span>
+      <span class="fntg" data-m="p">Terapéutica</span>
+      <span class="fntg" data-m="b">Crítica</span>
+      <span class="fntg" data-m="g">Ideológica</span>
+    </div>
+    <p>El Quijote cumple casi todas las funciones del arte simultáneamente. Es <strong>cognitivo</strong> porque nos enseña sobre la naturaleza humana de una manera que ningún tratado filosófico podría igualar. Es <strong>educativo y ético</strong> porque nos forma en valores como la generosidad, la lealtad, la amistad incondicional entre Don Quijote y Sancho. Es <strong>terapéutico</strong> porque millones de lectores han encontrado en él consuelo para sus propias desgracias. Es <strong>crítico</strong> porque denuncia la injusticia social, la corrupción, la ociosidad de las clases dirigentes. Y es también <strong>ideológico</strong>, pues transmite los valores del catolicismo de la Contrarreforma.</p></div>
+    </div>
+  </div>
 
-<!-- ===== GUERNICA ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1577720643272-265f09367456?w=1200&q=80", "Guernica - Pablo Picasso")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>Guernica</h3><span class="fmeta">Pablo Picasso · 1937 · Óleo sobre lienzo · 349cm × 776cm</span></div>
-</div>
-<div class="fp"><p>"¿Qué es el pintar? ¿Es para decorar habitaciones? Es un instrumento de guerra ofensiva y defensiva contra el enemigo." — Palabras de Picasso cuando el arte se convertía en trinchera.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>El 26 de abril de 1937, un escuadrón de la Legión Cóndor de la Alemania nazi, aliada de las fuerzas franquistas, bombardeó durante más de tres horas la pequeña ciudad vasca de Guernica. El ataque no tenía apenas interés militar: fue, en cierto modo, un ensayo general de lo que se avecinaba sobre Europa — uno de los primeros bombardeos masivos deliberados contra una población civil de la historia.</p><p>Picasso, que vivía en París, se enteró por los periódicos. Testigos que habían logrado llegar a París le relataron el horror. En cuestión de días, Picasso abandonó su proyecto original para el Pabellón de la República Española en la Exposición de París de 1937 y comenzó a dibujar furiosamente. El resultado fue un lienzo de casi ocho metros de largo que condensaba todo el horror de la guerra en una sola imagen.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>El Guernica está pintado en una paleta deliberadamente reducida: blanco, negro y grises. Esta ausencia de color evoca la estética de las fotografías de guerra, de los periódicos. Picasso quería que su cuadro pareciera un documento, un testimonio de la realidad. La composición es caótica y violenta, como la guerra que representa: las figuras se retuercen, se fragmentan, se amontonan en un espacio confuso sin perspectiva clara.</p><p>A la izquierda, un toro — símbolo de España pero también de la brutalidad — observa con una serenidad inquietante. Junto a él, una madre desgarra el aire con su grito mientras sostiene el cuerpo inerte de su hijo muerto en los brazos: una de las imágenes más devastadoras de la pintura universal. En el centro, un caballo agónico se desmorona. Un soldado yace desmembrado, con una flor brotando de su rota: esperanza en medio del horror total. A la derecha, una mujer cae envuelta en llamas; otra, asomada al exterior, alza una lámpara como para iluminar la verdad.</p><p>Picasso nunca quiso explicar el significado de cada elemento, y esa ambigüedad es parte de su fuerza. El Guernica no es propaganda con un mensaje unívoco: es un grito universal contra toda guerra, toda crueldad. Por eso su impacto ha trascendido el contexto concreto de la Guerra Civil Española.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="r">Política</span>
-<span class="fntg" data-m="b">Crítica</span>
-<span class="fntg" data-m="g">Cognitiva</span>
-<span class="fntg" data-m="v">Ética</span>
-</div>
-<p>El Guernica es el ejemplo más emblemático de la <strong>función política</strong> del arte en la historia: obra comprometida con una causa concreta — la lucha antifascista — que logró dar visibilidad internacional a la tragedia. Su <strong>función crítica</strong> es feroz: no hay justificación posible para lo que representa. Es <strong>cognitivo</strong> porque nos enseña sobre el sufrimiento de la guerra algo que ningún libro de historia puede igualar: el dolor visceral de las víctimas. Y cumple una <strong>función ética</strong> universal: al representar el sufrimiento, lo dignifica; al mostrar el horror, nos obliga a preguntarnos si la humanidad ha aprendido algo en absoluto.</p></div>
-</div>
-</div>
+  <!-- GUERNICA -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1577720643272-265f09367456?w=1200&q=80" alt="Guernica - Pablo Picasso" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>Guernica</h3><span class="fmeta">Pablo Picasso · 1937 · Óleo sobre lienzo · 349cm × 776cm</span></div>
+    </div>
+    <div class="fp"><p>"¿Qué es el pintar? ¿Es para decorar habitaciones? Es un instrumento de guerra ofensiva y defensiva contra el enemigo." — Palabras de Picasso cuando el arte se convertía en trinchera.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>El 26 de abril de 1937, un escuadrón de la Legión Cóndor de la Alemania nazi, aliada de las fuerzas franquistas, bombardeó durante más de tres horas la pequeña ciudad vasca de Guernica. El ataque no tenía apenas interés militar: fue, en cierto modo, un ensayo general de lo que se avecinaba sobre Europa — uno de los primeros bombardeos masivos deliberados contra una población civil de la historia.</p><p>Picasso, que vivía en París, se enteró por los periódicos. En cuestión de días, abandonó su proyecto original para el Pabellón de la República Española en la Exposición de París de 1937 y comenzó a dibujar furiosamente. El resultado fue un lienzo de casi ocho metros de largo que condensaba todo el horror de la guerra en una sola imagen.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>El Guernica está pintado en una paleta deliberadamente reducida: blanco, negro y grises. Esta ausencia de color evoca la estética de las fotografías de guerra, de los periódicos. Picasso quería que su cuadro pareciera un documento, un testimonio de la realidad. La composición es caótica y violenta, como la guerra que representa: las figuras se retuercen, se fragmentan, se amontonan en un espacio confuso sin perspectiva clara.</p><p>A la izquierda, un toro — símbolo de España pero también de la brutalidad — observa con una serenidad inquietante. Junto a él, una madre desgarra el aire con su grito mientras sostiene el cuerpo inerte de su hijo muerto en los brazos. En el centro, un caballo agónico se desmorona. Un soldado yace desmembrado, con una flor brotando de su rota: esperanza en medio del horror total. A la derecha, una mujer cae envuelta en llamas; otra, asomada al exterior, alza una lámpara como para iluminar la verdad.</p><p>Picasso nunca quiso explicar el significado de cada elemento, y esa ambigüedad es parte de su fuerza. El Guernica no es propaganda con un mensaje unívoco: es un grito universal contra toda guerra, toda crueldad.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="r">Política</span>
+      <span class="fntg" data-m="b">Crítica</span>
+      <span class="fntg" data-m="g">Cognitiva</span>
+      <span class="fntg" data-m="v">Ética</span>
+    </div>
+    <p>El Guernica es el ejemplo más emblemático de la <strong>función política</strong> del arte en la historia: obra comprometida con una causa concreta — la lucha antifascista — que logró dar visibilidad internacional a la tragedia. Su <strong>función crítica</strong> es feroz: no hay justificación posible para lo que representa. Es <strong>cognitivo</strong> porque nos enseña sobre el sufrimiento de la guerra algo que ningún libro de historia puede igualar. Y cumple una <strong>función ética</strong> universal: al representar el sufrimiento, lo dignifica.</p></div>
+    </div>
+  </div>
 
-<!-- ===== LAS SEÑORITAS ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1200&q=80", "Arte vanguardista - Cubismo")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>Las señoritas de Avignon</h3><span class="fmeta">Pablo Picasso · 1907 · Óleo sobre lienzo · 243cm × 233cm</span></div>
-</div>
-<div class="fp"><p>Cuando el cuadro fue expuesto, Matisse lo consideró una burla. Braque, asombrado. Los amigos de Picasso, escandalizados. Había nacido una nueva manera de ver.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>A comienzos del siglo XX, el arte pictórico occidental había vivido quinientos años regido por reglas sorprendentemente estables: perspectiva lineal, modelado con claroscuro, canon de proporciones clásicas. Todo eso se vino abajo en la primavera de 1907, cuando un joven Picasso, español en París, pintó un cuadro en su taller del Bateau-Lavoir que más tarde bautizaría como <em>Las señoritas de Avignon</em>.</p><p>El título original era "El burdel de Avinyón", la calle de Barcelona donde se encontraban los prostíbulos. No era un desnudo: era una provocación pictórica con la que Picasso rompía con toda la tradición de la representación occidental. El impacto fue brutal: la obra fue tan chocante que Picasso la guardó durante años sin atreverse a mostrarla.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Cinco mujeres desnudas llenan el lienzo en un espacio plano y fragmentado, sin perspectiva, sin profundidad, sin el menor intento de crear realidad. Los cuerpos están geometrizados, los rostros inspirados en máscaras africanas. Lo más revolucionario es la <strong>destrucción de la perspectiva renacentista</strong>: durante quinientos años, un cuadro fue una ventana abierta a la realidad. Picasso destruye esa ilusión: todas las figuras están en el mismo plano. El cuadro no es una ventana: es un muro.</p><p>Los cuerpos están deliberadamente <strong>deformados</strong> — proporciones anatómicamente imposibles, ojos que miran en direcciones distintas. Esto no es incompetencia sino una decisión radical de abandonar el realismo y buscar un nuevo lenguaje: uno que pudiera representar la realidad desde múltiples puntos de vista simultáneamente, sin limitarse a uno solo como hacía la tradición desde Brunelleschi.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="g">Genio (Kant)</span>
-<span class="fntg" data-m="b">Crítica</span>
-<span class="fntg" data-m="g">Cognitiva</span>
-</div>
-<p>Esta obra encarna el concepto kantiano de <strong>genio</strong>: Picasso no se limitó a hacer algo diferente dentro de las reglas existentes; creó reglas completamente nuevas. El cubismo transformó el arte occidental. Es <strong>crítica</strong> al romper con la tradición pictórica de siglos, <strong>cognitiva</strong> al enseñarnos que la realidad puede representarse de infinitas maneras, e <strong>ideológica</strong> al encarnar el espíritu de la vanguardia.</p></div>
-</div>
-</div>
+  <!-- LAS SEÑORITAS DE AVIGNON -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1200&q=80" alt="Arte vanguardista - Cubismo" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>Las señoritas de Avignon</h3><span class="fmeta">Pablo Picasso · 1907 · Óleo sobre lienzo · 243cm × 233cm</span></div>
+    </div>
+    <div class="fp"><p>Cuando el cuadro fue expuesto, Matisse lo consideró una burla. Braque, asombrado. Los amigos de Picasso, escandalizados. Había nacido una nueva manera de ver.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>A comienzos del siglo XX, el arte pictórico occidental había vivido quinientos años regido por reglas sorprendentemente estables: perspectiva lineal, modelado con claroscuro, canon de proporciones clásicas. Todo eso se vino abajo en la primavera de 1907, cuando un joven Picasso pintó un cuadro en su taller del Bateau-Lavoir que más tarde bautizaría como <em>Las señoritas de Avignon</em>.</p><p>El título original era "El burdel de Avinyón", la calle de Barcelona donde se encontraban los prostíbulos. No era un desnudo: era una provocación pictórica con la que Picasso rompía con toda la tradición de la representación occidental. La obra fue tan chocante que Picasso la guardó durante años sin atreverse a mostrarla.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Cinco mujeres desnudas llenan el lienzo en un espacio plano y fragmentado, sin perspectiva, sin profundidad. Los cuerpos están geometrizados, los rostros inspirados en máscaras africanas. Lo más revolucionario es la <strong>destrucción de la perspectiva renacentista</strong>: durante quinientos años, un cuadro fue una ventana abierta a la realidad. Picasso destruye esa ilusión: todas las figuras están en el mismo plano. El cuadro no es una ventana: es un muro.</p><p>Los cuerpos están deliberadamente <strong>deformados</strong> — proporciones anatómicamente imposibles, ojos que miran en direcciones distintas. Esto no es incompetencia sino una decisión radical de abandonar el realismo y buscar un nuevo lenguaje: uno que pudiera representar la realidad desde múltiples puntos de vista simultáneamente.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="g">Genio (Kant)</span>
+      <span class="fntg" data-m="b">Crítica</span>
+      <span class="fntg" data-m="g">Cognitiva</span>
+    </div>
+    <p>Esta obra encarna el concepto kantiano de <strong>genio</strong>: Picasso no se limitó a hacer algo diferente dentro de las reglas existentes; creó reglas completamente nuevas. El cubismo transformó el arte occidental. Es <strong>crítica</strong> al romper con la tradición pictórica de siglos, <strong>cognitiva</strong> al enseñarnos que la realidad puede representarse de infinitas maneras, e <strong>ideológica</strong> al encarnar el espíritu de la vanguardia.</p></div>
+    </div>
+  </div>
 
-<!-- ===== EL GRITO ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1200&q=80", "Cielo tormentoso - El Grito")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>El Grito</h3><span class="fmeta">Edvard Munch · 1893 · Óleo, temple y pastel sobre cartón · 91cm × 73cm</span></div>
-</div>
-<div class="fp"><p>"Iba por la calle con dos amigos. El cielo se tiñó de rojo sangre. Me detuve, mortalmente cansado. Y sentí el infinito grito que atraviesa la naturaleza." — Del diario de Munch.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico y personal</div><p>Edvard Munch (1863-1944) vivió una existencia marcada por la enfermedad, la muerte y la angustia. Su madre murió de tuberculosis cuando él tenía cinco años; su hermana mayor murió de la misma enfermedad cuando él tenía trece; su padre sufría una grave enfermedad mental. Munch mismo arrastró una fragilidad psíquica terrible durante toda su vida. En 1908, tras un colapso nervioso, estuvo internado ocho meses en una clínica psiquiátrica de Copenhague.</p><p>El Grito nace de una experiencia anímica concreta que Munch relató en su diario: paseaba al atardecer cuando el cielo se tiñó de rojo de repente. Se detuvo, cansado, mirando hacia la ciudad y el fiordo. Y entonces <em>"sentí un grito infinito atravesando toda la naturaleza"</em>. Este episodio — real, vivido — se convirtió en una de las pinturas más reconocibles de la historia.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Una figura andrógina, con el rostro deformado por el horror, se agarra las mejillas con las manos mientras abre la boca en un grito silencioso. A su derecha, dos figuras caminan por un puente, indiferentes. Al fondo, un cielo de rojo incandescente se refleja en un fiordo oscuro. Todo el paisaje ondula, vibra, se retuerce: las líneas curvas del cielo, el agua y el propio cuerpo crean un efecto de vibración casi audible.</p><p>La figura central es deliberadamente ambigua: carece de género, de rasgos concretos, de identidad. Es el ser humano confrontado con la angustia existencial en estado puro, despojado de todo atributo accesorio. Su cráneo calvo como el de un feto o un anciano; sus ojos agrandados miran sin ver. Se agarra la cabeza como para que no estalle. El cielo rojo funciona como campana de alarma visual: algo terrible está pasando.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="p">Terapéutica</span>
-<span class="fntg" data-m="g">Cognitiva</span>
-<span class="fntg" data-m="b">Crítica</span>
-</div>
-<p>La <strong>función terapéutica</strong> es la más inmediata: Munch canalizó su angustia existencial dándole forma pictórica. Sacar la angustia fuera, hacerla visible: ese acto de exteriorización es profundamente curativo. Millones de personas se han sentido identificados con esa imagen. Es <strong>cognitiva</strong> porque nos enseña sobre la angustia existencial — lo que Kierkegaard llamaba "el vértigo de la libertad". Es <strong>crítica</strong> porque señala a la sociedad que sigue caminando indiferente mientras un ser humano se desgarra: las dos figuras del fondo simbolizan la soledad del ser humano en la era moderna.</p></div>
-</div>
-</div>
+  <!-- EL GRITO -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1200&q=80" alt="Cielo tormentoso - El Grito" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>El Grito</h3><span class="fmeta">Edvard Munch · 1893 · Óleo, temple y pastel sobre cartón · 91cm × 73cm</span></div>
+    </div>
+    <div class="fp"><p>"Iba por la calle con dos amigos. El cielo se tiñó de rojo sangre. Me detuve, mortalmente cansado. Y sentí el infinito grito que atraviesa la naturaleza." — Del diario de Munch.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico y personal</div><p>Edvard Munch (1863-1944) vivió una existencia marcada por la enfermedad, la muerte y la angustia. Su madre murió de tuberculosis cuando él tenía cinco años; su hermana mayor murió de la misma enfermedad cuando él tenía trece; su padre sufría una grave enfermedad mental. Munch mismo arrastró una fragilidad psíquica terrible durante toda su vida.</p><p>El Grito nace de una experiencia anímica concreta que Munch relató en su diario: paseaba al atardecer cuando el cielo se tiñó de rojo de repente. Se detuvo, cansado, mirando hacia la ciudad y el fiordo. Y entonces <em>"sentí un grito infinito atravesando toda la naturaleza"</em>. Este episodio — real, vivido — se convirtió en una de las pinturas más reconocibles de la historia.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Una figura andrógina, con el rostro deformado por el horror, se agarra las mejillas con las manos mientras abre la boca en un grito silencioso. A su derecha, dos figuras caminan por un puente, indiferentes. Al fondo, un cielo de rojo incandescente se refleja en un fiordo oscuro. Todo el paisaje ondula, vibra, se retuerce: las líneas curvas del cielo, el agua y el propio cuerpo crean un efecto de vibración casi audible.</p><p>La figura central es deliberadamente ambigua: carece de género, de rasgos concretos, de identidad. Es el ser humano confrontado con la angustia existencial en estado puro, despojado de todo atributo accesorio. Su cráneo calvo como el de un feto o un anciano; sus ojos agrandados miran sin ver. El cielo rojo funciona como campana de alarma visual: algo terrible está pasando.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="p">Terapéutica</span>
+      <span class="fntg" data-m="g">Cognitiva</span>
+      <span class="fntg" data-m="b">Crítica</span>
+    </div>
+    <p>La <strong>función terapéutica</strong> es la más inmediata: Munch canalizó su angustia existencial dándole forma pictórica. Millones de personas se han sentido identificados con esa imagen. Es <strong>cognitiva</strong> porque nos enseña sobre la angustia existencial — lo que Kierkegaard llamaba "el vértigo de la libertad". Es <strong>crítica</strong> porque señala a la sociedad que sigue caminando indiferente mientras un ser humano se desgarra.</p></div>
+    </div>
+  </div>
 
-<!-- ===== LA PIEDAD ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1549490349-8643362247b5?w=1200&q=80", "Escultura renacentista - La Piedad")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>La Piedad del Vaticano</h3><span class="fmeta">Miguel Ángel Buonarroti · 1498-1499 · Mármol · 174cm altura</span></div>
-</div>
-<div class="fp"><p>Terminada cuando su autor tenía solo veintitrés años. Es la única obra que Miguel Ángel firmó: la cinta del pecho de María dice "MICHAELA[N]GELUS BONAROTUS FLORENTIN[US] FACIEBA[T]."</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>El Renacimiento italiano transformó el arte, la ciencia y la filosofía occidental. Sus figuras capitales — Brunelleschi, Botticelli, Leonardo, Miguel Ángel — recuperaron los ideales de la Antigüedad clásica y los fusionaron con los valores cristianos. Para los neoplatónicos florentinos como Marsilio Ficino, la belleza terrenal no era un pecado sino un camino hacia lo divino, un reflejo de la perfección de Dios visible en el mundo.Contemplar la belleza era, en cierto modo, una forma de oración.</p><p>Miguel Ángel (1475-1564) fue quizás la figura más sobresaliente de este movimiento. Su Piedad la esculpió entre 1498 y 1499, con solo veintitrés años, por encargo del cardenal Jean de Bilhères para la basílica de San Pedro.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>La Virgen María, de pie, sostiene en su regazo el cuerpo muerto de Jesucristo. Todo responde a una concepción perfecta de la belleza como orden, proporción y equilibrio. La Virgen aparece extraordinariamente joven — explicó Miguel Ángel que "las mujeres castas conservan su juventud más tiempo" —, pero la decisión también resuelve un problema compositivo: los amplios pliegues de su vestido crean una base sólida que soporta visualmente el peso de Cristo.</p><p>El cuerpo de Cristo es anatómicamente perfecto, reflejo del dominio de Miguel Ángel adquirido en sus disecciones de cadáveres. Cae con naturalidad desconcertante: la cabeza ladeada, los brazos colgantes. No hay crispación ni dolor: solo paz absoluta, como un sueño del que no despertará. Esa serenad en la muerte es lo que hace la obra profundamente perturbadora a la vez que consoladora.</p><p>Es la única obra firmada por Miguel Ángel: en la cinta del pecho de María se lee: "MICHAELA[N]GELUS BONAROTUS FLORENTIN[US] FACIEBA[T]". Firmó después de escuchar a visitantes atribuir la obra a otro escultor. No volvió a firmar ninguna creación posterior.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="v">Educativa</span>
-<span class="fntg" data-m="g">Ideológica</span>
-<span class="fntg" data-m="b">Belleza Clásica</span>
-</div>
-<p>La Piedad cumple una <strong>función educativa</strong> evidente: catequesis en mármol que enseña la doctrina cristiana de la redención de manera visualmente impactante. Su <strong>función ideológica</strong> demuestra el poder de la Iglesia Católica a través de la magnificencia artística. Es la encarnación perfecta de la <strong>belleza clásica</strong> como armonía y proporción. Y su contemplación produce una profunda <strong>experiencia estética</strong> de serenad admirativa que ha conmovido a millones de personas durante quinientos años.</p></div>
-</div>
-</div>
+  <!-- LA PIEDAD -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=1200&q=80" alt="Escultura renacentista - La Piedad" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>La Piedad del Vaticano</h3><span class="fmeta">Miguel Ángel Buonarroti · 1498-1499 · Mármol · 174cm altura</span></div>
+    </div>
+    <div class="fp"><p>Terminada cuando su autor tenía solo veintitrés años. Es la única obra que Miguel Ángel firmó: la cinta del pecho de María dice "MICHAELA[N]GELUS BONAROTUS FLORENTIN[US] FACIEBA[T]."</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>El Renacimiento italiano transformó el arte, la ciencia y la filosofía occidental. Para los neoplatónicos florentinos como Marsilio Ficino, la belleza terrenal no era un pecado sino un camino hacia lo divino, un reflejo de la perfección de Dios visible en el mundo. Contemplar la belleza era, en cierto modo, una forma de oración.</p><p>Miguel Ángel (1475-1564) fue quizás la figura más sobresaliente de este movimiento. Su Piedad la esculpió entre 1498 y 1499, con solo veintitrés años, por encargo del cardenal Jean de Bilhères para la basílica de San Pedro.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>La Virgen María, de pie, sostiene en su regazo el cuerpo muerto de Jesucristo. Todo responde a una concepción perfecta de la belleza como orden, proporción y equilibrio. La Virgen aparece extraordinariamente joven — explicó Miguel Ángel que "las mujeres castas conservan su juventud más tiempo" —, pero la decisión también resuelve un problema compositivo: los amplios pliegues de su vestido crean una base sólida que soporta visualmente el peso de Cristo.</p><p>El cuerpo de Cristo es anatómicamente perfecto, reflejo del dominio de Miguel Ángel adquirido en sus disecciones de cadáveres. Cae con naturalidad desconcertante: la cabeza ladeada, los brazos colgante. No hay crispación ni dolor: solo paz absoluta, como un sueño del que no despertará. Esa serenidad en la muerte es lo que hace la obra profundamente perturbadora a la vez que consoladora.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="v">Educativa</span>
+      <span class="fntg" data-m="g">Ideológica</span>
+      <span class="fntg" data-m="b">Belleza Clásica</span>
+    </div>
+    <p>La Piedad cumple una <strong>función educativa</strong> evidente: catequesis en mármol que enseña la doctrina cristiana de la redención de manera visualmente impactante. Su <strong>función ideológica</strong> demuestra el poder de la Iglesia Católica a través de la magnificencia artística. Es la encarnación perfecta de la <strong>belleza clásica</strong> como armonía y proporción. Y su contemplación produce una profunda <strong>experiencia estética</strong> de serena admiración.</p></div>
+    </div>
+  </div>
 
-<!-- ===== LAS MENINAS ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=1200&q=80", "Museo del Prado - Velázquez")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>Las Meninas</h3><span class="fmeta">Diego Velázquez · 1656 · Óleo sobre lienzo · 318cm × 276cm</span></div>
-</div>
-<div class="fp"><p>Michel Foucault dedicó el primer capítulo de "Las palabras y las cosas" a este cuadro. Luca Giordano lo llamó "la teología de la pintura".</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>Velázquez era pintor de cámara del rey Felipe IV, el monarca más poderoso del mundo en plena declinación. Las Meninas fue pintada en 1656, en el Alcázar Real de Madrid, apenas cuatro años antes de la muerte del artista. Oficialmente es un retrato de la infanta Margarita, pero Velázquez hizo algo insólito: se incluyó pintando a sí mismo, casi tan grande como la infanta. Al rey y la reina los incluye como un reflejo borroso en un espejo al fondo.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Si en un espejo se refleja lo que está delante, y en el espejo aparecen los reyes, lo que está delante del espejo es exactamente nuestro punto de vista. <em>Nosotros</em> estamos ocupando el lugar de los reyes. ¿Qué pinta Velázquez en el enorme lienzo cuyo reverso vemos? Precisamente el retrato de los reyes, desde nuestra posición. El cuadro está pintando lo que estamos viendo.</p><p>La técnica es magistral: a la distancia justa, los detalles son perfectos; de cerca, todo se convierte en manchas abstractas. Anticipó el impresionismo por casi dos siglos. Velázquez se autorrepresenta con la cruz de la Orden de Santiago concedida después de terminar el cuadro — según la tradición, fue el propio rey quien la pintó. Es una reivindicación del estatus del pintor como intelectual, no como artesano.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="g">Cognitiva</span>
-<span class="fntg" data-m="r">Política</span>
-<span class="fntg" data-m="b">Crítica</span>
-</div>
-<p>Las Meninas es profundamente <strong>cognitiva</strong>: reflexión filosófica en forma de pintura sobre la representación, la mirada y la realidad. Es <strong>política</strong> porque legitima la monarquía española a través de la presencia omnipotente de los reyes en el espejo. Es <strong>crítico</strong> porque reivindica el estatus social del artistas como intelectual. E <strong>ideológica</strong> porque refleja la sociedad jerárquica del Antiguo Régimen.</p></div>
-</div>
-</div>
+  <!-- LAS MENINAS -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=1200&q=80" alt="Museo del Prado - Velázquez" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>Las Meninas</h3><span class="fmeta">Diego Velázquez · 1656 · Óleo sobre lienzo · 318cm × 276cm</span></div>
+    </div>
+    <div class="fp"><p>Michel Foucault dedicó el primer capítulo de "Las palabras y las cosas" a este cuadro. Luca Giordano lo llamó "la teología de la pintura".</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>Velázquez era pintor de cámara del rey Felipe IV, el monarca más poderoso del mundo en plena declinación. Las Meninas fue pintada en 1656, en el Alcázar Real de Madrid. Oficialmente es un retrato de la infanta Margarita, pero Velázquez hizo algo insólito: se incluyó pintando a sí mismo, casi tan grande como la infanta. Al rey y la reina los incluye como un reflejo borroso en un espejo al fondo.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Si en un espejo se refleja lo que está delante, y en el espejo aparecen los reyes, lo que está delante del espejo es exactamente nuestro punto de vista. <em>Nosotros</em> estamos ocupando el lugar de los reyes. ¿Qué pinta Velázquez en el enorme lienzo cuyo reverso vemos? Precisamente el retrato de los reyes, desde nuestra posición. El cuadro está pintando lo que estamos viendo.</p><p>La técnica es magistral: a la distancia justa, los detalles son perfectos; de cerca, todo se convierte en manchas abstractas. Anticipó el impresionismo por casi dos siglos. Velázquez se autorrepresenta con la cruz de la Orden de Santiago — según la tradición, fue el propio rey quien la pintó. Es una reivindicación del estatus del pintor como intelectual, no como artesano.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="g">Cognitiva</span>
+      <span class="fntg" data-m="r">Política</span>
+      <span class="fntg" data-m="b">Crítica</span>
+    </div>
+    <p>Las Meninas es profundamente <strong>cognitiva</strong>: reflexión filosófica en forma de pintura sobre la representación, la mirada y la realidad. Es <strong>política</strong> porque legitima la monarquía española a través de la presencia omnipotente de los reyes en el espejo. Es <strong>crítica</strong> porque reivindica el estatus social del artista como intelectual. E <strong>ideológica</strong> porque refleja la sociedad jerárquica del Antiguo Régimen.</p></div>
+    </div>
+  </div>
 
-<!-- ===== LOS GIRASOLES ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=1200&q=80", "Girasoles - Van Gogh")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>Los Girasoles</h3><span class="fmeta">Vincent van Gogh · 1888 · Óleo sobre lienzo · Serie de pinturas</span></div>
-</div>
-<div class="fp"><p>Pintada para decorar la habitación que esperaba compartir con Gauguin en la Casa Amarilla de Arlés. Los girasoles marchitos se convirtieron, sin pretenderlo, en pinturas extraordinariamente valiosas.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>Van Gogh se instaló en Arlés en febrero de 1888, buscando una luz más intensa que pudiera curar su tristeza perpetua. Alquiló la Casa Amarilla y pintó frenéticamente: unas doscientas pinturas en quince meses. Los girasoles fueron de las primeras obras: Vincent quiso decorar la habitación de Gauguin. La relación entre ambos fue desastrosa — tras una discusión brutal, Van Gogh se cortó el lóbulo de la oreja —, pero los girasoles quedaron como testimonio de la esperanza de amistad que los inspiró.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Un tema aparentemente infantil — un jarrón con girasoles en diferentes estados — esconde una profundidad extraordinaria. La paleta es deliberadamente restrictiva: toda variaciones de amarillo. Van Gogh asociaba ese color con el sol, la luz, la calidez.</p><p>La técnica es revolucionaria: pinceladas gruesas, empastadas extraordinariamente expresivas. Los pétalos no están "pintados": están construidos con la pintura como si fuera arcilla. El jarrón tiene relieve propio, casi escultórico. El fondo palpita con una energía cromática que hace vibrar toda la superficie.</p><p>Cada girasol es diferente: algunos en plena floración, otros marchitos con pétalos curvados como cabezas pensativas. La serie completa puede leerse como meditación sobre el ciclo de la vida: nacimiento, esplendor, declive y muerte condensados en un simple jarrón de flores.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="p">Terapéutica</span>
-<span class="fntg" data-m="g">Cognitiva</span>
-<span class="fntg" data-m="b">Belleza expresiva</span>
-</div>
-<p>Los Girasoles encarnan la <strong>función terapéutica</strong>: Van Gogh pintó desde la soledad y la desesperación cotidiana, para decorar una habitación para un amigo. El acto de pintar fue terapéutico: canalizar su febril energía creativa. Es <strong>cognitivo</strong> porque nos enseña que reside también en lo imperfecto y lo marchito. Pinta como un poeta escribe versos, para dar forma a lo que le quema por dentro.</p></div>
-</div>
-</div>
+  <!-- LOS GIRASOLES -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=1200&q=80" alt="Girasoles - Van Gogh" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>Los Girasoles</h3><span class="fmeta">Vincent van Gogh · 1888 · Óleo sobre lienzo · Serie de pinturas</span></div>
+    </div>
+    <div class="fp"><p>Pintada para decorar la habitación que esperaba compartir con Gauguin en la Casa Amarilla de Arlés. Los girasoles marchitos se convirtieron, sin pretenderlo, en pinturas extraordinariamente valiosas.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>Van Gogh se instaló en Arlés en febrero de 1888, buscando una luz más intensa que pudiera curar su tristeza perpetua. Alquiló la Casa Amarilla y pintó frenéticamente: unas doscientas pinturas en quince meses. Los girasoles fueron de las primeras obras: Vincent quiso decorar la habitación de Gauguin. La relación entre ambos fue desastrosa — tras una discusión brutal, Van Gogh se cortó el lóbulo de la oreja —, pero los girasoles quedaron como testimonio de la esperanza de amistad que los inspiró.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Un tema aparentemente infantil — un jarrón con girasoles en diferentes estados — esconde una profundidad extraordinaria. La paleta es deliberadamente restrictiva: toda variaciones de amarillo. Van Gogh asociaba ese color con el sol, la luz, la calidez.</p><p>La técnica es revolucionaria: pinceladas gruesas, empastadas extraordinariamente expresivas. Los pétalos no están "pintados": están construidos con la pintura como si fuera arcilla. El jarrón tiene relieve propio, casi escultórico. Cada girasol es diferente: algunos en plena floración, otros marchitos con pétalos curvados como cabezas pensativas. La serie completa puede leerse como meditación sobre el ciclo de la vida.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="p">Terapéutica</span>
+      <span class="fntg" data-m="g">Cognitiva</span>
+      <span class="fntg" data-m="b">Belleza expresiva</span>
+    </div>
+    <p>Los Girasoles encarnan la <strong>función terapéutica</strong>: Van Gogh pintó desde la soledad y la desesperación cotidiana, para decorar una habitación para un amigo. El acto de pintar fue terapéutico: canalizar su febril energía creativa. Es <strong>cognitivo</strong> porque nos enseña que la belleza reside también en lo imperfecto y lo marchito.</p></div>
+    </div>
+  </div>
 
-<!-- ===== NACIMIENTO DE VENUS ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&q=80", "Arte renacentista - Venus")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>El Nacimiento de Venus</h3><span class="fmeta">Sandro Botticelli · 1484-1486 · Temple sobre lienzo · 172cm × 278cm</span></div>
-</div>
-<div class="fp"><p>Encargada por Lorenzo di Pierfrancesco de Médici. Encarna el ideal neoplatónico: la belleza terrenal como camino de elevación espiritual hacia lo divino.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>Flores, 1485. Gobernada de facto por Lorenzo el Magnífico, la ciudad era el mayor centro artístico del mundo. El neoplatonismo de Ficino y Pico della Mirandola proporcionaba la cosmovisión dominante: la belleza terrenal no era pecado sino camino hacia lo divino, un reflejo de la perfección de Dios. Contemplar la desnudez de Venus era un acto de elevación espiritual.</p><p>Sandro Botticelli (1445-1510), uno de los pintores favoritos del círculo Médici, encarnó magistralmente este espíritu.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Venus emerge desnuda sobre una concha marina, con una pose inspirada en la <em>Venus púdica</em> de la escultura clásica. Su cuerpo es alargado, grácil, etéreo, con pelirrojos cayendo largos. Su expresión es melancólica: acaba de nacer al mundo con mezcla de inocencia y tristeza premonitoria. La composición es de una pureza extraordinaria: Céfiro sopla brisas a la izquierda, la Hora de la Primavera se apresura a cubrir a Venus con un manto florido.</p><p>El cuadro funciona simultáneamente como mitología recreada, como ideal de belleza neoplatónica y como meditación sobre el amor y la generación. Es una de esas obras que nunca se agotan: cada vez que vuelves a mirarla, encuentras algo nuevo.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="b">Belleza clásica</span>
-<span class="fntg" data-m="v">Educativa</span>
-<span class="fntg" data-m="g">Ideológica</span>
-</div>
-<p>El Nacimiento de Venus es la encarnación suprema de la <strong>belleza clásica</strong>. Su <strong>función educativa</strong> es filosófica: la belleza como camino hacia lo divino. Su <strong>función ideológica</strong> al servicio de los Médici es evidente. Y cumple una <strong>función terapéutica</strong> subliminal: su belleza serena produce calma y admiración.</p></div>
-</div>
-</div>
+  <!-- EL NACIMIENTO DE VENUS -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&q=80" alt="Arte renacentista - Venus" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>El Nacimiento de Venus</h3><span class="fmeta">Sandro Botticelli · 1484-1486 · Temple sobre lienzo · 172cm × 278cm</span></div>
+    </div>
+    <div class="fp"><p>Encargada por Lorenzo di Pierfrancesco de Médici. Encarna el ideal neoplatónico: la belleza terrenal como camino de elevación espiritual hacia lo divino.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>Florencia, 1485. Gobernada de facto por Lorenzo el Magnífico, la ciudad era el mayor centro artístico del mundo. El neoplatonismo de Ficino y Pico della Mirandola proporcionaba la cosmovisión dominante: la belleza terrenal no era pecado sino camino hacia lo divino, un reflejo de la perfección de Dios. Contemplar la desnudez de Venus era un acto de elevación espiritual.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Venus emerge desnuda sobre una concha marina, con una pose inspirada en la <em>Venus púdica</em> de la escultura clásica. Su cuerpo es alargado, grácil, etéreo, con pelirrojo cayendo largo. Su expresión es melancólica: acaba de nacer al mundo con mezcla de inocencia y tristeza premonitoria. La composición es de una pureza extraordinaria: Céfiro sopla brisas a la izquierda, la Hora de la Primavera se apresura a cubrir a Venus con un manto florido.</p><p>El cuadro funciona simultáneamente como mitología recreada, como ideal de belleza neoplatónica y como meditación sobre el amor y la generación. Es una de esas obras que nunca se agotan: cada vez que vuelves a mirarla, encuentras algo nuevo.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="b">Belleza clásica</span>
+      <span class="fntg" data-m="v">Educativa</span>
+      <span class="fntg" data-m="g">Ideológica</span>
+    </div>
+    <p>El Nacimiento de Venus es la encarnación suprema de la <strong>belleza clásica</strong>. Su <strong>función educativa</strong> es filosófica: la belleza como camino hacia lo divino. Su <strong>función ideológica</strong> al servicio de los Médici es evidente. Y cumple una <strong>función terapéutica</strong> subliminal: su belleza serena produce calma y admiración.</p></div>
+    </div>
+  </div>
 
-<!-- ===== 1984 ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=1200&q=80", "Distopía - 1984")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>1984</h3><span class="fmeta">George Orwell · 1949 · Novela distópica</span></div>
-</div>
-<div class="fp"><p>"Si quieres una imagen del futuro, imagina una bota pisando una cara humana. Para siempre." —Advertencia tan relevante hoy como cuando fue escrita.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>Orwell escribió 1984 en la isla escocesa de Jura, durante sus últimos años de vida, ya gravemente enfermo de tuberculosis. Socialista democrático que había luchado en la Guerra Civil Española, estaba profundamente alarmado por el avance de los totalitarismos — el estalinismo que había visto en acción en Barcelona, el nazismo que había llevado a Europa al abismo. Lo que vio con terrible claridad fue que ambos sistemas compartían una lógica: el control de la realidad a través del control del lenguaje.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Un mundo distópico gobernado por el omnipresente Gran Hermano. Control absoluto a través de: telepantallas que vigilan y transmiten propaganda simultáneamente; la "neolengua" diseñada para que sea imposible pensar ideas contrarias al régimen; el "doble pensamiento" — creer simultáneamente dos contradicciones; la reescritura continua del pasado. "Quien controla el pasado, controla el futuro. Quien controla el presente, controla el pasado."</p><p>Winston Smith se rebela secretamente, pero es capturado, torturado y "reeducado". El final demoledor: completamente roto, vaciado, sentado en un mirador, piensa: "¡Amo al Gran Hermano!" Ha dejado de ser humano. Conceptos como "Gran Hermano", "neolengua" y "doble pensamiento" se han incorporado al lenguaje cotidiano porque describen fenómenos escalofriantemente reales.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="r">Política</span>
-<span class="fntg" data-m="b">Crítica</span>
-<span class="fntg" data-m="g">Cognitiva</span>
-<span class="fntg" data-m="v">Educativa</span>
-</div>
-<p>1984 es una obra de <strong>función política</strong> extraordinariamente poderosa: advertencia contra el totalitarismo plenamente vigente en la era de la vigilancia digital y las noticias falsas. Su <strong>función crítica</strong> denuncia implacablemente cualquier totalitarismo. Es <strong>cognitiva</strong> porque nos enseña cómo funcionan los mecanismos de control. Y es <strong>educativa</strong> porque nos enseña que defender la libertad de pensamiento es una responsabilidad que no se puede dar nunca por garantizada.</p></div>
-</div>
-</div>
+  <!-- 1984 -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=1200&q=80" alt="Distopía - 1984" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>1984</h3><span class="fmeta">George Orwell · 1949 · Novela distópica</span></div>
+    </div>
+    <div class="fp"><p>"Si quieres una imagen del futuro, imagina una bota pisando una cara humana. Para siempre." — Advertencia tan relevante hoy como cuando fue escrita.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>Orwell escribió 1984 en la isla escocesa de Jura, durante sus últimos años de vida, ya gravemente enfermo de tuberculosis. Socialista democrático que había luchado en la Guerra Civil Española, estaba profundamente alarmado por el avance de los totalitarismos. Lo que vio con terrible claridad fue que ambos sistemas compartían una lógica: el control de la realidad a través del control del lenguaje.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Un mundo distópico gobernado por el omnipresente Gran Hermano. Control absoluto a través de: telepantallas que vigilan y transmiten propaganda simultáneamente; la "neolengua" diseñada para que sea imposible pensar ideas contrarias al régimen; el "doble pensamiento" — creer simultáneamente dos contradicciones; la reescritura continua del pasado. "Quien controla el pasado, controla el futuro. Quien controla el presente, controla el pasado."</p><p>Winston Smith se rebela secretamente, pero es capturado, torturado y "reeducado". El final demoledor: completamente roto, vaciado, piensa: "¡Amo al Gran Hermano!" Ha dejado de ser humano. Conceptos como "Gran Hermano", "neolengua" y "doble pensamiento" se han incorporado al lenguaje cotidiano porque describen fenómenos escalofriantemente reales.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="r">Política</span>
+      <span class="fntg" data-m="b">Crítica</span>
+      <span class="fntg" data-m="g">Cognitiva</span>
+      <span class="fntg" data-m="v">Educativa</span>
+    </div>
+    <p>1984 es una obra de <strong>función política</strong> extraordinariamente poderosa: advertencia contra el totalitarismo plenamente vigente en la era de la vigilancia digital y las noticias falsas. Su <strong>función crítica</strong> denuncia implacablemente cualquier totalitarismo. Es <strong>cognitiva</strong> porque nos enseña cómo funcionan los mecanismos de control. Y es <strong>educativa</strong> porque nos enseña que defender la libertad de pensamiento es una responsabilidad que no se puede dar nunca por garantizada.</p></div>
+    </div>
+  </div>
 
-<!-- ===== LA NOCHE ESTRELLADA ===== -->
-<div class="mw reveal">
-<div class="fo"><div class="fi"><div class="fiw">
-{img("https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1200&q=80", "Cielo estrellado - Van Gogh")}
-<div class="fspot"></div><div class="fgrad"></div>
-<div class="finfo"><h3>La noche estrellada</h3><span class="fmeta">Vincent van Gogh · 1889 · Óleo sobre lienzo · 73cm × 92cm</span></div>
-</div>
-<div class="fp"><p>Pintada en junio de 1889 desde la ventana — real e imaginada — de su habitación en el hospital psiquiátrico de Saint-Rémy-de-Provence. El pueblo que aparece abajo no se veía realmente: lo añadió de memoria.</p></div>
-</div></div>
-<div class="ab"><div class="ag">
-<div class="ap"><div class="al">Contexto histórico</div><p>Tras la ruptura con Gauguin y el amputamiento de su oreja, Van Gogh ingresó voluntariamente en el hospital psiquiátrico de Saint-Rémy en mayo de 1889. Durante el año que pasó allí, alternando lucidez con episodios devastadores, produjo unas ciento cincuenta pinturas. La noche estrellada nace de esa ventana: paisaje parcialmente real, parcialmente soñado.</p></div>
-<div class="ap"><div class="al">Análisis de la obra</div><p>Un cielo extraordinariamente vibrante: once estrellas con aureolas concéntricas, una luna creciente resplandeciendo, espirales de nubes que parecen galaxias todo gira, vibra, vive. Abajo, un pueblo diminuto y dormido: casitas de tejados rojos, la aguja de una iglesia que no llega al cielo. A la izquierda, un ciprés flameante conecta la tierra con el cosmos.</p><p>Las pinceladas curvas y gruesas hacen que el cuadro parezca moverse ante nuestros ojos. La gama fría — azules, violetas — se rompe con la luz cálida de las estrellas. El contraste entre el universo convulso y la tranquilidad doméstica crea una tensión emocional extraordinaria: el cielo grita mientras el pueblo duerme plácidamente.</p></div>
-</div>
-<div class="fnp"><div class="fnt">
-<span class="fntg" data-m="p">Terapéutica</span>
-<span class="fntg" data-m="g">Cognitiva</span>
-<span class="fntg" data-m="v">Experiencia Estética</span>
-</div>
-<p>Pintada desde la ventana de un hospital psiquiátrico, esta es la prueba de que incluso en la oscuridad más profunda el ser humano es capaz de crear luz. Es <strong>terapéutica</strong>: Van Gogh transformó su sufrimiento en la imagen más luminosa de la historia. Es <strong>cognitiva</strong> porque reflexiona sobre la relación entre el ser humano y el cosmos. Y produce una <strong>experiencia estética</strong> sublime que nos sobrepasa y nos llena de asombro.</p></div>
-</div>
-</div>
-
+  <!-- LA NOCHE ESTRELLADA -->
+  <div class="mw reveal">
+    <div class="fo"><div class="fi"><div class="fiw">
+      <img class="fimg" src="https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1200&q=80" alt="Cielo estrellado - Van Gogh" loading="lazy">
+      <div class="fspot"></div><div class="fgrad"></div>
+      <div class="finfo"><h3>La noche estrellada</h3><span class="fmeta">Vincent van Gogh · 1889 · Óleo sobre lienzo · 73cm × 92cm</span></div>
+    </div>
+    <div class="fp"><p>Pintada en junio de 1889 desde la ventana — real e imaginada — de su habitación en el hospital psiquiátrico de Saint-Rémy-de-Provence. El pueblo que aparece abajo no se veía realmente: lo añadió de memoria.</p></div>
+    </div></div>
+    <div class="ab"><div class="ag">
+      <div class="ap"><div class="al">Contexto histórico</div><p>Tras la ruptura con Gauguin y la amputación de su oreja, Van Gogh ingresó voluntariamente en el hospital psiquiátrico de Saint-Rémy en mayo de 1889. Durante el año que pasó allí, alternando lucidez con episodios devastadores, produjo unas ciento cincuenta pinturas. La noche estrellada nace de esa ventana: paisaje parcialmente real, parcialmente soñado.</p></div>
+      <div class="ap"><div class="al">Análisis de la obra</div><p>Un cielo extraordinariamente vibrante: once estrellas con aureolas concéntricas, una luna creciente resplandeciendo, espirales de nubes que parecen galaxias — todo gira, vibra, vive. Abajo, un pueblo diminuto y dormido: casitas de tejados rojos, la aguja de una iglesia que no llega al cielo. A la izquierda, un ciprés flameante conecta la tierra con el cosmos.</p><p>Las pinceladas curvas y gruesas hacen que el cuadro parezca moverse ante nuestros ojos. La gama fría — azules, violetas — se rompe con la luz cálida de las estrellas. El contraste entre el universo convulso y la tranquilidad doméstica crea una tensión emocional extraordinaria: el cielo grita mientras el pueblo duerme plácidamente.</p></div>
+    </div>
+    <div class="fnp"><div class="fnt">
+      <span class="fntg" data-m="p">Terapéutica</span>
+      <span class="fntg" data-m="g">Cognitiva</span>
+      <span class="fntg" data-m="v">Experiencia Estética</span>
+    </div>
+    <p>Pintada desde la ventana de un hospital psiquiátrico, esta es la prueba de que incluso en la oscuridad más profunda el ser humano es capaz de crear luz. Es <strong>terapéutica</strong>: Van Gogh transformó su sufrimiento en la imagen más luminosa de la historia. Es <strong>cognitiva</strong> porque reflexiona sobre la relación entre el ser humano y el cosmos. Y produce una <strong>experiencia estética</strong> sublime que nos sobrepasa y nos llena de asombro.</p></div>
+    </div>
+  </div>
 
 </section>
 
 <div class="ediv"><span>✦</span></div>
 
-<!-- PICASSO GENIO -->
+<!-- ===== PICASSO GENIO ===== -->
 <section class="section">
-<div class="sheader reveal">
-<span class="se">IV — El Genio</span>
-<h2 class="st">Picasso: La Regla del Arte <em>por Venir</em></h2>
-</div>
-<div class="con reveal">
-<p>Inmanuel Kant definió el genio como aquel que da la regla del arte que está por venir. Picasso lo hizo no una, sino varias veces: con <em>Las señoritas de Avignon</em> creó el cubismo; con el <em>Guernica</em> demostró que el arte podía ser un arma política devastadora; a lo largo de toda su carrera cambió de estilo y en cada período fue inaugurador. <em>"Yo no busco, encuentro."</em> Esa frase resume perfectamente la noción kantiana de genio.</p>
-</div>
+  <div class="sheader reveal">
+    <span class="se">IV — El Genio</span>
+    <h2 class="st">Picasso: La Regla del Arte <em>por Venir</em></h2>
+  </div>
+  <div class="con reveal">
+    <p>Inmanuel Kant definió el genio como aquel que da la regla del arte que está por venir. Picasso lo hizo no una, sino varias veces: con <em>Las señoritas de Avignon</em> creó el cubismo; con el <em>Guernica</em> demostró que el arte podía ser un arma política devastadora; a lo largo de toda su carrera cambió de estilo y en cada período fue inaugurador. <em>"Yo no busco, encuentro."</em> Esa frase resume perfectamente la noción kantiana de genio.</p>
+  </div>
 </section>
 
 <div class="ediv"><span>✦</span></div>
 
-<!-- ANALYZER -->
-<section class="section" id="inteligencia">
-<div class="sheader reveal">
-<span class="se">V — Inteligencia Artificial</span>
-<h2 class="st">Analizador <em>de Obras</em></h2>
-<p class="sd">Selecciona o describe una obra de arte y el sistema identificará sus funciones estéticas.</p></div>
-<div class="ar reveal"><div class="ai">
-<div class="at">Analizador Filosófico de Arte</div>
-<p class="as">Selecciona una obra o descríbela para analizar sus funciones</p>
-<div class="af">
-<div class="ig"><label>Obra conocida</label>
-<select id="sel"><option value="">— O descríbela abajo —</option>
-<option value="guernica">Guernica — Picasso (1937)</option>
-<option value="quijote">El Quijote — Cervantes (1605-1615)</option>
-<option value="avignon">Las señoritas de Avignon — Picasso (1907)</option>
-<option value="grito">El Grito — Munch (1893)</option>
-<option value="piedad">La Piedad — Miguel Ángel (1499)</option>
-<option value="meninas">Las Meninas — Velázquez (1656)</option>
-<option value="girasoles">Los Girasoles — Van Gogh (1888)</option>
-<option value="nacimiento">El Nacimiento de Venus — Botticelli (1485)</option>
-<option value="1984book">1984 — Orwell (1949)</option>
-<option value="noche">La noche estrellada — Van Gogh (1889)</option>
-</select></div>
-<div class="ig"><label>O escribe su nombre</label><input type="text" id="nom" placeholder="Ej: Una pintura sobre la guerra..."></div>
-<div class="ig"><label>Descríbela brevemente</label><textarea id="desc" placeholder="¿De qué trata? ¿Cómo es? ¿Qué sensación produce?"></textarea></div>
-<button class="btn" id="abtn">✦ Analizar obra</button>
-</div>
-<div class="rs" id="rblock">
-<div class="rsc"><h4>Obra analizada</h4><p id="rn"></p></div>
-<div class="rsc"><h4>Funciones detectadas</h4><div id="rbars"></div></div>
-<div class="rsc"><h4>Análisis</h4><p id="ra"></p></div>
-<div class="rsc"><h4>Reflexión filosófica</h4><p id="rr"></p></div>
-</div>
-</div></div>
+<!-- ===== ANALYZER ===== -->
+<section class="section" id="analisis">
+  <div class="sheader reveal">
+    <span class="se">V — Inteligencia Artificial</span>
+    <h2 class="st">Analizador <em>de Obras</em></h2>
+    <p class="sd">Selecciona o describe una obra de arte y el sistema identificará sus funciones estéticas.</p>
+  </div>
+  <div class="ar reveal"><div class="ai">
+    <div class="at">Analizador Filosófico de Arte</div>
+    <p class="as">Selecciona una obra o descríbela para analizar sus funciones</p>
+    <div class="af">
+      <div class="ig">
+        <label for="sel">Obra conocida</label>
+        <select id="sel">
+          <option value="">— O descríbela abajo —</option>
+          <option value="guernica">Guernica — Picasso (1937)</option>
+          <option value="quijote">El Quijote — Cervantes (1605-1615)</option>
+          <option value="avignon">Las señoritas de Avignon — Picasso (1907)</option>
+          <option value="grito">El Grito — Munch (1893)</option>
+          <option value="piedad">La Piedad — Miguel Ángel (1499)</option>
+          <option value="meninas">Las Meninas — Velázquez (1656)</option>
+          <option value="girasoles">Los Girasoles — Van Gogh (1888)</option>
+          <option value="nacimiento">El Nacimiento de Venus — Botticelli (1485)</option>
+          <option value="1984book">1984 — Orwell (1949)</option>
+          <option value="noche">La noche estrellada — Van Gogh (1889)</option>
+        </select>
+      </div>
+      <div class="ig">
+        <label for="nom">O escribe su nombre</label>
+        <input type="text" id="nom" placeholder="Ej: Una pintura sobre la guerra...">
+      </div>
+      <div class="ig">
+        <label for="desc">Descríbela brevemente</label>
+        <textarea id="desc" placeholder="¿De qué trata? ¿Cómo es? ¿Qué sensación produce?"></textarea>
+      </div>
+      <button class="btn" id="abtn">&#10022; Analizar obra</button>
+    </div>
+    <div class="rs" id="rblock">
+      <div class="rsc"><h4>Obra analizada</h4><p id="rn"></p></div>
+      <div class="rsc"><h4>Funciones detectadas</h4><div id="rbars"></div></div>
+      <div class="rsc"><h4>Análisis</h4><p id="ra"></p></div>
+      <div class="rsc"><h4>Reflexión filosófica</h4><p id="rr"></p></div>
+    </div>
+  </div></div>
 </section>
 
 <div class="ediv"><span>✦</span></div>
 
-<!-- CONCLUSION -->
+<!-- ===== CONCLUSIÓN ===== -->
 <section class="section" id="conclusion">
-<div class="sheader reveal"><span class="se">VI — Reflexión Final</span>
-<h2 class="st">Conclusiones</h2></div>
-<div class="conc reveal">
-<p>A lo largo de este trabajo hemos visto que el arte es mucho más que un pasatiempo o un adorno. Es una de las herramientas más poderosas que el ser humano ha creado para comprenderse a sí mismo y transformar el mundo.</p>
-<p>Las funciones del arte — cognitiva, educativa, terapéutica, política, crítica, ideológica — no son compartimentos estancos sino dimensiones que se entrelazan. Una misma obra puede enseñarnos, curarnos, denunciar una injusticia y hacernos reflexionar sobre la condición humana, todo al mismo tiempo.</p>
-<p>Las obras analizadas — desde el Quijote hasta el Guernica, desde la Piedad hasta la Noche estrellada — demuestran que el arte es una forma de conocimiento tan valiosa como la ciencia o la filosofía, aunque su método sea diferente: nos enseña a través de la emoción, de la intuición, de la experiencia vivida.</p>
-<p>Y conceptos como el genio, la belleza, la estética y la experiencia estética nos proporcionan las herramientas teóricas para comprender por qué el arte nos afecta tanto y por qué es tan importante. El arte es un reflejo de lo mejor y lo peor de la humanidad: de su creatividad, su sensibilidad, su capacidad de sufrir y de soñar. Y mientras el ser humano siga siendo humano, el arte seguirá siendo una necesidad vital.</p>
-</div>
+  <div class="sheader reveal">
+    <span class="se">VI — Reflexión Final</span>
+    <h2 class="st">Conclusiones</h2>
+  </div>
+  <div class="conc reveal">
+    <p>A lo largo de este trabajo hemos visto que el arte es mucho más que un pasatiempo o un adorno. Es una de las herramientas más poderosas que el ser humano ha creado para comprenderse a sí mismo y transformar el mundo.</p>
+    <p>Las funciones del arte — cognitiva, educativa, terapéutica, política, crítica, ideológica — no son compartimentos estancos sino dimensiones que se entrelazan. Una misma obra puede enseñarnos, curarnos, denunciar una injusticia y hacernos reflexionar sobre la condición humana, todo al mismo tiempo.</p>
+    <p>Las obras analizadas — desde el Quijote hasta el Guernica, desde la Piedad hasta la Noche estrellada — demuestran que el arte es una forma de conocimiento tan valiosa como la ciencia o la filosofía, aunque su método sea diferente: nos enseña a través de la emoción, de la intuición, de la experiencia vivida.</p>
+    <p>Y conceptos como el genio, la belleza, la estética y la experiencia estética nos proporcionan las herramientas teóricas para comprender por qué el arte nos afecta tanto y por qué es tan importante. El arte es un reflejo de lo mejor y lo peor de la humanidad: de su creatividad, su sensibilidad, su capacidad de sufrir y de soñar. Y mientras el ser humano siga siendo humano, el arte seguirá siendo una necesidad vital.</p>
+  </div>
 </section>
+
 </main>
 
-<footer><p><span class="g">Φ</span> Trabajo de Filosofía — Las Funciones del Arte</p><p style="margin-top:0.5rem;font-size:0.5rem;opacity:0.6">Elaborado con dedicación para comprender el arte desde la filosofía</p></footer>
+<footer>
+  <p><span class="g">Φ</span> Trabajo de Filosofía — Las Funciones del Arte</p>
+  <p style="margin-top:0.5rem;font-size:0.5rem;opacity:0.6">Elaborado con dedicación para comprender el arte desde la filosofía</p>
+</footer>
+
 <button class="btp" id="btp" title="Volver arriba">↑</button>
 
+<!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-gsap.registerPlugin(ScrollTrigger);
-// Dust particles
 (function(){
-const c=document.getElementById('dust'),x=c.getContext('2d');
-let w,h,p=[];
-function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
-function ini(){p=[];for(let i=0;i<80;i++)p.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1+0.3,a:Math.random()*0.25+0.05,s:Math.random()*0.15+0.05})}
-function dr(){x.clearRect(0,0,w,h);for(const q of p){q.y-=q.s;q.x+=Math.sin(q.y*0.01)*0.15;if(q.y<-10){q.y=h+10;q.x=Math.random()*w}x.beginPath();x.arc(q.x,q.y,q.r,0,Math.PI*2);x.fillStyle=`rgba(184,149,46,${q.a})`;x.fill()}requestAnimationFrame(dr)}
-rs();ini();dr();addEventListener('resize',()=>{rs();ini()})
+  gsap.registerPlugin(ScrollTrigger);
+
+  // DUST PARTICLES
+  const canvas = document.getElementById('dust');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width = innerWidth;
+    h = canvas.height = innerHeight;
+  }
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1 + 0.3,
+        a: Math.random() * 0.25 + 0.05,
+        s: Math.random() * 0.15 + 0.05
+      });
+    }
+  }
+
+  function drawDust() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.y -= p.s;
+      p.x += Math.sin(p.y * 0.01) * 0.15;
+      if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(184,149,46,' + p.a + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(drawDust);
+  }
+
+  resize(); initParticles(); drawDust();
+  addEventListener('resize', function() { resize(); initParticles(); });
+
+  // NAV SCROLL
+  var nav = document.getElementById('navbar');
+  addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', scrollY > 60);
+  });
+
+  // MOBILE MENU
+  var menuBtn = document.getElementById('menuToggle');
+  var navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', function() {
+    navLinks.classList.toggle('active');
+    menuBtn.classList.toggle('active');
+  });
+  document.querySelectorAll('.na a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      navLinks.classList.remove('active');
+      menuBtn.classList.remove('active');
+    });
+  });
+
+  // HERO ANIMATION
+  var heroTl = gsap.timeline({ delay: 0.4 });
+  heroTl.to('#hb', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+        .to('#ht', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .to('#ho', { opacity: 1, scale: 1, duration: 0.6, ease: 'power3.out' }, '-=0.6')
+        .to('#hs', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+        .to('#hc', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+        .to('#hh', { opacity: 1, duration: 0.8 }, '-=0.3');
+
+  // SCROLL REVEAL
+  gsap.utils.toArray('.reveal').forEach(function(el) {
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 88%',
+      onEnter: function() {
+        gsap.to(el, { opacity: 1, y: 0, x: 0, duration: 0.8, ease: 'power3.out' });
+      },
+      once: true
+    });
+  });
+
+  // BACK TO TOP
+  var btp = document.getElementById('btp');
+  addEventListener('scroll', function() {
+    btp.classList.toggle('vis', scrollY > 500);
+  });
+  btp.addEventListener('click', function() {
+    scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // SMOOTH SCROLL FOR NAV LINKS
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ANALYZER
+  var analyzerData = {
+    guernica: {
+      n: "Guernica — Picasso", c: "Óleo de 1937",
+      f: [{n:"Política",v:98,color:"#b08888"},{n:"Crítica",v:95,color:"#889eb0"},{n:"Cognitiva",v:70,color:"#b8952e"},{n:"Ética",v:60,color:"#6aaa7a"},{n:"Ideológica",v:75,color:"#b8952e"},{n:"Terapéutica",v:40,color:"#9b88b0"}],
+      a: "El Guernica es un grito de horror contra la guerra. Su composición caótica en blanco, negro y grises evoca las fotografías de guerra. Las figuras retorcidas transmiten el sufrimiento de los civiles. Es el anti-monumento perfecto: no celebra ninguna victoria.",
+      r: "El arte puede ser el testigo más poderoso de la Historia. Picasso creó un arma que sigue atacando la barbarie siete décadas después."
+    },
+    quijote: {
+      n: "El Quijote — Cervantes", c: "Novela, 1605-1615",
+      f: [{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:95,color:"#6aaa7a"},{n:"Terapéutica",v:85,color:"#9b88b0"},{n:"Crítica",v:90,color:"#889eb0"},{n:"Ideológica",v:70,color:"#b8952e"},{n:"Política",v:50,color:"#b08888"}],
+      a: "El Quijote cumple casi todas las funciones del arte: cognitiva, educativa, terapéutica, crítica e ideológica. Don Quijote plantea si es más cuerdo luchar por ideales que aceptar pasivamente las injusticias.",
+      r: "Don Quijote nos enseña que la lucidez a veces se parece mucho a la locura."
+    },
+    avignon: {
+      n: "Las señoritas de Avignon — Picasso", c: "Óleo, 1907",
+      f: [{n:"Genio (Kant)",v:98,color:"#b8952e"},{n:"Crítica",v:90,color:"#889eb0"},{n:"Cognitiva",v:85,color:"#b8952e"},{n:"Ideológica",v:80,color:"#6aaa7a"},{n:"Política",v:15,color:"#b08888"},{n:"Terapéutica",v:20,color:"#9b88b0"}],
+      a: "Esta obra es el ejemplo del genio kantiano: Picasso creó reglas completamente nuevas. El cubismo transformó el arte occidental. Destruye la perspectiva renacentista como un muro.",
+      r: "Picasso no buscaba una regla nueva: la encontraba. Eso es el genio."
+    },
+    grito: {
+      n: "El Grito — Munch", c: "Óleo y pastel, 1893",
+      f: [{n:"Terapéutica",v:98,color:"#9b88b0"},{n:"Cognitiva",v:80,color:"#b8952e"},{n:"Crítica",v:75,color:"#889eb0"},{n:"Experiencia Estética",v:90,color:"#6aaa7a"},{n:"Política",v:20,color:"#b08888"},{n:"Ideológica",v:40,color:"#b8952e"}],
+      a: "Munch canalizó su angustia existencial en la pintura. La figura retorcida, el cielo de rojos incandescentes, las dos figuras indiferentes simbolizan la angustia universal.",
+      r: "Kierkegaard llamaba a esto 'el vértigo de la libertad'. El Grito lo hace visible."
+    },
+    piedad: {
+      n: "La Piedad del Vaticano — Miguel Ángel", c: "Mármol, 1499",
+      f: [{n:"Educativa",v:95,color:"#6aaa7a"},{n:"Ideológica",v:90,color:"#b8952e"},{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Cognitiva",v:60,color:"#b8952e"},{n:"Política",v:60,color:"#b08888"},{n:"Terapéutica",v:70,color:"#9b88b0"}],
+      a: "Encarna el ideal neoplatónico: la belleza terrenal como reflejo de lo divino. Es catequesis en mármol, propaganda eclesial y obra maestra de la proporción.",
+      r: "Miguel Ángel esculpió la belleza neoplatónica. Contemplar la Piedad eleva el alma."
+    },
+    meninas: {
+      n: "Las Meninas — Velázquez", c: "Óleo, 1656",
+      f: [{n:"Cognitiva",v:98,color:"#b8952e"},{n:"Política",v:85,color:"#b08888"},{n:"Crítica",v:80,color:"#889eb0"},{n:"Ideológica",v:75,color:"#6aaa7a"},{n:"Educativa",v:50,color:"#b8952e"},{n:"Terapéutica",v:30,color:"#9b88b0"}],
+      a: "Reflexión filosófica en forma de pintura. El juego de miradas, la ruptura de realidad y ficción, la reivindicación del estatus del artista. Foucault le dedicó un capítulo entero.",
+      r: "Las Meninas enseña que la representación no es inocente: toda imagen construye una visión del mundo."
+    },
+    girasoles: {
+      n: "Los Girasoles — Van Gogh", c: "Óleo, 1888, serie",
+      f: [{n:"Terapéutica",v:95,color:"#9b88b0"},{n:"Cognitiva",v:75,color:"#b8952e"},{n:"Belleza Expresiva",v:90,color:"#889eb0"},{n:"Experiencia Estética",v:80,color:"#6aaa7a"},{n:"Política",v:5,color:"#b08888"},{n:"Ideológica",v:15,color:"#b8952e"}],
+      a: "Pintados desde la desesperación para un amigo. La técnica es revolucionaria: pinceladas gruesas construyen los pétalos como arcilla. Meditación sobre el ciclo de la vida.",
+      r: "Nietzsche: tenemos el arte para no morir de la verdad. Los Girasoles lo demuestran."
+    },
+    nacimiento: {
+      n: "El Nacimiento de Venus — Botticelli", c: "Temple sobre lienzo, 1485",
+      f: [{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Educativa",v:80,color:"#6aaa7a"},{n:"Cognitiva",v:65,color:"#b8952e"},{n:"Política",v:55,color:"#b08888"},{n:"Terapéutica",v:65,color:"#9b88b0"}],
+      a: "Encarna el neoplatonismo florentino: belleza pagana como camino espiritual. Venus nace del mar con una melancolía que ha fascinado durante cinco siglos.",
+      r: "Plotino: la belleza es el esplendor de la verdad. Botticelli lo hizo visible."
+    },
+    "1984book": {
+      n: "1984 — George Orwell", c: "Novela distópica, 1949",
+      f: [{n:"Política",v:99,color:"#b08888"},{n:"Crítica",v:98,color:"#889eb0"},{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:90,color:"#6aaa7a"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Terapéutica",v:30,color:"#9b88b0"}],
+      a: "Advertencia contra el totalitarismo. Conceptos como 'Gran Hermano', 'neolengua', 'doble pensamiento' describen fenómenos reales. El final demoledor: '¡Amo al Gran Hermano!'",
+      r: "Orwell enseñó que controlar el lenguaje es controlar el pensamiento. Más relevante que nunca."
+    },
+    noche: {
+      n: "La noche estrellada — Van Gogh", c: "Óleo, 1889",
+      f: [{n:"Terapéutica",v:97,color:"#9b88b0"},{n:"Cognitiva",v:80,color:"#b8952e"},{n:"Experiencia Estética",v:95,color:"#6aaa7a"},{n:"Lo Sublime",v:92,color:"#889eb0"},{n:"Política",v:5,color:"#b08888"},{n:"Ideológica",v:20,color:"#b8952e"}],
+      a: "Pintada desde un hospital psiquiátrico. Cielo vibrante de estrellas girando, pueblo dormido abajo. El contraste entre el cosmos convulso y la paz doméstica es extraordinario.",
+      r: "Heidegger: el arte es el ponerse a trabajar de la verdad. La noche estrellada transforma sufrimiento en luz."
+    }
+  };
+
+  document.getElementById('abtn').addEventListener('click', function() {
+    var sel = document.getElementById('sel').value;
+    var nom = document.getElementById('nom').value.trim();
+    var desc = document.getElementById('desc').value.trim();
+    var btn = this;
+
+    if (!sel && !nom && !desc) {
+      alert('Selecciona una obra o escribe una descripción.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Analizando...';
+    document.getElementById('rblock').classList.remove('v');
+
+    setTimeout(function() {
+      var dt;
+
+      if (sel && analyzerData[sel]) {
+        dt = analyzerData[sel];
+      } else {
+        var text = (nom + ' ' + desc).toLowerCase();
+        var vals = { cognitiva: 50, educativa: 50, terapeutica: 50, politica: 50, critica: 50, ideologica: 50 };
+
+        var keywords = {
+          politica: ['guerra','poder','gobierno','política','revolución','fascismo','dictadura','imperio','rey','estado'],
+          critica: ['crítica','denuncia','abuso','injusticia','violencia','barbarie','horror','sufrimiento','muerte','dolor'],
+          cognitiva: ['aprender','conocimiento','enseñar','verdad','realidad','mundo','naturaleza','universo','existencia','vida'],
+          educativa: ['educar','valor','moral','ético','formar','crecer','fe','creencia','espiritual','virtud'],
+          terapeutica: ['curar','sanar','consuelo','angustia','ansiedad','depresión','trauma','enfermedad','amor','paz'],
+          ideologica: ['ideología','doctrina','propaganda','pensamiento','creencia','cultura','identidad','nación','clase']
+        };
+
+        for (var fn in keywords) {
+          for (var i = 0; i < keywords[fn].length; i++) {
+            if (text.indexOf(keywords[fn][i]) !== -1) {
+              vals[fn] = Math.min(95, vals[fn] + 25);
+            }
+          }
+        }
+
+        var fns = [];
+        if (vals.politica >= 65) fns.push({n:"Política",v:vals.politica,color:"#b08888"});
+        if (vals.critica >= 65) fns.push({n:"Crítica",v:vals.critica,color:"#889eb0"});
+        if (vals.cognitiva >= 65) fns.push({n:"Cognitiva",v:vals.cognitiva,color:"#b8952e"});
+        if (vals.educativa >= 65) fns.push({n:"Educativa",v:vals.educativa,color:"#6aaa7a"});
+        if (vals.terapeutica >= 65) fns.push({n:"Terapéutica",v:vals.terapeutica,color:"#9b88b0"});
+        if (vals.ideologica >= 65) fns.push({n:"Ideológica",v:vals.ideologica,color:"#b8952e"});
+
+        if (!fns.length) {
+          fns = [
+            {n:"Política",v:50,color:"#b08888"},{n:"Crítica",v:50,color:"#889eb0"},
+            {n:"Cognitiva",v:50,color:"#b8952e"},{n:"Educativa",v:50,color:"#6aaa7a"},
+            {n:"Terapéutica",v:50,color:"#9b88b0"},{n:"Ideológica",v:50,color:"#b8952e"}
+          ];
+        }
+
+        dt = {
+          n: nom || desc,
+          c: "Análisis basado en la descripción",
+          f: fns,
+          a: "Esta obra muestra un equilibrio entre funciones. Toda manifestación artística cumple múltiples funciones simultáneamente, aunque alguna suele predominar según el contexto.",
+          r: "Aristóteles: la finalidad del arte no es representar la apariencia exterior de las cosas, sino su significado interior."
+        };
+      }
+
+      document.getElementById('rn').innerHTML = '<strong>' + dt.n + '</strong><br><em>' + dt.c + '</em>';
+      document.getElementById('rbars').innerHTML = dt.f.map(function(f) {
+        return '<div class="bb"><div class="bl"><span>' + f.n + '</span><span>' + f.v + '%</span></div><div class="bt"><div class="bf" data-w="' + f.v + '" style="background:' + f.color + '"></div></div></div>';
+      }).join('');
+      document.getElementById('ra').textContent = dt.a;
+      document.getElementById('rr').textContent = dt.r;
+
+      document.getElementById('rblock').classList.add('v');
+
+      setTimeout(function() {
+        document.querySelectorAll('.bf').forEach(function(bar) {
+          bar.style.width = bar.dataset.w + '%';
+        });
+      }, 200);
+
+      btn.disabled = false;
+      btn.innerHTML = '&#10022; Analizar obra';
+
+      setTimeout(function() {
+        document.getElementById('rblock').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 300);
+    }, 1800);
+  });
+
 })();
-// Nav
-const nav=document.getElementById('navbar');
-addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
-// Mobile menu
-document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));
-document.querySelectorAll('.na a').forEach(l=>l.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('active')));
-// Hero
-const tl=gsap.timeline({delay:0.4});
-tl.to('#hb',{opacity:1,y:0,duration:0.8,ease:'power3.out'})
-  .to('#ht',{opacity:1,y:0,duration:1,ease:'power3.out'},'-=0.5')
-  .to('#ho',{opacity:1,scale:1,duration:0.6,ease:'power3.out'},'-=0.6')
-  .to('#hs',{opacity:1,y:0,duration:0.8,ease:'power3.out'},'-=0.4')
-  .to('#hc',{opacity:1,y:0,duration:0.8,ease:'power3.out'},'-=0.4')
-  .to('#hh',{opacity:1,duration:0.8},'-=0.3');
-// Reveal
-gsap.utils.toArray('.reveal').forEach(el=>{
-ScrollTrigger.create({trigger(el,start:'top 88%',onEnter:()=>gsap.to(el,{opacity:1,y:0,x:0,duration:0.8,ease:'power3.out'}),once:true})
-});
-// Back to top
-const btp=document.getElementById('btp');
-addEventListener('scroll',()=>btp.classList.toggle('v',scrollY>500));
-btp.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})}));
-// Analyzer
-const data={
-guernica:{n:"Guernica — Picasso",c:"Óleo de 1937",f:[{n:"Política",v:98,color:"#b08888"},{n:"Crítica",v:95,color:"#889eb0"},{n:"Cognitiva",v:70,color:"#b8952e"},{n:"Ética",v:60,color:"#6aaa7a"},{n:"Ideológica",v:75,color:"#b8952e"},{n:"Terapéutica",v:40,color:"#9b88b0"}],a:"El Guernica es un grito de horror contra la guerra. Su composición caótica en blanco, negro y grises evoca las fotografías de guerra. Las figuras retorcidas transmiten el sufrimiento de los civiles. Es el anti-monumento perfecto: no celebra ninguna victoria.",r:"El arte puede ser el testigo más poderoso de la Historia. Picasso creó un arma que sigue atacando la barbarie siete décadas después."},
-quijote:{n:"El Quijote — Cervantes",c:"Novela, 1605-1615",f:[{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:95,color:"#6aaa7a"},{n:"Terapéutica",v:85,color:"#9b88b0"},{n:"Crítica",v:90,color:"#889eb0"},{n:"Ideológica",v:70,color:"#b8952e"},{n:"Política",v:50,color:"#b08888"}],a:"El Quijote cumple casi todas las funciones del arte: cognitiva, educativa, terapéutica, crítica e ideológica. Don Quijote plantea si es más cuerdo luchar por ideales que aceptar pasivamente las injusticias.",r:"Don Quijote nos enseña que la lucidez a veces se parece mucho a la locura."},
-avignon:{n:"Las señoritas de Avignon — Picasso",c:"Óleo, 1907",f:[{n:"Genio (Kant)",v:98,color:"#b8952e"},{n:"Crítica",v:90,color:"#889eb0"},{n:"Cognitiva",v:85,color:"#b8952e"},{n:"Ideológica",v:80,color:"#6aaa7a"},{n:"Política",v:15,color:"#b08888"},{n:"Terapéutica",v:20,color:"#9b88b0"}],a:"Esta obra es el ejemplo del genio kantiano: Picasso creó reglas completamente nuevas. El cubismo transformó el arte occidental. Destruye la perspectiva renacentista como un muro.",r:"Picasso no buscaba una regla nueva: la encontraba. Eso es el genio."},
-grito:{n:"El Grito — Munch",c:"Óleo y pastel, 1893",f:[{n:"Terapéutica",v:98,color:"#9b88b0"},{n:"Cognitiva",v:80,color:"#b8952e"},{n:"Crítica",v:75,color:"#889eb0"},{n:"Experiencia Estética",v:90,color:"#6aaa7a"},{n:"Política",v:20,color:"#b08888"},{n:"Ideológica",v:40,color:"#b8952e"}],a:"Munch canalizó su angustia existencial en la pintura. La figura retorcida, el cielo de rojos incandescentes, las dos figuras indiferentes simbolizan la angustia universal.",r:"Kierkegaard llamaba a esto 'el vértigo de la libertad'. El Grito lo hace visible."},
-piedad:{n:"La Piedad del Vaticano — Miguel Ángel",c:"Mármol, 1499",f:[{n:"Educativa",v:95,color:"#6aaa7a"},{n:"Ideológica",v:90,color:"#b8952e"},{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Cognitiva",v:60,color:"#b8952e"},{n:"Política",v:60,color:"#b08888"},{n:"Terapéutica",v:70,color:"#9b88b0"}],a:"Encarna el ideal neoplatónico: la belleza terrenal como reflejo de lo divino. Es catequesis en mármol, propaganda eclesial y obra maestra de la proporción.",r:"Miguel Ángel esculpió la belleza neoplatónica. Contemplar la Piedad eleva el alma."},
-meninas:{n:"Las Meninas — Velázquez",c:"Óleo, 1656",f:[{n:"Cognitiva",v:98,color:"#b8952e"},{n:"Política",v:85,color:"#b08888"},{n:"Crítica",v:80,color:"#889eb0"},{n:"Ideológica",v:75,color:"#6aaa7a"},{n:"Educativa",v:50,color:"#b8952e"},{n:"Terapéutica",v:30,color:"#9b88b0"}],a:"Reflexión filosófica en forma de pintura. El juego de miradas, la ruptura de realidad y ficción, la reivindicación del estatus del artista. Foucault le dedicó un capítulo entero.",r:"Las Meninas enseña que la representación no es inocente: toda imagen construye una visión del mundo."},
-girasoles:{n:"Los Girasoles — Van Gogh",c:"Óleo, 1888, serie",f:[{n:"Terapéutica",v:95,color:"#9b88b0"},{n:"Cognitiva",v:75,color:"#b8952e"},{n:"Belleza Expresiva",v:90,color:"#889eb0"},{n:"Experiencia Estética",v:80,color:"#6aaa7a"},{n:"Política",v:5,color:"#b08888"},{n:"Ideológica",v:15,color:"#b8952e"}],a:"Pintados desde la desesperación para un amigo. La técnica es revolucionaria: pinceladas gruesas construyen los pétalos como arcilla. Meditación sobre el ciclo de la vida.",r:"Nietzsche: tenemos el arte para no morir de la verdad. Los Girasoles lo demuestran."},
-nacimiento:{n:"El Nacimiento de Venus — Botticelli",c:"Temple sobre lienzo, 1485",f:[{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Educativa",v:80,color:"#6aaa7a"},{n:"Cognitiva",v:65,color:"#b8952e"},{n:"Política",v:55,color:"#b08888"},{n:"Terapéutica",v:65,color:"#9b88b0"}],a:"Encarna el neoplatonismo florentino: belleza pagana como camino espiritual. Venus nace del mar con una melancolía que ha fascinado durante cinco siglos.",r:"Plotino: la belleza es el esplendor de la verdad. Botticelli lo hizo visible."},
-"1984book":{n:"1984 — George Orwell",c:"Novela distópica, 1949",f:[{n:"Política",v:99,color:"#b08888"},{n:"Crítica",v:98,color:"#889eb0"},{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:90,color:"#6aaa7a"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Terapéutica",v:30,color:"#9b88b0"}],a:"Advertencia contra el totalitarismo. Conceptos como 'Gran Hermano', 'neolengua', 'doble pensamiento' describen fenómenos reales. El final demoledor: '¡Amo al Gran Hermano!'",r:"Orwell enseñó que controlar el lenguaje es controlar el pensamiento. Más relevante que nunca."},
-noche:{n:"La noche estrellada — Van Gogh",c:"Óleo, 1889",f:[{n:"Terapéutica",v:97,color:"#9b88b0"},{n:"Cognitiva",v:80,color:"#b8952e"},{n:"Experiencia Estética",v:95,color:"#6aaa7a"},{n:"Lo Sublime",v:92,color:"#889eb0"},{n:"Política",v:5,color:"#b08888"},{n:"Ideológica",v:20,color:"#b8952e"}],a:"Pintada desde un hospital psiquiátrico. Cielo vibrante de estrellas girando, pueblo dormido abajo. El contraste entre el cosmos convulso y la paz doméstica es extraordinario.",r:"Heidegger: el arte es el ponerse a trabajar de la verdad. La noche estrellada transforma sufrimiento en luz."}
-};
-document.getElementById('abtn').addEventListener('click',function(){
-const s=document.getElementById('sel').value,n=document.getElementById('nom').value.trim(),d=document.getElementById('desc').value.trim();
-if(!s&&!n&&!d){alert('Selecciona una obra o escribe una descripción.');return}
-this.disabled=true;this.textContent='Analizando...';
-document.getElementById('rblock').classList.remove('v');
-setTimeout(()=>{
-let dt;
-if(s&&data[s]) dt=data[s];
-else{const t=(n+' '+d).toLowerCase();let vals={cognitiva:50,educativa:50,terapeutica:50,politica:50,critica:50,ideologica:50};
-const kw={politica:['guerra','poder','gobierno','política','revolución','fascismo','dictadura','imperio','rey','estado'],critica:['crítica','denuncia','abuso','injusticia','violencia','barbarie','horror','sufrimiento','muerte','dolor'],cognitiva:['aprender','conocimiento','enseñar','verdad','realidad','mundo','naturaleza','universo','existencia','vida'],educativa:['educar','valor','moral','ético','formar','crecer','fe','creencia','espiritual','virtud'],terapeutica:['curar','sanar','consuelo','angustia','ansiedad','depresión','trauma','enfermedad','amor','paz'],ideologica:['ideología','doctrina','propaganda','pensamiento','creencia','cultura','identidad','nación','clase']};
-for(const[fn,ws]of Object.entries(kw)){for(const w of ws){if(t.includes(w))vals[fn]=Math.min(95,vals[fn]+25)}}
-const fns=[];if(vals.politica>=65)fns.push({n:"Política",v:vals.politica,color:"#b08888"});if(vals.critica>=65)fns.push({n:"Crítica",v:vals.critica,color:"#889eb0"});if(vals.cognitiva>=65)fns.push({n:"Cognitiva",v:vals.cognitiva,color:"#b8952e"});if(vals.educativa>=65)fns.push({n:"Educativa",v:vals.educativa,color:"#6aaa7a"});if(vals.terapeutica>=65)fns.push({n:"Terapéutica",v:vals.terapeutica,color:"#9b88b0"});if(vals.ideologica>=65)fns.push({n:"Ideológica",v:vals.ideologica,color:"#b8952e"});
-if(!fns.length)fns.push({n:"Política",v:50,color:"#b08888"},{n:"Crítica",v:50,color:"#889eb0"},{n:"Cognitiva",v:50,color:"#b8952e"},{n:"Educativa",v:50,color:"#6aaa7a"},{n:"Terapéutica",v:50,color:"#9b88b0"},{n:"Ideológica",v:50,color:"#b8952e"});
-dt={n:n||d,c:"Análisis basado en la descripción",f:fns,a:"Esta obra muestra un equilibrio entre funciones. Toda manifestación artística cumple múltiples funciones simultáneamente, aunque alguna suele predominar según el contexto.",r:"Aristóteles: la finalidad del arte no es representar la apariencia exterior de las cosas, sino su significado interior."}
-document.getElementById('rn').innerHTML=`<strong>${dt.n}</strong><br><em>${dt.c}</em>`;
-document.getElementById('rbars').innerHTML=dt.f.map(f=>`<div class="bb"><div class="bl"><span>${f.n}</span><span>${f.v}%</span></div><div class="bt"><div class="bf" data-w="${f.v}" style="background:${f.color}"></div></div></div>`).join('');
-document.getElementById('ra').textContent=dt.a;document.getElementById('rr').textContent=dt.r;
-document.getElementById('rblock').classList.add('v');
-setTimeout(()=>document.querySelectorAll('.bf').forEach(b=>b.style.width=b.dataset.w+'%'),200);
-this.disabled=false;this.textContent='✦ Analizar obra';
-setTimeout(()=>document.getElementById('rblock').scrollIntoView({behavior:'smooth',block:'nearest'}),300);
-},1800)
-})
 </script>
 </body>
 </html>
