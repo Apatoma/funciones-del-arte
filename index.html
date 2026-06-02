@@ -727,12 +727,17 @@ footer .g{color:var(--ac)}
   <div class="sheader reveal">
     <span class="se">V — Inteligencia Artificial</span>
     <h2 class="st">Analizador <em>de Obras</em></h2>
-    <p class="sd">Selecciona o describe una obra de arte y el sistema identificará sus funciones estéticas.</p>
+    <p class="sd">Selecciona o describe una obra de arte y la IA analizará sus funciones estéticas usando visión artificial.</p>
   </div>
   <div class="ar reveal"><div class="ai">
     <div class="at">Analizador Filosófico de Arte</div>
-    <p class="as">Selecciona una obra o descríbela para analizar sus funciones</p>
+    <p class="as">IA real con visión artificial — Selecciona una obra o descríbela</p>
     <div class="af">
+      <div class="ig">
+        <label for="orToken">🔑 Token de OpenRouter</label>
+        <input type="password" id="orToken" placeholder="Pega tu token sk-or-v1-..." style="font-size:0.8rem">
+        <p style="font-size:0.7rem;color:var(--tm);margin-top:0.3rem">Tu token se guarda localmente en tu navegador y nunca se envía a ningún servidor excepto OpenRouter. <a href="https://openrouter.ai/keys" target="_blank" style="color:var(--ac)">Obtener token gratuito →</a></p>
+      </div>
       <div class="ig">
         <label for="sel">Obra conocida</label>
         <select id="sel">
@@ -916,188 +921,189 @@ footer .g{color:var(--ac)}
     });
   });
 
-  // ANALYZER
-  var analyzerData = {
-    guernica: {
-      n: "Guernica — Picasso", c: "Óleo de 1937",
-      f: [{n:"Política",v:98,color:"#b08888"},{n:"Crítica",v:95,color:"#889eb0"},{n:"Cognitiva",v:70,color:"#b8952e"},{n:"Ética",v:60,color:"#6aaa7a"},{n:"Ideológica",v:75,color:"#b8952e"},{n:"Terapéutica",v:40,color:"#9b88b0"}],
-      a: "El Guernica es un grito de horror contra la guerra. Su composición caótica en blanco, negro y grises evoca las fotografías de guerra. Las figuras retorcidas transmiten el sufrimiento de los civiles. Es el anti-monumento perfecto: no celebra ninguna victoria.",
-      r: "El arte puede ser el testigo más poderoso de la Historia. Picasso creó un arma que sigue atacando la barbarie siete décadas después."
-    },
-    quijote: {
-      n: "El Quijote — Cervantes", c: "Novela, 1605-1615",
-      f: [{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:95,color:"#6aaa7a"},{n:"Terapéutica",v:85,color:"#9b88b0"},{n:"Crítica",v:90,color:"#889eb0"},{n:"Ideológica",v:70,color:"#b8952e"},{n:"Política",v:50,color:"#b08888"}],
-      a: "El Quijote cumple casi todas las funciones del arte: cognitiva, educativa, terapéutica, crítica e ideológica. Don Quijote plantea si es más cuerdo luchar por ideales que aceptar pasivamente las injusticias.",
-      r: "Don Quijote nos enseña que la lucidez a veces se parece mucho a la locura."
-    },
-    avignon: {
-      n: "Las señoritas de Avignon — Picasso", c: "Óleo, 1907",
-      f: [{n:"Genio (Kant)",v:98,color:"#b8952e"},{n:"Crítica",v:90,color:"#889eb0"},{n:"Cognitiva",v:85,color:"#b8952e"},{n:"Ideológica",v:80,color:"#6aaa7a"},{n:"Política",v:15,color:"#b08888"},{n:"Terapéutica",v:20,color:"#9b88b0"}],
-      a: "Esta obra es el ejemplo del genio kantiano: Picasso creó reglas completamente nuevas. El cubismo transformó el arte occidental. Destruye la perspectiva renacentista como un muro.",
-      r: "Picasso no buscaba una regla nueva: la encontraba. Eso es el genio."
-    },
-    grito: {
-      n: "El Grito — Munch", c: "Óleo y pastel, 1893",
-      f: [{n:"Terapéutica",v:98,color:"#9b88b0"},{n:"Cognitiva",v:80,color:"#b8952e"},{n:"Crítica",v:75,color:"#889eb0"},{n:"Experiencia Estética",v:90,color:"#6aaa7a"},{n:"Política",v:20,color:"#b08888"},{n:"Ideológica",v:40,color:"#b8952e"}],
-      a: "Munch canalizó su angustia existencial en la pintura. La figura retorcida, el cielo de rojos incandescentes, las dos figuras indiferentes simbolizan la angustia universal.",
-      r: "Kierkegaard llamaba a esto 'el vértigo de la libertad'. El Grito lo hace visible."
-    },
-    piedad: {
-      n: "La Piedad del Vaticano — Miguel Ángel", c: "Mármol, 1499",
-      f: [{n:"Educativa",v:95,color:"#6aaa7a"},{n:"Ideológica",v:90,color:"#b8952e"},{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Cognitiva",v:60,color:"#b8952e"},{n:"Política",v:60,color:"#b08888"},{n:"Terapéutica",v:70,color:"#9b88b0"}],
-      a: "Encarna el ideal neoplatónico: la belleza terrenal como reflejo de lo divino. Es catequesis en mármol, propaganda eclesial y obra maestra de la proporción.",
-      r: "Miguel Ángel esculpió la belleza neoplatónica. Contemplar la Piedad eleva el alma."
-    },
-    meninas: {
-      n: "Las Meninas — Velázquez", c: "Óleo, 1656",
-      f: [{n:"Cognitiva",v:98,color:"#b8952e"},{n:"Política",v:85,color:"#b08888"},{n:"Crítica",v:80,color:"#889eb0"},{n:"Ideológica",v:75,color:"#6aaa7a"},{n:"Educativa",v:50,color:"#b8952e"},{n:"Terapéutica",v:30,color:"#9b88b0"}],
-      a: "Reflexión filosófica en forma de pintura. El juego de miradas, la ruptura de realidad y ficción, la reivindicación del estatus del artista. Foucault le dedicó un capítulo entero.",
-      r: "Las Meninas enseña que la representación no es inocente: toda imagen construye una visión del mundo."
-    },
-    girasoles: {
-      n: "Los Girasoles — Van Gogh", c: "Óleo, 1888, serie",
-      f: [{n:"Terapéutica",v:95,color:"#9b88b0"},{n:"Cognitiva",v:75,color:"#b8952e"},{n:"Belleza Expresiva",v:90,color:"#889eb0"},{n:"Experiencia Estética",v:80,color:"#6aaa7a"},{n:"Política",v:5,color:"#b08888"},{n:"Ideológica",v:15,color:"#b8952e"}],
-      a: "Pintados desde la desesperación para un amigo. La técnica es revolucionaria: pinceladas gruesas construyen los pétalos como arcilla. Meditación sobre el ciclo de la vida.",
-      r: "Nietzsche: tenemos el arte para no morir de la verdad. Los Girasoles lo demuestran."
-    },
-    nacimiento: {
-      n: "El Nacimiento de Venus — Botticelli", c: "Temple sobre lienzo, 1485",
-      f: [{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Educativa",v:80,color:"#6aaa7a"},{n:"Cognitiva",v:65,color:"#b8952e"},{n:"Política",v:55,color:"#b08888"},{n:"Terapéutica",v:65,color:"#9b88b0"}],
-      a: "Encarna el neoplatonismo florentino: belleza pagana como camino espiritual. Venus nace del mar con una melancolía que ha fascinado durante cinco siglos.",
-      r: "Plotino: la belleza es el esplendor de la verdad. Botticelli lo hizo visible."
-    },
-    "1984book": {
-      n: "1984 — George Orwell", c: "Novela distópica, 1949",
-      f: [{n:"Política",v:99,color:"#b08888"},{n:"Crítica",v:98,color:"#889eb0"},{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:90,color:"#6aaa7a"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Terapéutica",v:30,color:"#9b88b0"}],
-      a: "Advertencia contra el totalitarismo. Conceptos como 'Gran Hermano', 'neolengua', 'doble pensamiento' describen fenómenos reales. El final demoledor: '¡Amo al Gran Hermano!'",
-      r: "Orwell enseñó que controlar el lenguaje es controlar el pensamiento. Más relevante que nunca."
-    },
-    noche: {
-      n: "La noche estrellada — Van Gogh", c: "Óleo, 1889",
-      f: [{n:"Terapéutica",v:97,color:"#9b88b0"},{n:"Cognitiva",v:80,color:"#b8952e"},{n:"Experiencia Estética",v:95,color:"#6aaa7a"},{n:"Lo Sublime",v:92,color:"#889eb0"},{n:"Política",v:5,color:"#b08888"},{n:"Ideológica",v:20,color:"#b8952e"}],
-      a: "Pintada desde un hospital psiquiátrico. Cielo vibrante de estrellas girando, pueblo dormido abajo. El contraste entre el cosmos convulso y la paz doméstica es extraordinario.",
-      r: "Heidegger: el arte es el ponerse a trabajar de la verdad. La noche estrellada transforma sufrimiento en luz."
-    },
-    mona: {
-      n: "La Gioconda — Leonardo da Vinci", c: "Óleo sobre tabla, 1503-1519",
-      f: [{n:"Cognitiva",v:90,color:"#b8952e"},{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Experiencia Estética",v:88,color:"#6aaa7a"},{n:"Política",v:30,color:"#b08888"},{n:"Terapéutica",v:40,color:"#9b88b0"}],
-      a: "El cuadro más famoso del mundo. La técnica del sfumato hace imposible determinar las transiciones entre luz y sombra. La sonrisa deliberadamente ambigua admite todas las interpretaciones. El paisaje irreal del fondo parece un estado del alma más que un lugar real.",
-      r: "Leonardo pintó una expresión que contenía todas las emociones humanas a la vez. Ese es su misterio irresoluble."
-    },
-    libertad: {
-      n: "La Libertad guiando al pueblo — Delacroix", c: "Óleo sobre lienzo, 1830",
-      f: [{n:"Política",v:98,color:"#b08888"},{n:"Crítica",v:92,color:"#889eb0"},{n:"Cognitiva",v:70,color:"#b8952e"},{n:"Experiencia Estética",v:75,color:"#6aaa7a"},{n:"Educativa",v:60,color:"#b8952e"},{n:"Terapéutica",v:35,color:"#9b88b0"}],
-      a: "La Libertad personificada avanza sobre cadáveres agitando la bandera tricolor. Las clases sociales se funden en la barricada. La composición diagonal y el dramatismo lumínico rompen con el neoclásico. La obra fue retirada de la vista pública durante décadas por subversiva.",
-      r: "Delacroix demostró que el arte puede ser un acto de rebeldía tanto estética como política."
-    },
-    beso: {
-      n: "El beso — Klimt", c: "Óleo y pan de oro, 1907-1908",
-      f: [{n:"Terapéutica",v:92,color:"#9b88b0"},{n:"Belleza Expresiva",v:98,color:"#889eb0"},{n:"Experiencia Estética",v:90,color:"#6aaa7a"},{n:"Lo Sublime",v:70,color:"#889eb0"},{n:"Política",v:10,color:"#b08888"},{n:"Ideológica",v:25,color:"#b8952e"}],
-      a: "Dos amantes se funden en un abrazo suspendido sobre un prado de flores. Rectángulos (él) y círculos (ella) construyen una gramática visual de la diferencia sexual. El fondo dorado elimina todo contexto: este beso es universal, eterno, fuera del tiempo.",
-      r: "Klimt transformó la intimidad humana en una experiencia estética sublime."
-    },
-    dali: {
-      n: "La persistencia de la memoria — Dalí", c: "Óleo sobre lienzo, 1931",
-      f: [{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Terapéutica",v:80,color:"#9b88b0"},{n:"Experiencia Estética",v:88,color:"#6aaa7a"},{n:"Lo Sublime",v:75,color:"#889eb0"},{n:"Política",v:15,color:"#b08888"},{n:"Crítica",v:30,color:"#889eb0"}],
-      a: "Tres relojes blandos se derriten en un paisaje de Port Lligat bañado en luz de atardecer. El tiempo no es rígido sino subjeto, maleable, blando. Un cuarto reloj cubierto de hormigas evoca la decadencia. Dalí pintó esta imagen casi automáticamente tras contemplar un camembert derritiéndose.",
-      r: "Dalí demostró que la intuición surrealista podía anticipar verdades que la física tardaría en formular."
-    },
-    rembrandt: {
-      n: "La ronda de noche — Rembrandt", c: "Óleo sobre lienzo, 1642",
-      f: [{n:"Política",v:80,color:"#b08888"},{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:85,color:"#6aaa7a"},{n:"Belleza Expresiva",v:78,color:"#889eb0"},{n:"Crítica",v:40,color:"#b08888"},{n:"Ideológica",v:55,color:"#b8952e"}],
-      a: "El capitán avanza dando órdenes mientras la mascota — una niña — brilla con la luz más intensa. Rembrandt distribuyó la luz de forma dramática en lugar de igual para todos. El resultado convierte un retrato corporativo en una escena narrativa de energía insuperable.",
-      r: "Rembrandt enseñó que la luz no tiene la función de iluminar sino de revelar lo verdaderamente importante."
-    }
+  // ANALYZER — OpenRouter AI (token introducido por el usuario)
+  var OR_MODEL = 'moonshotai/kimi-k2.6:free';
+  var OR_URL = 'https://openrouter.ai/api/v1/chat/completions';
+
+  // Guardar token en localStorage al escribir
+  document.getElementById('orToken').addEventListener('change', function() {
+    localStorage.setItem('or_token', this.value.trim());
+  });
+  // Cargar token guardado
+  var savedToken = localStorage.getItem('or_token');
+  if (savedToken) document.getElementById('orToken').value = savedToken;
+
+  var artworkImages = {
+    guernica: 'https://upload.wikimedia.org/wikipedia/en/7/74/Guernica.jpg',
+    quijote: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/El_ingenioso_hidalgo_don_Quijote_de_la_Mancha.jpg/1280px-El_ingenioso_hidalgo_don_Quijote_de_la_Mancha.jpg',
+    avignon: 'https://upload.wikimedia.org/wikipedia/en/4/4c/Les_Demoiselles_d%27Avignon.jpg',
+    grito: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg',
+    piedad: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Michelangelo%27s_Piet%C3%A0_Rovere_%28rectangular%29.jpg/800px-Michelangelo%27s_Piet%C3%A0_Rovere_%28rectangular%29.jpg',
+    meninas: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_thin_black_margin.jpg/1280px-Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_thin_black_margin.jpg',
+    girasoles: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Vincent_Willem_van_Gogh_127.jpg/800px-Vincent_Willem_van_Gogh_127.jpg',
+    nacimiento: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1280px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg',
+    '1984book': 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg',
+    noche: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
+    mona: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg',
+    libertad: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Eug%C3%A8ne_Delacroix_-_La_libert%C3%A9_guidant_le_peuple.jpg/1280px-Eug%C3%A8ne_Delacroix_-_La_libert%C3%A9_guidant_le_peuple.jpg',
+    beso: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg/1280px-The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg',
+    dali: 'https://upload.wikimedia.org/wikipedia/en/d/dd/The_Persistence_of_Memory.jpg',
+    rembrandt: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Night_Watch_-_HD.jpg/1280px-The_Night_Watch_-_HD.jpg'
   };
+
+  var artworkNames = {
+    guernica: 'Guernica — Pablo Picasso (1937)',
+    quijote: 'El Quijote — Miguel de Cervantes (1605-1615)',
+    avignon: 'Las señoritas de Avignon — Pablo Picasso (1907)',
+    grito: 'El Grito — Edvard Munch (1893)',
+    piedad: 'La Piedad del Vaticano — Miguel Ángel (1499)',
+    meninas: 'Las Meninas — Diego Velázquez (1656)',
+    girasoles: 'Los Girasoles — Vincent van Gogh (1888)',
+    nacimiento: 'El Nacimiento de Venus — Sandro Botticelli (1485)',
+    '1984book': '1984 — George Orwell (1949)',
+    noche: 'La noche estrellada — Vincent van Gogh (1889)',
+    mona: 'La Gioconda (Mona Lisa) — Leonardo da Vinci (1503-1519)',
+    libertad: 'La Libertad guiando al pueblo — Eugène Delacroix (1830)',
+    beso: 'El beso — Gustav Klimt (1907-1908)',
+    dali: 'La persistencia de la memoria — Salvador Dalí (1931)',
+    rembrandt: 'La ronda de noche — Rembrandt (1642)'
+  };
+
+  function renderResult(dt) {
+    document.getElementById('rn').innerHTML = '<strong>' + dt.n + '</strong><br><em>' + dt.c + '</em>';
+    document.getElementById('rbars').innerHTML = dt.f.map(function(f) {
+      return '<div class="bb"><div class="bl"><span>' + f.n + '</span><span>' + f.v + '%</span></div><div class="bt"><div class="bf" data-w="' + f.v + '" style="background:' + f.color + '"></div></div></div>';
+    }).join('');
+    document.getElementById('ra').textContent = dt.a;
+    document.getElementById('rr').textContent = dt.r;
+    document.getElementById('rblock').classList.add('v');
+    setTimeout(function() {
+      document.querySelectorAll('.bf').forEach(function(bar) {
+        bar.style.width = bar.dataset.w + '%';
+      });
+    }, 200);
+    setTimeout(function() {
+      document.getElementById('rblock').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 300);
+  }
+
+  function parseAIResponse(text, artworkName) {
+    var dt = { n: artworkName, c: 'Análisis por IA (OpenRouter — Kimi K2.6)', f: [], a: '', r: '' };
+    try {
+      var jsonMatch = text.match(/\{[\s\S]*"funciones"[\s\S]*\}/);
+      if (jsonMatch) {
+        var parsed = JSON.parse(jsonMatch[0]);
+        if (parsed.nombre) dt.n = parsed.nombre;
+        if (parsed.funciones && Array.isArray(parsed.funciones)) {
+          var colors = { 'Política':'#b08888','Crítica':'#889eb0','Cognitiva':'#b8952e','Educativa':'#6aaa7a','Terapéutica':'#9b88b0','Ideológica':'#b8952e','Belleza':'#889eb0','Experiencia Estética':'#6aaa7a','Genio':'#b8952e','Lo Sublime':'#889eb0' };
+          dt.f = parsed.funciones.map(function(f) {
+            return { n: f.nombre || f, v: Math.min(99, Math.max(5, parseInt(f.valor || f.porcentaje || 50))), color: colors[f.nombre || f] || '#b8952e' };
+          });
+        }
+        if (parsed.analisis) dt.a = parsed.analisis;
+        if (parsed.reflexion) dt.r = parsed.reflexion;
+        if (dt.f.length && dt.a) return dt;
+      }
+    } catch(e) {}
+    dt.f = [
+      {n:"Cognitiva",v:72,color:"#b8952e"},{n:"Educativa",v:65,color:"#6aaa7a"},
+      {n:"Terapéutica",v:58,color:"#9b88b0"},{n:"Política",v:45,color:"#b08888"},
+      {n:"Crítica",v:55,color:"#889eb0"},{n:"Ideológica",v:50,color:"#b8952e"}
+    ];
+    dt.a = text.substring(0, 500);
+    dt.r = 'Análisis generado por inteligencia artificial.';
+    return dt;
+  }
 
   document.getElementById('abtn').addEventListener('click', function() {
     var sel = document.getElementById('sel').value;
     var nom = document.getElementById('nom').value.trim();
     var desc = document.getElementById('desc').value.trim();
+    var token = document.getElementById('orToken').value.trim();
     var btn = this;
 
+    if (!token) {
+      alert('Introduce tu token de OpenRouter en el campo correspondiente.\nPuedes obtener uno gratuito en openrouter.ai/keys');
+      document.getElementById('orToken').focus();
+      return;
+    }
     if (!sel && !nom && !desc) {
       alert('Selecciona una obra o escribe una descripción.');
       return;
     }
 
     btn.disabled = true;
-    btn.textContent = 'Analizando...';
+    btn.classList.add('loading');
+    btn.textContent = 'Analizando con IA...';
     document.getElementById('rblock').classList.remove('v');
 
-    setTimeout(function() {
-      var dt;
+    var artworkName = sel ? (artworkNames[sel] || sel) : (nom || 'Obra sin título');
+    var imageUrl = sel ? (artworkImages[sel] || '') : '';
 
-      if (sel && analyzerData[sel]) {
-        dt = analyzerData[sel];
+    var systemPrompt = 'Eres un experto en filosofía del arte y estética. Analiza la obra de arte que se te presenta identificando qué funciones del arte cumple, según la teoría filosófica (cognitiva, educativa/ética, terapéutica, política, crítica, ideológica, belleza, experiencia estética, genio según Kant, lo sublime). Responde SOLO con un JSON válido, sin texto adicional, con esta estructura exacta: {"nombre":"...","funciones":[{"nombre":"Política","valor":85},...],"analisis":"análisis detallado de 3-4 párrafos sobre la obra, su contexto y significado filosófico","reflexion":"una reflexión filosófica profunda de 1-2 párrafos con referencias a filósofos como Platón, Aristóteles, Kant, Hegel, Nietzsche, Heidegger, Adorno, Benjamin, etc."} Los valores de funciones son números enteros del 5 al 99. Incluye solo las funciones que realmente aplica (mínimo 3, máximo 7). El análisis debe ser riguroso, académico y detallado.';
+
+    var userContent;
+    if (imageUrl) {
+      userContent = [
+        { type: 'text', text: 'Analiza esta obra de arte: ' + artworkName + (desc ? '. Descripción adicional del usuario: ' + desc : '') },
+        { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
+      ];
+    } else {
+      userContent = 'Analiza esta obra de arte. Nombre: ' + nom + '. Descripción: ' + desc + '. Proporciona un análisis filosófico profundo de las funciones del arte que cumple esta obra.';
+    }
+
+    fetch(OR_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://apatoma.github.io/funciones-del-arte/',
+        'X-Title': 'Analizador Filosófico de Arte'
+      },
+      body: JSON.stringify({
+        model: OR_MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userContent }
+        ],
+        temperature: 0.7,
+        max_tokens: 2048
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      var aiText = '';
+      if (data.choices && data.choices[0] && data.choices[0].message) {
+        aiText = data.choices[0].message.content;
+      } else if (data.error) {
+        throw new Error(data.error.message || 'Error de API');
       } else {
-        var text = (nom + ' ' + desc).toLowerCase();
-        var vals = { cognitiva: 50, educativa: 50, terapeutica: 50, politica: 50, critica: 50, ideologica: 50 };
-
-        var keywords = {
-          politica: ['guerra','poder','gobierno','política','revolución','fascismo','dictadura','imperio','rey','estado'],
-          critica: ['crítica','denuncia','abuso','injusticia','violencia','barbarie','horror','sufrimiento','muerte','dolor'],
-          cognitiva: ['aprender','conocimiento','enseñar','verdad','realidad','mundo','naturaleza','universo','existencia','vida'],
-          educativa: ['educar','valor','moral','ético','formar','crecer','fe','creencia','espiritual','virtud'],
-          terapeutica: ['curar','sanar','consuelo','angustia','ansiedad','depresión','trauma','enfermedad','amor','paz'],
-          ideologica: ['ideología','doctrina','propaganda','pensamiento','creencia','cultura','identidad','nación','clase']
-        };
-
-        for (var fn in keywords) {
-          for (var i = 0; i < keywords[fn].length; i++) {
-            if (text.indexOf(keywords[fn][i]) !== -1) {
-              vals[fn] = Math.min(95, vals[fn] + 25);
-            }
-          }
-        }
-
-        var fns = [];
-        if (vals.politica >= 65) fns.push({n:"Política",v:vals.politica,color:"#b08888"});
-        if (vals.critica >= 65) fns.push({n:"Crítica",v:vals.critica,color:"#889eb0"});
-        if (vals.cognitiva >= 65) fns.push({n:"Cognitiva",v:vals.cognitiva,color:"#b8952e"});
-        if (vals.educativa >= 65) fns.push({n:"Educativa",v:vals.educativa,color:"#6aaa7a"});
-        if (vals.terapeutica >= 65) fns.push({n:"Terapéutica",v:vals.terapeutica,color:"#9b88b0"});
-        if (vals.ideologica >= 65) fns.push({n:"Ideológica",v:vals.ideologica,color:"#b8952e"});
-
-        if (!fns.length) {
-          fns = [
-            {n:"Política",v:50,color:"#b08888"},{n:"Crítica",v:50,color:"#889eb0"},
-            {n:"Cognitiva",v:50,color:"#b8952e"},{n:"Educativa",v:50,color:"#6aaa7a"},
-            {n:"Terapéutica",v:50,color:"#9b88b0"},{n:"Ideológica",v:50,color:"#b8952e"}
-          ];
-        }
-
-        dt = {
-          n: nom || desc,
-          c: "Análisis basado en la descripción",
-          f: fns,
-          a: "Esta obra muestra un equilibrio entre funciones. Toda manifestación artística cumple múltiples funciones simultáneamente, aunque alguna suele predominar según el contexto.",
-          r: "Aristóteles: la finalidad del arte no es representar la apariencia exterior de las cosas, sino su significado interior."
-        };
+        throw new Error('Respuesta inesperada');
       }
-
-      document.getElementById('rn').innerHTML = '<strong>' + dt.n + '</strong><br><em>' + dt.c + '</em>';
-      document.getElementById('rbars').innerHTML = dt.f.map(function(f) {
-        return '<div class="bb"><div class="bl"><span>' + f.n + '</span><span>' + f.v + '%</span></div><div class="bt"><div class="bf" data-w="' + f.v + '" style="background:' + f.color + '"></div></div></div>';
-      }).join('');
-      document.getElementById('ra').textContent = dt.a;
-      document.getElementById('rr').textContent = dt.r;
-
-      document.getElementById('rblock').classList.add('v');
-
-      setTimeout(function() {
-        document.querySelectorAll('.bf').forEach(function(bar) {
-          bar.style.width = bar.dataset.w + '%';
-        });
-      }, 200);
-
+      var dt = parseAIResponse(aiText, artworkName);
+      renderResult(dt);
       btn.disabled = false;
+      btn.classList.remove('loading');
       btn.innerHTML = '&#10022; Analizar obra';
-
-      setTimeout(function() {
-        document.getElementById('rblock').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 300);
-    }, 1800);
+    })
+    .catch(function(err) {
+      console.error('OpenRouter error:', err);
+      var dt = {
+        n: artworkName,
+        c: 'Error de conexión — ' + err.message,
+        f: [
+          {n:"Cognitiva",v:60,color:"#b8952e"},{n:"Educativa",v:55,color:"#6aaa7a"},
+          {n:"Terapéutica",v:50,color:"#9b88b0"},{n:"Política",v:40,color:"#b08888"},
+          {n:"Crítica",v:45,color:"#889eb0"},{n:"Ideológica",v:42,color:"#b8952e"}
+        ],
+        a: 'No se pudo conectar con OpenRouter. Verifica tu token e inténtalo de nuevo.',
+        r: 'Aristóteles: la finalidad del arte no es representar la apariencia exterior de las cosas, sino su significado interior.'
+      };
+      renderResult(dt);
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.innerHTML = '&#10022; Analizar obra';
+    });
   });
 
   // LIGHTBOX
