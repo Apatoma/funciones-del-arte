@@ -178,22 +178,6 @@ footer .g{color:var(--ac)}
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(30px)}
 
-/* LIGHTBOX */
-.lb{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s cubic-bezier(0.4,0,0.2,1)}
-.lb.active{opacity:1;pointer-events:all}
-.lb::before{content:'';position:fixed;inset:0;background:rgba(7,6,5,0.96);backdrop-filter:blur(20px)}
-.lbw{position:relative;z-index:2;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center}
-.lbi{max-width:100%;max-height:78vh;object-fit:contain;border-radius:3px;box-shadow:0 30px 100px rgba(0,0,0,0.8);cursor:default}
-.lbc{position:fixed;top:1.5rem;right:1.5rem;background:rgba(22,20,18,0.8);border:1px solid rgba(184,149,46,0.2);color:var(--ac);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:3}
-.lbc:hover{background:rgba(184,149,46,0.1);border-color:rgba(184,149,46,0.4)}
-.lbf{margin-top:1rem;text-align:center;z-index:3}
-.lbf #lightboxTitle{font-family:var(--fd);font-size:1.2rem;color:var(--tx);display:block}
-.lbf #lightboxCredit{font-family:var(--fa);font-size:0.8rem;color:var(--tm);font-style:italic;display:block;margin-top:0.3rem}
-.fiw{cursor:zoom-in}
-
-/* IMAGE SOURCE */
-.fsrc{font-family:var(--fa);font-size:0.72rem;color:var(--tm);margin-top:0.8rem;padding:0.4rem 1.8rem;font-style:italic}
-
 /* RESPONSIVE */
 @media(max-width:900px){
   .na{display:none;position:absolute;top:100%;left:0;width:100%;background:rgba(12,11,10,0.96);backdrop-filter:blur(20px);flex-direction:column;padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(184,149,46,0.05)}
@@ -362,13 +346,13 @@ footer .g{color:var(--ac)}
   <div class="sheader reveal">
     <span class="se">III — Análisis de Obras</span>
     <h2 class="st">La Galería <em>Filosófica</em></h2>
-    <p class="sd">Cada obra de arte es un mundo. Quince obras maestras analizadas en profundidad: su contexto, su significado y las funciones del arte que encarnan.</p>
+    <p class="sd">Cada obra de arte es un mundo. Diez obras analizadas en profundidad: su contexto, su significado y las funciones del arte que encarnan.</p>
   </div>
 
   <!-- EL QUIJOTE -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/El_ingenioso_hidalgo_don_Quijote_de_la_Mancha.jpg/1280px-El_ingenioso_hidalgo_don_Quijote_de_la_Mancha.jpg" alt="El Quijote - Miguel de Cervantes" loading="lazy" data-title="El Quijote — Miguel de Cervantes" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1200&q=80" alt="Biblioteca antigua - El Quijote" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>El Quijote</h3><span class="fmeta">Miguel de Cervantes · 1605 · 1615 · Novela</span></div>
     </div>
@@ -392,7 +376,7 @@ footer .g{color:var(--ac)}
   <!-- GUERNICA -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/en/7/74/Guernica.jpg" alt="Guernica - Pablo Picasso" loading="lazy" data-title="Guernica — Pablo Picasso (1937)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1577720643272-265f09367456?w=1200&q=80" alt="Guernica - Pablo Picasso" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>Guernica</h3><span class="fmeta">Pablo Picasso · 1937 · Óleo sobre lienzo · 349cm × 776cm</span></div>
     </div>
@@ -415,7 +399,7 @@ footer .g{color:var(--ac)}
   <!-- LAS SEÑORITAS DE AVIGNON -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/en/4/4c/Les_Demoiselles_d%27Avignon.jpg" alt="Las señoritas de Avignon - Pablo Picasso" loading="lazy" data-title="Las señoritas de Avignon — Pablo Picasso (1907)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1200&q=80" alt="Arte vanguardista - Cubismo" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>Las señoritas de Avignon</h3><span class="fmeta">Pablo Picasso · 1907 · Óleo sobre lienzo · 243cm × 233cm</span></div>
     </div>
@@ -437,7 +421,7 @@ footer .g{color:var(--ac)}
   <!-- EL GRITO -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg" alt="El Grito - Edvard Munch" loading="lazy" data-title="El Grito — Edvard Munch (1893)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1200&q=80" alt="Cielo tormentoso - El Grito" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>El Grito</h3><span class="fmeta">Edvard Munch · 1893 · Óleo, temple y pastel sobre cartón · 91cm × 73cm</span></div>
     </div>
@@ -459,7 +443,7 @@ footer .g{color:var(--ac)}
   <!-- LA PIEDAD -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Michelangelo%27s_Piet%C3%A0_Rovere_%28rectangular%29.jpg/800px-Michelangelo%27s_Piet%C3%A0_Rovere_%28rectangular%29.jpg" alt="La Piedad - Miguel Ángel" loading="lazy" data-title="La Piedad del Vaticano — Miguel Ángel (1499)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=1200&q=80" alt="Escultura renacentista - La Piedad" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>La Piedad del Vaticano</h3><span class="fmeta">Miguel Ángel Buonarroti · 1498-1499 · Mármol · 174cm altura</span></div>
     </div>
@@ -481,7 +465,7 @@ footer .g{color:var(--ac)}
   <!-- LAS MENINAS -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_thin_black_margin.jpg/1280px-Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_thin_black_margin.jpg" alt="Las Meninas - Diego Velázquez" loading="lazy" data-title="Las Meninas — Diego Velázquez (1656)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=1200&q=80" alt="Museo del Prado - Velázquez" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>Las Meninas</h3><span class="fmeta">Diego Velázquez · 1656 · Óleo sobre lienzo · 318cm × 276cm</span></div>
     </div>
@@ -503,7 +487,7 @@ footer .g{color:var(--ac)}
   <!-- LOS GIRASOLES -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Vincent_Willem_van_Gogh_127.jpg/800px-Vincent_Willem_van_Gogh_127.jpg" alt="Los Girasoles - Vincent van Gogh" loading="lazy" data-title="Los Girasoles — Vincent van Gogh (1888)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=1200&q=80" alt="Girasoles - Van Gogh" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>Los Girasoles</h3><span class="fmeta">Vincent van Gogh · 1888 · Óleo sobre lienzo · Serie de pinturas</span></div>
     </div>
@@ -525,7 +509,7 @@ footer .g{color:var(--ac)}
   <!-- EL NACIMIENTO DE VENUS -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1280px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg" alt="El Nacimiento de Venus - Sandro Botticelli" loading="lazy" data-title="El Nacimiento de Venus — Sandro Botticelli (1485)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&q=80" alt="Arte renacentista - Venus" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>El Nacimiento de Venus</h3><span class="fmeta">Sandro Botticelli · 1484-1486 · Temple sobre lienzo · 172cm × 278cm</span></div>
     </div>
@@ -547,7 +531,7 @@ footer .g{color:var(--ac)}
   <!-- 1984 -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg" alt="1984 - George Orwell" loading="lazy" data-title="1984 — George Orwell (1949)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=1200&q=80" alt="Distopía - 1984" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>1984</h3><span class="fmeta">George Orwell · 1949 · Novela distópica</span></div>
     </div>
@@ -570,7 +554,7 @@ footer .g{color:var(--ac)}
   <!-- LA NOCHE ESTRELLADA -->
   <div class="mw reveal">
     <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="La noche estrellada - Vincent van Gogh" loading="lazy" data-title="La noche estrellada — Vincent van Gogh (1889)" data-credit="Wikimedia Commons · Dominio Público">
+      <img class="fimg" src="https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1200&q=80" alt="Cielo estrellado - Van Gogh" loading="lazy">
       <div class="fspot"></div><div class="fgrad"></div>
       <div class="finfo"><h3>La noche estrellada</h3><span class="fmeta">Vincent van Gogh · 1889 · Óleo sobre lienzo · 73cm × 92cm</span></div>
     </div>
@@ -588,122 +572,6 @@ footer .g{color:var(--ac)}
     <p>Pintada desde la ventana de un hospital psiquiátrico, esta es la prueba de que incluso en la oscuridad más profunda el ser humano es capaz de crear luz. Es <strong>terapéutica</strong>: Van Gogh transformó su sufrimiento en la imagen más luminosa de la historia. Es <strong>cognitiva</strong> porque reflexiona sobre la relación entre el ser humano y el cosmos. Y produce una <strong>experiencia estética</strong> sublime que nos sobrepasa y nos llena de asombro.</p></div>
     </div>
   </div>
-  <!-- LA GIOCONDA (MONA LISA) -->
-  <div class="mw reveal">
-    <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg" alt="La Gioconda (Mona Lisa) - Leonardo da Vinci" loading="lazy" data-title="La Gioconda (Mona Lisa) — Leonardo da Vinci (1503-1519)" data-credit="Wikimedia Commons · Dominio Público">
-      <div class="fspot"></div><div class="fgrad"></div>
-      <div class="finfo"><h3>La Gioconda (Mona Lisa)</h3><span class="fmeta">Leonardo da Vinci · 1503-1519 · Óleo sobre tabla · 77cm × 53cm</span></div>
-    </div>
-    <div class="fp"><p>La pintura más famosa del mundo. Robada en 1911, fue noticia de portada en todos los periódicos del planeta. Desde entonces se exhibe tras un cristal blindado en el Louvre. El misterio de la Gioconda empieza ahí.</p></div>
-    <div class="fsrc">Fuente: Wikimedia Commons — Dominio Público</div>
-    </div></div>
-    <div class="ab"><div class="ag">
-      <div class="ap"><div class="al">Contexto histórico</div><p>Florencia, principios del siglo XVI. Leonardo da Vinci (1452-1519) representaba la culminación del ideal renacentista del "hombre universal". Comenzó el retrato hacia 1503 por encargo de Francesco del Giocondo, pero nunca lo entregó: se lo llevó a Francia en 1516, donde pasó sus últimos años perfeccionando esa sonrisa enigmática. No acabó la obra porque, para Leonardo, la perfección era inalcanzable por definición. La técnica del <em>sfumato</em> alcanza aquí su máxima expresión: las transiciones entre luz y sombra son tan sutiles que resulta imposible determinar dónde termina una zona y empieza otra.</p></div>
-      <div class="ap"><div class="al">Análisis de la obra</div><p>El paisaje que rodea a la figura es deliberadamente irreal: formaciones geológicas imposibles, un mundo onírico que no existe en ningún lugar. La composición es una pirámide perfecta que transmite estabilidad y eternidad. La sonrisa ha sido explicada de mil maneras — Freud escribió un ensayo entero sobre ella — pero la ambigíad es la obra misma: Leonardo pintó una expresión que admite todas las interpretaciones porque potencialmente contenía todas las emociones humanas.</p></div>
-    </div>
-    <div class="fnp"><div class="fnt">
-      <span class="fntg" data-m="g">Cognitiva</span>
-      <span class="fntg" data-m="g">Ideológica</span>
-      <span class="fntg" data-m="b">Belleza Clásica</span>
-    </div>
-    <p>La Gioconda es <strong>cognitiva</strong> por el conocimiento que ha generado, <strong>ideológica</strong> como símbolo del canon occidental, y encarna la <strong>belleza clásica</strong> como equilibrio y misterio inagotable: cinco siglos después, sigue guardando secretos.</p></div>
-    </div>
-  </div>
-
-  <!-- LA LIBERTAD GUIANDO AL PUEBLO -->
-  <div class="mw reveal">
-    <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Eug%C3%A8ne_Delacroix_-_La_libert%C3%A9_guidant_le_peuple.jpg/1280px-Eug%C3%A8ne_Delacroix_-_La_libert%C3%A9_guidant_le_peuple.jpg" alt="La Libertad guiando al pueblo - Eugène Delacroix" loading="lazy" data-title="La Libertad guiando al pueblo — Eugène Delacroix (1830)" data-credit="Wikimedia Commons — Dominio Público">
-      <div class="fspot"></div><div class="fgrad"></div>
-      <div class="finfo"><h3>La Libertad guiando al pueblo</h3><span class="fmeta">Eugène Delacroix · 1830 · Óleo sobre lienzo · 260cm × 325cm</span></div>
-    </div>
-    <div class="fp"><p>"Si no he luchado por mi patria, al menos pintaré para ella." — Delacroix transformó su impulso político en una de las imágenes más poderosas del siglo XIX.</p></div>
-    <div class="fsrc">Fuente: Wikimedia Commons — Dominio Público</div>
-    </div></div>
-    <div class="ab"><div class="ag">
-      <div class="ap"><div class="al">Contexto histórico</div><p>En julio de 1830, el rey Carlos X intentó un golpe contra el parlamento francés. El pueblo de París respondió con tres días de barricadas — las "Tres Gloriosas" — que derrocaron al monarca. Delacroix (1798-1863) vivió los acontecimientos como testigo directo. El Romanticismo proclamaba la emoción, el drama y la libertad expresiva: Delacroix encontró en la política y el arte un mismo impulso revolucionario.</p></div>
-      <div class="ap"><div class="al">Análisis de la obra</div><p>Una mujer — la Libertad personificada — avanza sobre un montículo de cadáveres, agitando la bandera tricolor. Arrastra tras de sí a un pueblo heterogéneo: bourgeois, obrero, adolescente. Las clases sociales se funden en la barricada. La composición es una diagonal ascendente de energía caótica: no hay orden neoclásico sino drama puro. La Libertad no es una diosa sino una mujer del pueblo con los pies sucios: esa ambigüedad entre lo real y lo simbóllico es parte de su poder universal.</p></div>
-    </div>
-    <div class="fnp"><div class="fnt">
-      <span class="fntg" data-m="r">Política</span>
-      <span class="fntg" data-m="b">Crítica</span>
-      <span class="fntg" data-m="g">Cognitiva</span>
-    </div>
-    <p>La Libertad es la <strong>función política</strong> del arte en estado puro: un episodio histórico convertido en símbolo perenne de la libertad. Su <strong>función crítica</strong> denuncia el absolutismo. Es <strong>cognitiva</strong> porque no nos cuenta los hechos: nos los hace sentir visceralmente.</p></div>
-    </div>
-  </div>
-
-  <!-- EL BESO (KLIMT) -->
-  <div class="mw reveal">
-    <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg/1280px-The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg" alt="El beso - Gustav Klimt" loading="lazy" data-title="El beso — Gustav Klimt (1907-1908)" data-credit="Wikimedia Commons — Dominio Público">
-      <div class="fspot"></div><div class="fgrad"></div>
-      <div class="finfo"><h3>El beso</h3><span class="fmeta">Gustav Klimt · 1907-1908 · Óleo y pan de oro sobre lienzo · 180cm × 180cm</span></div>
-    </div>
-    <div class="fp"><p>En la Viena de 1908, entre el psicoanálisis de Freud y la arquitectura de Wagner, Klimt pintó la pintura íntima más celebrada del Jugendstil: dos amantes fundidos sobre un prado de flores, a un paso del precipicio.</p></div>
-    <div class="fsrc">Fuente: Wikimedia Commons — Dominio Público</div>
-    </div></div>
-    <div class="ab"><div class="ag">
-      <div class="ap"><div class="al">Contexto histórico</div><p>Viena, fin de siglo: aquella civilización brillaba con el psicoanálisis de Freud, la música de Schönberg y la pintura radical de la Secesión. Klimt (1862-1918) fue el líder del movimiento: a partir de 1900 entró en su "fase dorada" inspirada en los mosaicos bizantinos de Ravena, donde el pan de oro se convirtió en su firma. El beso fue adquirido directamente por el gobierno austriaco en 1908.</p></div>
-      <div class="ap"><div class="al">Análisis de la obra</div><p>Él se arrodilla, envuelto en rectángulos oscuros; ella se inclina, cubierta de círculos y espirales. Están a punto de besarse, pero el instante nunca se completa: es una suspensión máxima. Klimt construye una gramática visual de la diferencia sexual: lo masculino como rigidez, lo femenino como fluidez. El fondo dorado abstracto elimina todo contexto histórico: este beso no pertenece a ninguna época, es el concepto mismo del abrazo amoroso como experiencia universal.</p></div>
-    </div>
-    <div class="fnp"><div class="fnt">
-      <span class="fntg" data-m="p">Terapéutica</span>
-      <span class="fntg" data-m="v">Experiencia Estética</span>
-      <span class="fntg" data-m="b">Belleza Expresiva</span>
-    </div>
-    <p>El beso despliega su <strong>función terapéutica</strong> de forma casi universal: canto al amor como refugio. La <strong>experiencia estética</strong> que produce es de rara serenidad. Y representa la <strong>belleza expresiva</strong> en su máxima exaltación: la emoción amorosa convertida en forma, color y oro.</p></div>
-    </div>
-  </div>
-
-  <!-- LA PERSISTENCIA DE LA MEMORIA -->
-  <div class="mw reveal">
-    <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/en/d/dd/The_Persistence_of_Memory.jpg" alt="La persistencia de la memoria - Salvador Dalí" loading="lazy" data-title="La persistencia de la memoria — Salvador Dalí (1931)" data-credit="Wikimedia Commons — Uso educativo">
-      <div class="fspot"></div><div class="fgrad"></div>
-      <div class="finfo"><h3>La persistencia de la memoria</h3><span class="fmeta">Salvador Dalí · 1931 · Óleo sobre lienzo · 24cm × 33cm</span></div>
-    </div>
-    <div class="fp"><p>Uno de los cuadros más reconocibles de la historia: relojes que se derriten sobre un paisaje desértico. Tan pequeño —24 por 33 centímetros— que puede pasar desapercibido en el MoMA.</p></div>
-    <div class="fsrc">Fuente: Wikimedia Commons — Dominio Público</div>
-    </div></div>
-    <div class="ab"><div class="ag">
-      <div class="ap"><div class="al">Contexto histórico</div><p>La década de 1930 fue la edad de oro del Surrealismo. Salvador Dalí (1904-1989) se incorporó al movimiento desarrollando el "método paranoico-crítico": provocar estados de delirio controlado para generar imágenes que la razón no podría concebir. Dalí explicó que la imagen del relojo blando le vino contemplando un camembert derritiéndose al sol.</p></div>
-      <div class="ap"><div class="al">Análisis de la obra</div><p>Tres relojes blandos se derriten sobre superficies: uno cuelga de un árbol seco, otro se desliza por un borde, el tercero envuelve una masa amorfa —autorretrato de Dalí dormido—. Un cuarto reloj cubierto de hormigas (símbolo de putrefacción) descansa al lado. El paisaje de fondo es Port Lligat, bañado en luz de atardecer. La lectura es clara: el tiempo no es rígido sino blando, subjetivo, maleable. Los relojes se deshacen porque el tiempo real no es el del reloj sino el de la experiencia vivida.</p></div>
-    </div>
-    <div class="fnp"><div class="fnt">
-      <span class="fntg" data-m="g">Cognitiva</span>
-      <span class="fntg" data-m="p">Terapéutica</span>
-      <span class="fntg" data-m="v">Experiencia Estética</span>
-    </div>
-    <p>Esta obra es <strong>cognitiva</strong>: revela la naturaleza subjetiva del tiempo. Es <strong>terapéutica</strong> porque Dalí transformó la angustia en belleza. Y produce una <strong>experiencia estética</strong> inquietante: un mundo onírico que reconocemos como real aunque sabemos que es imposible.</p></div>
-    </div>
-  </div>
-
-  <!-- LA RONDA DE NOCHE -->
-  <div class="mw reveal">
-    <div class="fo"><div class="fi"><div class="fiw">
-      <img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Night_Watch_-_HD.jpg/1280px-The_Night_Watch_-_HD.jpg" alt="La ronda de noche - Rembrandt" loading="lazy" data-title="La ronda de noche — Rembrandt (1642)" data-credit="Wikimedia Commons — Dominio Público">
-      <div class="fspot"></div><div class="fgrad"></div>
-      <div class="finfo"><h3>La ronda de noche</h3><span class="fmeta">Rembrandt van Rijn · 1642 · Óleo sobre lienzo · 363cm × 437cm</span></div>
-    </div>
-    <div class="fp"><p>La obra más monumental de Rembrandt ha sido llamada "La ronda de noche" por error durante siglos: el barniz oscuro que se eliminó en los años 40 reveló que la escena ocurre de día. Para entonces el nombre ya no se cambió.</p></div>
-    <div class="fsrc">Fuente: Wikimedia Commons — Dominio Público</div>
-    </div></div>
-    <div class="ab"><div class="ag">
-      <div class="ap"><div class="al">Contexto histórico</div><p>Ámsterdam, 1642. Los Países Bajos vivían su Siglo de Oro: república más próspera de Europa, tierra de tolerancia donde Descartes escribió sus obras. Rembrandt (1606-1669) era el retratista más solicitado. La obra la pintó para la compañía de mosqueteros del distrito II, pero se negó al formato de filas estáticas y pintó una escena con movimiento y dramatismo narrativo.</p></div>
-      <div class="ap"><div class="al">Análisis de la obra</div><p>El capitán Cocq avanza hacia nosotros dando una orden. A su lado, el teniente vestido de amarillo. Entre ambos, una niña —la mascota— bañada en la luz más intensa del cuadro. Lo revolucionario es la distribución de la luz: en lugar de iluminar igual a todos, Rembrandt ilumina dramáticamente. Algunos brillan; otros quedan en sombras. La niña —el ser más insignificante— es el punto de máxima luz porque Rembrandt entendía que lo importante no es el rango social sino la forma en que la luz transforma.</p></div>
-    </div>
-    <div class="fnp"><div class="fnt">
-      <span class="fntg" data-m="r">Política</span>
-      <span class="fntg" data-m="g">Cognitiva</span>
-      <span class="fntg" data-m="v">Educativa</span>
-    </div>
-    <p>La ronda de noche cumple una <strong>función política</strong> legitimando la república holandesa a través de sus ciudadanos armados. Es <strong>cognitiva</strong> como enseñanza insuperable sobre la luz y la composición. Y es <strong>educativa</strong> porque demuestra que la excelencia artística no conoce jerarquías sociales: la luz cae donde mejor compone la escena.</p></div>
-    </div>
-  </div>
-
-
 
 </section>
 
@@ -747,11 +615,6 @@ footer .g{color:var(--ac)}
           <option value="nacimiento">El Nacimiento de Venus — Botticelli (1485)</option>
           <option value="1984book">1984 — Orwell (1949)</option>
           <option value="noche">La noche estrellada — Van Gogh (1889)</option>
-          <option value="mona">La Gioconda (Mona Lisa) — Leonardo da Vinci (1503-1519)</option>
-          <option value="libertad">La Libertad guiando al pueblo — Delacroix (1830)</option>
-          <option value="beso">El beso — Klimt (1907-1908)</option>
-          <option value="dali">La persistencia de la memoria — Dalí (1931)</option>
-          <option value="rembrandt">La ronda de noche — Rembrandt (1642)</option>
         </select>
       </div>
       <div class="ig">
@@ -784,7 +647,7 @@ footer .g{color:var(--ac)}
   <div class="conc reveal">
     <p>A lo largo de este trabajo hemos visto que el arte es mucho más que un pasatiempo o un adorno. Es una de las herramientas más poderosas que el ser humano ha creado para comprenderse a sí mismo y transformar el mundo.</p>
     <p>Las funciones del arte — cognitiva, educativa, terapéutica, política, crítica, ideológica — no son compartimentos estancos sino dimensiones que se entrelazan. Una misma obra puede enseñarnos, curarnos, denunciar una injusticia y hacernos reflexionar sobre la condición humana, todo al mismo tiempo.</p>
-    <p>Las obras analizadas — desde el Quijote hasta La ronda de noche, desde la Piedad hasta La persistencia de la memoria, desde la Gioconda hasta el Guernica — demuestran que el arte es una forma de conocimiento tan valiosa como la ciencia o la filosofía, aunque su método sea diferente: nos enseña a través de la emoción, de la intuición, de la experiencia vivida.</p>
+    <p>Las obras analizadas — desde el Quijote hasta el Guernica, desde la Piedad hasta la Noche estrellada — demuestran que el arte es una forma de conocimiento tan valiosa como la ciencia o la filosofía, aunque su método sea diferente: nos enseña a través de la emoción, de la intuición, de la experiencia vivida.</p>
     <p>Y conceptos como el genio, la belleza, la estética y la experiencia estética nos proporcionan las herramientas teóricas para comprender por qué el arte nos afecta tanto y por qué es tan importante. El arte es un reflejo de lo mejor y lo peor de la humanidad: de su creatividad, su sensibilidad, su capacidad de sufrir y de soñar. Y mientras el ser humano siga siendo humano, el arte seguirá siendo una necesidad vital.</p>
   </div>
 </section>
@@ -797,18 +660,6 @@ footer .g{color:var(--ac)}
 </footer>
 
 <button class="btp" id="btp" title="Volver arriba">↑</button>
-
-<!-- LIGHTBOX -->
-<div class="lb" id="lightbox">
-  <div class="lbw">
-    <img class="lbi" id="lightboxImg" src="" alt="">
-    <button class="lbc" id="lightboxClose" aria-label="Cerrar">✕</button>
-    <div class="lbf">
-      <span id="lightboxTitle"></span>
-      <span id="lightboxCredit"></span>
-    </div>
-  </div>
-</div>
 
 <!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -977,36 +828,6 @@ footer .g{color:var(--ac)}
       f: [{n:"Terapéutica",v:97,color:"#9b88b0"},{n:"Cognitiva",v:80,color:"#b8952e"},{n:"Experiencia Estética",v:95,color:"#6aaa7a"},{n:"Lo Sublime",v:92,color:"#889eb0"},{n:"Política",v:5,color:"#b08888"},{n:"Ideológica",v:20,color:"#b8952e"}],
       a: "Pintada desde un hospital psiquiátrico. Cielo vibrante de estrellas girando, pueblo dormido abajo. El contraste entre el cosmos convulso y la paz doméstica es extraordinario.",
       r: "Heidegger: el arte es el ponerse a trabajar de la verdad. La noche estrellada transforma sufrimiento en luz."
-    },
-    mona: {
-      n: "La Gioconda — Leonardo da Vinci", c: "Óleo sobre tabla, 1503-1519",
-      f: [{n:"Cognitiva",v:90,color:"#b8952e"},{n:"Belleza Clásica",v:98,color:"#889eb0"},{n:"Ideológica",v:85,color:"#b8952e"},{n:"Experiencia Estética",v:88,color:"#6aaa7a"},{n:"Política",v:30,color:"#b08888"},{n:"Terapéutica",v:40,color:"#9b88b0"}],
-      a: "El cuadro más famoso del mundo. La técnica del sfumato hace imposible determinar las transiciones entre luz y sombra. La sonrisa deliberadamente ambigua admite todas las interpretaciones. El paisaje irreal del fondo parece un estado del alma más que un lugar real.",
-      r: "Leonardo pintó una expresión que contenía todas las emociones humanas a la vez. Ese es su misterio irresoluble."
-    },
-    libertad: {
-      n: "La Libertad guiando al pueblo — Delacroix", c: "Óleo sobre lienzo, 1830",
-      f: [{n:"Política",v:98,color:"#b08888"},{n:"Crítica",v:92,color:"#889eb0"},{n:"Cognitiva",v:70,color:"#b8952e"},{n:"Experiencia Estética",v:75,color:"#6aaa7a"},{n:"Educativa",v:60,color:"#b8952e"},{n:"Terapéutica",v:35,color:"#9b88b0"}],
-      a: "La Libertad personificada avanza sobre cadáveres agitando la bandera tricolor. Las clases sociales se funden en la barricada. La composición diagonal y el dramatismo lumínico rompen con el neoclásico. La obra fue retirada de la vista pública durante décadas por subversiva.",
-      r: "Delacroix demostró que el arte puede ser un acto de rebeldía tanto estética como política."
-    },
-    beso: {
-      n: "El beso — Klimt", c: "Óleo y pan de oro, 1907-1908",
-      f: [{n:"Terapéutica",v:92,color:"#9b88b0"},{n:"Belleza Expresiva",v:98,color:"#889eb0"},{n:"Experiencia Estética",v:90,color:"#6aaa7a"},{n:"Lo Sublime",v:70,color:"#889eb0"},{n:"Política",v:10,color:"#b08888"},{n:"Ideológica",v:25,color:"#b8952e"}],
-      a: "Dos amantes se funden en un abrazo suspendido sobre un prado de flores. Rectángulos (él) y círculos (ella) construyen una gramática visual de la diferencia sexual. El fondo dorado elimina todo contexto: este beso es universal, eterno, fuera del tiempo.",
-      r: "Klimt transformó la intimidad humana en una experiencia estética sublime."
-    },
-    dali: {
-      n: "La persistencia de la memoria — Dalí", c: "Óleo sobre lienzo, 1931",
-      f: [{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Terapéutica",v:80,color:"#9b88b0"},{n:"Experiencia Estética",v:88,color:"#6aaa7a"},{n:"Lo Sublime",v:75,color:"#889eb0"},{n:"Política",v:15,color:"#b08888"},{n:"Crítica",v:30,color:"#889eb0"}],
-      a: "Tres relojes blandos se derriten en un paisaje de Port Lligat bañado en luz de atardecer. El tiempo no es rígido sino subjeto, maleable, blando. Un cuarto reloj cubierto de hormigas evoca la decadencia. Dalí pintó esta imagen casi automáticamente tras contemplar un camembert derritiéndose.",
-      r: "Dalí demostró que la intuición surrealista podía anticipar verdades que la física tardaría en formular."
-    },
-    rembrandt: {
-      n: "La ronda de noche — Rembrandt", c: "Óleo sobre lienzo, 1642",
-      f: [{n:"Política",v:80,color:"#b08888"},{n:"Cognitiva",v:95,color:"#b8952e"},{n:"Educativa",v:85,color:"#6aaa7a"},{n:"Belleza Expresiva",v:78,color:"#889eb0"},{n:"Crítica",v:40,color:"#b08888"},{n:"Ideológica",v:55,color:"#b8952e"}],
-      a: "El capitán avanza dando órdenes mientras la mascota — una niña — brilla con la luz más intensa. Rembrandt distribuyó la luz de forma dramática en lugar de igual para todos. El resultado convierte un retrato corporativo en una escena narrativa de energía insuperable.",
-      r: "Rembrandt enseñó que la luz no tiene la función de iluminar sino de revelar lo verdaderamente importante."
     }
   };
 
@@ -1098,41 +919,6 @@ footer .g{color:var(--ac)}
         document.getElementById('rblock').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }, 300);
     }, 1800);
-  });
-
-  // LIGHTBOX
-  var lightbox = document.getElementById('lightbox');
-  var lightboxImg = document.getElementById('lightboxImg');
-  var lightboxTitle = document.getElementById('lightboxTitle');
-  var lightboxCredit = document.getElementById('lightboxCredit');
-  var lightboxClose = document.getElementById('lightboxClose');
-
-  function openLightbox(img) {
-    lightboxImg.src = img.src;
-    lightboxTitle.textContent = img.dataset.title || img.alt;
-    lightboxCredit.textContent = img.dataset.credit || '';
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-    setTimeout(function() { lightboxImg.src = ''; }, 400);
-  }
-
-  document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('fimg')) {
-      openLightbox(e.target);
-    }
-  });
-
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', function(e) {
-    if (e.target === lightbox) closeLightbox();
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox();
   });
 
 })();
